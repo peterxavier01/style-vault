@@ -96,7 +96,7 @@ const PageContent: React.FC<PageContentProps> = ({}) => {
 
       <section className="mt-12 md:mt-24 select-none">
         <Header title="Product Categories" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 gap-y-11">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 gap-y-11">
           {products.map((product) => (
             <div key={product.id}>
               <Card

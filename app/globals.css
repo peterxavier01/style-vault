@@ -7,3 +7,7 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+.link-hover-c {
+  @apply border-b-transparent border-b-2 hover:border-b-slate-800 transition;
+}

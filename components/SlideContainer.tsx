@@ -19,7 +19,7 @@ interface NavArrowsProps {
 
 const NavArrows: React.FC<NavArrowsProps> = ({ prevRef, nextRef }) => {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2 md:gap-4">
       <span
         ref={prevRef}
         className="border-primary border-[1px] text-primary active:scale-95 hover:bg-primary hover:text-white transition rounded-full p-3"
@@ -58,7 +58,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({ title, children }) => {
 
   return (
     <>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-6">
         <Header title={title} />
         <NavArrows prevRef={prevRef} nextRef={nextRef} />
       </div>

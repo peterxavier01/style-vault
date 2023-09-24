@@ -26,18 +26,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <div
       className={twMerge(
-        `card card-compact bg-base-100 shadow-md rounded-lg overflow-hidden`,
+        `card card-compact shadow-md rounded-lg overflow-hidden hover:-translate-y-4 transition duration-300 my-4`,
         className
       )}
     >
       <Link href={`/product/${productId}`}>
-        <figure className="bg-gray-300">
+        <figure className="bg-gray-300 group">
           <Image
             src={src}
             alt="product"
             width={220}
             height={220}
-            className="object-contain"
+            className="object-contain group-hover:scale-125 group-hover:rotate-45 transition duration-500"
           />
         </figure>
       </Link>
@@ -45,7 +45,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <div className="card-body">
         <div className="flex justify-between items-center text-slate-800 w-full">
           <Link href={`/product/${productId}`}>
-            <h2 className="card-title text-lg md:text-xl">{name}</h2>
+            <h2 className="card-title text-lg md:text-xl link-hover-c">
+              {name}
+            </h2>
           </Link>
           <p className="card-title text-lg md:text-xl flex-grow-0">{price}</p>
         </div>
