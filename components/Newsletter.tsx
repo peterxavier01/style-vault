@@ -15,7 +15,7 @@ const Newsletter = () => {
               placeholder="Your e-mail"
               className="px-4 py-2 text-slate-700 rounded-l-lg w-full h-12 outline-none"
             />
-            <button className="bg-primary text-white text-xs md:text-sm py-2 px-4 rounded-r-lg w-fit md:w-[250px] h-12">
+            <button className="bg-primary text-white text-xs md:text-sm py-2 px-2 rounded-r-lg w-fit md:w-[250px] h-12">
               Get $10 Savings
             </button>
           </div>
