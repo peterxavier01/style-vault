@@ -1,13 +1,13 @@
 import Image from "next/image";
 
 import { AiOutlineClose } from "react-icons/ai";
-import { Product } from "@chec/commerce.js/types/product";
+import { LineItem } from "@chec/commerce.js/types/line-item";
 
 import Counter from "./Counter";
 import Link from "next/link";
 
 interface CartItemProps {
-  product: Product;
+  product: LineItem;
 }
 
 const CartItem: React.FC<CartItemProps> = ({ product }) => {
