@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { Cart } from "@chec/commerce.js/types/cart";
 
 interface CartDataStore {
-  cart: Cart | null; // Assuming you have a CartItems type
+  cart: Cart | null;
   setCart: (value: Cart | null) => void;
 }
 
