@@ -24,12 +24,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cart: Cart = await getCart();
+  // const cart: Cart = await getCart();
 
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <SliderProvider cart={cart} />
+        <SliderProvider />
         <Layout>{children}</Layout>
       </body>
     </html>

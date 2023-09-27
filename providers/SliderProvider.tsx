@@ -7,14 +7,15 @@ import CartSlider from "@/components/CartSlider";
 import LikedSlider from "@/components/LikedSlider";
 import useCartData from "@/hooks/useCartData";
 
-type SliderProviderProps = {
-  cart: Cart;
-};
+// type SliderProviderProps = {
+//   cart: Cart;
+// };
 
-const SliderProvider: React.FC<SliderProviderProps> = ({ cart }) => {
-  const { setCart } = useCartData();
+const SliderProvider = () => {
+  // const { setCart } = useCartData();
+  // setCart(cart);
+
   const [isMounted, setIsMounted] = useState(false);
-  setCart(cart);
 
   useEffect(() => {
     setIsMounted(true);

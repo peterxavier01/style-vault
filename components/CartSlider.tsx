@@ -30,20 +30,20 @@ const EmptyCart = () => {
 };
 
 const FilledCart = () => {
-  const { cart } = useCartData();
+  // const { cart } = useCartData();
 
   return (
     <div className="mt-8 grid gap-8">
-      {cart?.line_items.map((product) => (
+      {/* {cart?.line_items.map((product) => (
         <CartItem key={product.id} product={product} />
-      ))}
+      ))} */}
     </div>
   );
 };
 
 const CartSlider = () => {
   const { isOpen, onClose } = useCartSlider();
-  const { cart } = useCartData();
+  // const { cart } = useCartData();
 
   useEffect(() => {
     onClose();
@@ -55,8 +55,9 @@ const CartSlider = () => {
     }
   };
 
-  const isEmpty = !cart?.line_items;
-
+  // const isEmpty = !cart?.line_items;
+  const isEmpty = false;
+  
   return (
     <Slider
       title="Your Cart"
