@@ -1,8 +1,7 @@
 import Image from "next/image";
 
 import { AiOutlineClose } from "react-icons/ai";
-
-import { Product } from "@/types";
+import { Product } from "@chec/commerce.js/types/product";
 
 import Counter from "./Counter";
 import Link from "next/link";
