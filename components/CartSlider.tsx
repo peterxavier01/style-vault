@@ -5,11 +5,11 @@ import { useEffect } from "react";
 import { BsBagX } from "react-icons/bs";
 
 import useCartSlider from "@/hooks/useCartSlider";
+import useCartData from "@/hooks/useCartData";
 
 import Slider from "./Slider";
 import Button from "./Button";
-// import CartItem from "./CartItem";
-// import { products } from "@/app/(home)/_components/PageContent";
+import CartItem from "./CartItem";
 
 const EmptyCart = () => {
   const cartSlider = useCartSlider();
@@ -30,19 +30,20 @@ const EmptyCart = () => {
 };
 
 const FilledCart = () => {
+  const { cart } = useCartData();
+
   return (
     <div className="mt-8 grid gap-8">
-      <p>There are invisible products here.</p>
-
-      {/* {products.map((product) => (
+      {cart?.line_items.map((product) => (
         <CartItem key={product.id} product={product} />
-      ))} */}
+      ))}
     </div>
   );
 };
 
 const CartSlider = () => {
   const { isOpen, onClose } = useCartSlider();
+  const { cart } = useCartData();
 
   useEffect(() => {
     onClose();
@@ -54,7 +55,7 @@ const CartSlider = () => {
     }
   };
 
-  const isEmpty = false;
+  const isEmpty = !cart?.line_items;
 
   return (
     <Slider

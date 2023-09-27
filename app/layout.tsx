@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 
+import { Cart } from "@chec/commerce.js/types/cart";
+
 import "./globals.css";
 
 import SliderProvider from "@/providers/SliderProvider";
 import Layout from "@/components/Layout";
+import getCart from "@/libs/getCart";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -16,15 +19,17 @@ export const metadata: Metadata = {
   description: "",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cart: Cart = await getCart();
+
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <SliderProvider />
+        <SliderProvider cart={cart} />
         <Layout>{children}</Layout>
       </body>
     </html>

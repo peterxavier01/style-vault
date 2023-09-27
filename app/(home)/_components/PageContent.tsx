@@ -6,7 +6,7 @@ import ProductCard from "@/components/ProductCard";
 import SlideContainer from "@/components/SlideContainer";
 import Header from "@/components/Header";
 
-import { Product } from "@/types";
+import { Product } from "@chec/commerce.js/types/product";
 
 import Card from "./Card";
 

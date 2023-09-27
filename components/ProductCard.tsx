@@ -5,8 +5,9 @@ import { twMerge } from "tailwind-merge";
 import { Markup } from "interweave";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
-import { Product } from "@/types";
 import Button from "./Button";
+import addToCart from "@/libs/addToCart";
+import { Product } from "@chec/commerce.js/types/product";
 
 interface ProductCardProps {
   product: Product;
@@ -60,6 +61,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
           <Button
             className="bg-transparent text-primary hover:text-white"
             title="Add to cart"
+            onClick={() => addToCart(productId, 1)}
           >
             <AiOutlineShoppingCart size={20} />
           </Button>
