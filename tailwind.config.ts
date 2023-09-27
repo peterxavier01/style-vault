@@ -11,6 +11,9 @@ const config: Config = {
       colors: {
         primary: "#03343d",
       },
+      backgroundImage: {
+        "hero": "url('https://imgur.com/jvKg8x2')",
+      },
     },
   },
   plugins: [require("daisyui")],

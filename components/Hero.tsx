@@ -3,7 +3,7 @@ import Button from "./Button";
 
 const Hero = () => {
   return (
-    <div className="hero min-h-screen bg-base-200">
+    <div className="hero min-h-screen bg-base-200 bg-hero bg-cover bg-no-repeat bg-center">
       <div className="hero-overlay bg-opacity-50" />
       <div className="hero-content text-center text-neutral-content">
         <div className="max-w-xl">

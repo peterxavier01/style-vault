@@ -8,8 +8,8 @@ import useCartSlider from "@/hooks/useCartSlider";
 
 import Slider from "./Slider";
 import Button from "./Button";
-import CartItem from "./CartItem";
-import { products } from "@/app/(home)/_components/PageContent";
+// import CartItem from "./CartItem";
+// import { products } from "@/app/(home)/_components/PageContent";
 
 const EmptyCart = () => {
   const cartSlider = useCartSlider();
@@ -32,9 +32,11 @@ const EmptyCart = () => {
 const FilledCart = () => {
   return (
     <div className="mt-8 grid gap-8">
-      {products.map((product) => (
+      <p>There are invisible products here.</p>
+
+      {/* {products.map((product) => (
         <CartItem key={product.id} product={product} />
-      ))}
+      ))} */}
     </div>
   );
 };
