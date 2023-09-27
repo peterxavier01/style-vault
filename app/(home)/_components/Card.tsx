@@ -11,14 +11,14 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ src, category, href }) => {
   return (
     <div className="hover:-translate-y-4 transition duration-300">
-      <div className="bg-gray-300 rounded-md flex justify-center items-center">
+      <div className="bg-gray-300 rounded-md flex justify-center items-center h-52">
         <Link href={`/${href}`}>
           <Image
             src={src}
             alt={category}
-            width={220}
-            height={220}
-            className="object-contain"
+            width={150}
+            height={150}
+            className="object-contain h-auto"
           />
         </Link>
       </div>

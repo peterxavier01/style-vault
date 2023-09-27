@@ -5,11 +5,59 @@ import { SwiperSlide } from "swiper/react";
 import ProductCard from "@/components/ProductCard";
 import SlideContainer from "@/components/SlideContainer";
 import Header from "@/components/Header";
+
+import { Product } from "@/types";
+
 import Card from "./Card";
 
-interface PageContentProps {}
+type PageContentProps = {
+  products: Product[];
+};
 
-const products = [
+const PageContent: React.FC<PageContentProps> = ({ products }) => {
+  return (
+    <>
+      <section>
+        <SlideContainer title="Featured Products">
+          {products.map((product) => (
+            <SwiperSlide key={product.id}>
+              <ProductCard product={product} />
+            </SwiperSlide>
+          ))}
+        </SlideContainer>
+      </section>
+
+      <section className="mt-12 md:mt-24 select-none">
+        <Header title="Product Categories" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 gap-y-11">
+          {products.map((product) => (
+            <div key={product.id}>
+              <Card
+                src={product.image!.url}
+                category={product.id}
+                href={product.id}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-12 md:mt-24 select-none">
+        <SlideContainer title="Bestselling Products">
+          {products.map((product) => (
+            <SwiperSlide key={product.id}>
+              <ProductCard product={product} />
+            </SwiperSlide>
+          ))}
+        </SlideContainer>
+      </section>
+    </>
+  );
+};
+
+export default PageContent;
+
+export const products = [
   {
     id: 1,
     name: "Headsets",
@@ -75,56 +123,3 @@ const products = [
     category: "Accessories",
   },
 ];
-
-const PageContent: React.FC<PageContentProps> = ({}) => {
-  return (
-    <>
-      <section>
-        <SlideContainer title="Featured Products">
-          {products.map((product) => (
-            <SwiperSlide key={product.id}>
-              <ProductCard
-                name={product.name}
-                description={product.description}
-                price={product.price}
-                src={product.src}
-              />
-            </SwiperSlide>
-          ))}
-        </SlideContainer>
-      </section>
-
-      <section className="mt-12 md:mt-24 select-none">
-        <Header title="Product Categories" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 gap-y-11">
-          {products.map((product) => (
-            <div key={product.id}>
-              <Card
-                src={product.src}
-                category={product.category}
-                href={product.category.toLowerCase()}
-              />
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-12 md:mt-24 select-none">
-        <SlideContainer title="Bestselling Products">
-          {products.map((product) => (
-            <SwiperSlide key={product.id}>
-              <ProductCard
-                name={product.name}
-                description={product.description}
-                price={product.price}
-                src={product.src}
-              />
-            </SwiperSlide>
-          ))}
-        </SlideContainer>
-      </section>
-    </>
-  );
-};
-
-export default PageContent;

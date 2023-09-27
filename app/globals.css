@@ -11,3 +11,13 @@
 .link-hover-c {
   @apply border-b-transparent border-b-2 hover:border-b-slate-800 transition;
 }
+
+/****** Slider Styles *******/
+.cart-slider {
+  -ms-overflow-style: none !important; /** IE and Edge */
+  scrollbar-width: none !important; /** Firefox **/
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

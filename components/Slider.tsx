@@ -7,6 +7,7 @@ interface SliderProps {
   children: React.ReactNode;
   onClick: () => void;
   isOpen: boolean;
+  className?: string;
 }
 
 const Slider: React.FC<SliderProps> = ({
@@ -14,11 +15,13 @@ const Slider: React.FC<SliderProps> = ({
   children,
   onClick,
   isOpen,
+  className,
 }) => {
   return (
     <div
       className={cn(
-        "fixed right-0 inset-y-0 h-full min-h-screen w-[80%] md:w-96 bg-white z-[200] py-12 px-4 duration-[300ms] transition",
+        "fixed right-0 inset-y-0 h-full min-h-screen w-[80%] md:w-[25rem] bg-white z-[200] py-12 px-4 duration-[300ms] transition overflow-y-scroll",
+        className,
         {
           "translate-x-[0%]": isOpen,
           "translate-x-[100%]": !isOpen,

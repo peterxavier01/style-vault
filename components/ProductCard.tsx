@@ -1,43 +1,43 @@
 import Image from "next/image";
-import { twMerge } from "tailwind-merge";
-
-import { AiOutlineShoppingCart } from "react-icons/ai";
-
-import Button from "./Button";
 import Link from "next/link";
 
+import { twMerge } from "tailwind-merge";
+import { Markup } from "interweave";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+
+import { Product } from "@/types";
+import Button from "./Button";
+
 interface ProductCardProps {
-  name: string;
-  description: string;
-  src: string;
-  price: string;
+  product: Product;
   className?: string;
-  productId?: number;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
-  productId,
-  name,
-  description,
-  src,
-  price,
-  className,
-}) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
+  const {
+    name,
+    description,
+    price: { formatted_with_symbol },
+    id: productId,
+    image,
+  } = product;
+  const src = image ? image.url : "";
+
   return (
     <div
       className={twMerge(
-        `card card-compact shadow-md rounded-lg overflow-hidden hover:-translate-y-4 transition duration-300 my-4`,
+        `card card-compact shadow-md rounded-lg overflow-hidden hover:-translate-y-4 transition duration-300 my-4 h-[400px]`,
         className
       )}
     >
       <Link href={`/product/${productId}`}>
-        <figure className="bg-gray-300 group">
+        <figure className="bg-gray-300 group w-full h-52">
           <Image
             src={src}
             alt="product"
-            width={220}
-            height={220}
-            className="object-contain group-hover:scale-125 group-hover:rotate-45 transition duration-500"
+            width={150}
+            height={150}
+            className="object-contain h-auto group-hover:scale-125 group-hover:rotate-45 transition duration-500"
           />
         </figure>
       </Link>
@@ -49,9 +49,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
               {name}
             </h2>
           </Link>
-          <p className="card-title text-lg md:text-xl flex-grow-0">{price}</p>
+          <p className="card-title text-lg md:text-xl flex-grow-0">
+            {formatted_with_symbol}
+          </p>
         </div>
-        <p className="truncate text-slate-500 font-medium">{description}</p>
+        <p className="truncate text-slate-500 font-medium">
+          <Markup content={description} noHtml />
+        </p>
         <div className="card-actions justify-end mt-2">
           <Button
             className="bg-transparent text-primary hover:text-white"
