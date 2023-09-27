@@ -14,7 +14,6 @@ const CartItem: React.FC<CartItemProps> = ({ product }) => {
   const {
     image,
     name,
-    description,
     price: { formatted_with_symbol },
   } = product;
   const src = image ? image.url : "";
@@ -43,9 +42,9 @@ const CartItem: React.FC<CartItemProps> = ({ product }) => {
           </span>
         </div>
 
-        <p className="text-xs md:text-sm text-slate-700 line-clamp-1 md:line-clamp-2 mb-4">
+        {/* <p className="text-xs md:text-sm text-slate-700 line-clamp-1 md:line-clamp-2 mb-4">
           {description}
-        </p>
+        </p> */}
 
         <div className="flex justify-between items-center">
           <Counter quantity={1} />
