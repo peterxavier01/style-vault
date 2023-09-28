@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 
-import { Cart } from "@chec/commerce.js/types/cart";
-
 import "./globals.css";
 
 import SliderProvider from "@/providers/SliderProvider";
 import Layout from "@/components/Layout";
-import getCart from "@/libs/getCart";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -24,8 +21,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const cart: Cart = await getCart();
-
   return (
     <html lang="en">
       <body className={poppins.className}>

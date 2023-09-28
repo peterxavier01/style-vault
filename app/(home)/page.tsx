@@ -1,8 +1,9 @@
 import Hero from "@/components/Hero";
 import PageContent from "./_components/PageContent";
 
-import getProducts from "@/libs/getProducts";
 import { Product } from "@chec/commerce.js/types/product";
+
+import getProducts from "@/libs/getProducts";
 
 export default async function Home() {
   const products: Product[] = await getProducts();

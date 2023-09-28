@@ -2,11 +2,11 @@
 
 import { SwiperSlide } from "swiper/react";
 
+import { Product } from "@chec/commerce.js/types/product";
+
 import ProductCard from "@/components/ProductCard";
 import SlideContainer from "@/components/SlideContainer";
 import Header from "@/components/Header";
-
-import { Product } from "@chec/commerce.js/types/product";
 
 import Card from "./Card";
 

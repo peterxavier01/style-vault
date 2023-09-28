@@ -10,6 +10,7 @@ import useCartData from "@/hooks/useCartData";
 import Slider from "./Slider";
 import Button from "./Button";
 import CartItem from "./CartItem";
+import { Cart } from "@chec/commerce.js/types/cart";
 
 const EmptyCart = () => {
   const cartSlider = useCartSlider();
@@ -29,21 +30,26 @@ const EmptyCart = () => {
   );
 };
 
-const FilledCart = () => {
-  // const { cart } = useCartData();
+type FilledCartProps = {
+  cartData: Cart | null;
+};
 
+const FilledCart: React.FC<FilledCartProps> = ({ cartData: cart }) => {
   return (
     <div className="mt-8 grid gap-8">
-      {/* {cart?.line_items.map((product) => (
+      {cart?.line_items.map((product) => (
         <CartItem key={product.id} product={product} />
-      ))} */}
+      ))}
     </div>
   );
 };
 
-const CartSlider = () => {
+interface CartSliderProps {
+  cartData: Cart | null;
+}
+
+const CartSlider: React.FC<CartSliderProps> = ({ cartData }) => {
   const { isOpen, onClose } = useCartSlider();
-  // const { cart } = useCartData();
 
   useEffect(() => {
     onClose();
@@ -55,9 +61,6 @@ const CartSlider = () => {
     }
   };
 
-  // const isEmpty = !cart?.line_items;
-  const isEmpty = false;
-  
   return (
     <Slider
       title="Your Cart"
@@ -65,7 +68,11 @@ const CartSlider = () => {
       onClick={handleClose}
       className="cart-slider"
     >
-      {isEmpty ? <EmptyCart /> : <FilledCart />}
+      {!cartData?.line_items ? (
+        <EmptyCart />
+      ) : (
+        <FilledCart cartData={cartData} />
+      )}
     </Slider>
   );
 };
