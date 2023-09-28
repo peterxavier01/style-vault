@@ -8,7 +8,7 @@ const Newsletter = () => {
         <p className="text-slate-800 font-medium leading-7 mb-6 max-w-xl">
           Subscribe to our newsletter for exclusive offers and updates.
         </p>
-        <form>
+        <form id="newsletter">
           <div className="flex items-center justify-center">
             <input
               type="email"

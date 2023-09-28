@@ -8,6 +8,7 @@ import { useState } from "react";
 
 import useCartSlider from "@/hooks/useCartSlider";
 import useLikedSlider from "@/hooks/useLikedSlide";
+import useCartData from "@/hooks/useCartData";
 
 import {
   AiOutlineSearch,
@@ -37,6 +38,7 @@ const Navbar = () => {
 
   const cartSlider = useCartSlider();
   const likedSlider = useLikedSlider();
+  const { cart } = useCartData();
 
   const handleClick = () => {
     setIsOpen((prev) => !prev);
@@ -105,10 +107,15 @@ const Navbar = () => {
             <AiOutlineSearch size={24} />
           </span>
           <span
-            className="cursor-pointer text-slate-600 hover:text-slate-900 active:scale-90"
+            className="cursor-pointer relative text-slate-600 hover:text-slate-900 active:scale-90"
             onClick={cartSlider.onOpen}
           >
             <AiOutlineShoppingCart size={24} />
+            {cart && (
+              <span className="p-[10px] text-[9px] flex items-center justify-center bg-primary w-4 h-4 text-white absolute -top-3 -right-3 rounded-full">
+                {cart?.total_items}
+              </span>
+            )}
           </span>
           <span
             className="cursor-pointer text-slate-600 hover:text-slate-900 active:scale-90"

@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { BsBagX } from "react-icons/bs";
 
 import useCartSlider from "@/hooks/useCartSlider";
-import useCartData from "@/hooks/useCartData";
 
 import Slider from "./Slider";
 import Button from "./Button";
@@ -38,7 +37,7 @@ const FilledCart: React.FC<FilledCartProps> = ({ cartData: cart }) => {
   return (
     <div className="mt-8 grid gap-8">
       {cart?.line_items.map((product) => (
-        <CartItem key={product.id} product={product} />
+        <CartItem key={product.id} cartItem={product} />
       ))}
     </div>
   );

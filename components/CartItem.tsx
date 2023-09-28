@@ -5,28 +5,29 @@ import { LineItem } from "@chec/commerce.js/types/line-item";
 
 import Counter from "./Counter";
 import Link from "next/link";
+import { removeItem } from "@/libs/updateCart";
 
 interface CartItemProps {
-  product: LineItem;
+  cartItem: LineItem;
 }
 
-const CartItem: React.FC<CartItemProps> = ({ product }) => {
+const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
   const {
     image,
     name,
     price: { formatted_with_symbol },
-  } = product;
+  } = cartItem;
   const src = image ? image.url : "";
 
   return (
     <div className="grid grid-cols-3 gap-x-4">
-      <div className="bg-gray-300 hover:bg-gray-400 duration-200 transition rounded-lg flex items-center justify-center">
+      <div className="bg-gray-300 h-24 hover:bg-gray-400 duration-200 transition rounded-lg flex items-center justify-center">
         <Image
           src={src}
           alt={name}
-          width={50}
-          height={50}
-          className="object-contain w-full h-auto"
+          width={60}
+          height={60}
+          className="object-contain aspect-auto"
         />
       </div>
 
@@ -37,17 +38,16 @@ const CartItem: React.FC<CartItemProps> = ({ product }) => {
               {name}
             </p>
           </Link>
-          <span className="cursor-pointer">
+          <span
+            className="cursor-pointer"
+            onClick={() => removeItem(cartItem.id)}
+          >
             <AiOutlineClose />
           </span>
         </div>
 
-        {/* <p className="text-xs md:text-sm text-slate-700 line-clamp-1 md:line-clamp-2 mb-4">
-          {description}
-        </p> */}
-
         <div className="flex justify-between items-center">
-          <Counter quantity={1} />
+          <Counter quantity={cartItem.quantity} cartItem={cartItem} />
           <p className="text-slate-800 text-sm md:text-base">
             {formatted_with_symbol}
           </p>
