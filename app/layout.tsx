@@ -4,6 +4,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 
 import SliderProvider from "@/providers/SliderProvider";
+import ToasterProvider from "@/providers/ToasterProvider";
+
 import Layout from "@/components/Layout";
 
 const poppins = Poppins({
@@ -13,7 +15,8 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Style Vault",
-  description: "",
+  description:
+    "Discover the latest fashion trends at StyleVault. Shop a wide range of stylish clothing, accessories, and more for men and women. Elevate your wardrobe with high-quality fashion essentials and exclusive offers. Stay in vogue with StyleVault today!",
 };
 
 export default async function RootLayout({
@@ -24,6 +27,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
+        <ToasterProvider />
         <SliderProvider />
         <Layout>{children}</Layout>
       </body>

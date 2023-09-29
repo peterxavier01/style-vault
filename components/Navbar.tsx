@@ -52,9 +52,9 @@ const Navbar = () => {
             <Image
               src="/logo-dark.png"
               alt="style vault logo"
-              width={140}
+              width={100}
               height={100}
-              className="w-[130px] md:w-[180px] h-auto"
+              className="w-auto md:w-[150px] h-auto"
             />
           </Link>
         </div>

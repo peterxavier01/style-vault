@@ -1,15 +1,14 @@
 import Link from "next/link";
 
 import { useEffect } from "react";
-
 import { BsBagX } from "react-icons/bs";
+import { Cart } from "@chec/commerce.js/types/cart";
 
 import useCartSlider from "@/hooks/useCartSlider";
 
 import Slider from "./Slider";
 import Button from "./Button";
 import CartItem from "./CartItem";
-import { Cart } from "@chec/commerce.js/types/cart";
 
 const EmptyCart = () => {
   const cartSlider = useCartSlider();
@@ -67,7 +66,7 @@ const CartSlider: React.FC<CartSliderProps> = ({ cartData }) => {
       onClick={handleClose}
       className="cart-slider"
     >
-      {!cartData?.line_items ? (
+      {cartData?.line_items.length === 0 ? (
         <EmptyCart />
       ) : (
         <FilledCart cartData={cartData} />

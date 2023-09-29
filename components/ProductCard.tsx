@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { twMerge } from "tailwind-merge";
-import { Markup } from "interweave";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
 import Button from "./Button";
@@ -27,7 +26,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
   return (
     <div
       className={twMerge(
-        `card card-compact shadow-md rounded-lg overflow-hidden hover:-translate-y-4 transition duration-300 my-4 h-[400px]`,
+        `card card-compact shadow-md rounded-lg overflow-hidden md:hover:-translate-y-4 transition duration-300 my-4 h-[400px]`,
         className
       )}
     >
@@ -54,10 +53,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
             {formatted_with_symbol}
           </p>
         </div>
-        <p className="truncate text-slate-500 font-medium">
-          <Markup content={description} noHtml />
-        </p>
-        <div className="card-actions justify-end mt-2">
+        <div
+          className="line-clamp-1 text-slate-500 font-medium"
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
+
+        <div className="card-actions absolute bottom-4 right-4 mt-2">
           <Button
             className="bg-transparent text-primary hover:text-white"
             title="Add to cart"

@@ -1,11 +1,11 @@
+import Link from "next/link";
 import Image from "next/image";
 
 import { AiOutlineClose } from "react-icons/ai";
 import { LineItem } from "@chec/commerce.js/types/line-item";
 
-import Counter from "./Counter";
-import Link from "next/link";
 import { removeItem } from "@/libs/updateCart";
+import Counter from "./Counter";
 
 interface CartItemProps {
   cartItem: LineItem;
@@ -27,7 +27,7 @@ const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
           alt={name}
           width={60}
           height={60}
-          className="object-contain aspect-auto"
+          className="object-contain w-auto h-auto"
         />
       </div>
 

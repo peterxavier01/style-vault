@@ -1,4 +1,5 @@
 import commerce from "@/utils/commerce";
+import toast from "react-hot-toast";
 
 export const incrementQuantity = async (
   productId: string,
@@ -8,7 +9,7 @@ export const incrementQuantity = async (
     await commerce.cart.update(productId, { quantity: quantity + 1 });
     handleUpdateCart();
   } catch (error) {
-    // Handle errors if necessary
+    toast.error("Error updating cart");
   }
 };
 
@@ -21,7 +22,7 @@ export const decrementQuantity = async (
       await commerce.cart.update(productId, { quantity: quantity - 1 });
       handleUpdateCart();
     } catch (error) {
-      // Handle errors if necessary
+      toast.error("Error updating cart");
     }
   } else {
     removeItem(productId);
@@ -29,9 +30,17 @@ export const decrementQuantity = async (
 };
 
 function handleUpdateCart() {
-  commerce.cart.retrieve();
+  try {
+    commerce.cart.retrieve();
+  } catch (error) {
+    toast.error("Error fetching cart");
+  }
 }
 
 export async function removeItem(productId: string) {
-  await commerce.cart.remove(productId);
+  try {
+    await commerce.cart.remove(productId);
+  } catch (error) {
+    toast.error("Error removing item from cart");
+  }
 }
