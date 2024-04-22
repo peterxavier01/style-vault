@@ -1,11 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
+import debounce from "lodash.debounce";
 
 import { twMerge } from "tailwind-merge";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { TbShoppingCartCheck } from "react-icons/tb";
 
 import Button from "./Button";
 import addToCart from "@/libs/addToCart";
+import getCart from "@/libs/getCart";
 import { Product } from "@chec/commerce.js/types/product";
 
 interface ProductCardProps {
@@ -16,56 +20,88 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
   const {
     name,
-    description,
     price: { formatted_with_symbol },
     id: productId,
+    permalink,
     image,
   } = product;
+
   const src = image ? image.url : "";
+
+  type initialStateType = {
+    product: Product;
+    inCart: boolean;
+  };
+
+  const [productInCart, setproductInCart] = useState<initialStateType>({
+    product,
+    inCart: false,
+  });
+
+  const debouncedFunction = debounce(() => {
+    getCart()
+      .then((cart) => {
+        const isInCart = cart.line_items.some(
+          (item) => item.product_id === productId
+        );
+        setproductInCart((prev) => ({ ...prev, inCart: isInCart }));
+      })
+      .catch((err) => console.error(err));
+  }, 300);
+
+  const isProductInCart = useCallback(() => {
+    debouncedFunction();
+  }, [debouncedFunction]);
+
+  useEffect(() => {
+    isProductInCart();
+  }, [isProductInCart]);
 
   return (
     <div
       className={twMerge(
-        `card card-compact shadow-md rounded-lg overflow-hidden md:hover:-translate-y-4 transition duration-300 my-4 h-[400px]`,
+        `card card-compact w-full rounded-2xl my-4`,
         className
       )}
     >
-      <Link href={`/product/${productId}`}>
-        <figure className="bg-gray-300 group w-full h-52">
-          <Image
-            src={src}
-            alt="product"
-            width={150}
-            height={150}
-            className="object-contain h-auto group-hover:scale-125 group-hover:rotate-45 transition duration-500"
-          />
-        </figure>
-      </Link>
+      <div className="bg-gray-300 rounded-2xl group overflow-hidden w-full h-80 flex items-center justify-center relative">
+        <Link href={`/product/${permalink}`}>
+          <figure className="relative">
+            <Image
+              src={src}
+              alt="product"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              className="object-contain h-auto group-hover:scale-125 transition duration-500"
+            />
+          </figure>
+        </Link>
+
+        <div className="card-actions absolute top-4 right-4">
+          <Button
+            className="bg-white rounded-full border-none w-12 h-12 hover:bg-white flex justify-center items-center"
+            title="Add to cart"
+            onClick={() => addToCart(productId, 1)}
+          >
+            {!productInCart.inCart ? (
+              <AiOutlineShoppingCart size={28} className="text-slate-800" />
+            ) : (
+              <TbShoppingCartCheck size={28} className="text-green-800" />
+            )}
+          </Button>
+        </div>
+      </div>
 
       <div className="card-body">
-        <div className="flex justify-between items-center text-slate-800 w-full">
-          <Link href={`/product/${productId}`}>
-            <h2 className="card-title text-lg md:text-xl link-hover-c">
+        <div className="flex flex-col text-slate-800 w-full">
+          <Link href={`/product/${permalink}`}>
+            <h2 className="card-title text-sm md:text-base link-hover-custom">
               {name}
             </h2>
           </Link>
           <p className="card-title text-lg md:text-xl flex-grow-0">
             {formatted_with_symbol}
           </p>
-        </div>
-        <div
-          className="line-clamp-1 text-slate-500 font-medium"
-          dangerouslySetInnerHTML={{ __html: description }}
-        />
-
-        <div className="card-actions absolute bottom-4 right-4 mt-2">
-          <Button
-            className="bg-transparent text-primary hover:text-white"
-            title="Add to cart"
-            onClick={() => addToCart(productId, 1)}
-          >
-            <AiOutlineShoppingCart size={20} />
-          </Button>
         </div>
       </div>
     </div>
