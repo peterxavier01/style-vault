@@ -1,7 +1,6 @@
+import { Category } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-
-import { Category } from "@chec/commerce.js/types/category";
 
 import { AiOutlineArrowRight } from "react-icons/ai";
 
@@ -10,7 +9,7 @@ interface CardProps {
 }
 const Card: React.FC<CardProps> = ({ category }) => {
   const { name, slug, assets } = category;
-  const [{ url }] = assets;
+  const [{ url }] = assets!;
 
   if (!category) return;
 
