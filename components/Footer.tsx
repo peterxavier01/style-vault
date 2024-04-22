@@ -37,7 +37,7 @@ const aboutLinks = [
 
 const Footer = () => {
   return (
-    <footer className="bg-primary py-8 px-4 md:px-8">
+    <footer className="bg-[#040308] py-8 px-4 md:px-8">
       <div className="max-w-[1440px] mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
           <aside className="flex flex-col gap-4">
