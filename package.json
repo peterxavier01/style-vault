@@ -24,8 +24,10 @@
     "framer-motion": "^10.16.4",
     "interweave": "^13.1.0",
     "jsdom": "^22.1.0",
+    "lodash.debounce": "^4.0.8",
     "next": "^13.5.3",
     "postcss": "8.4.29",
+    "rc-pagination": "^3.6.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
@@ -37,6 +39,7 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.9",
     "daisyui": "^3.7.5"
   }
 }
