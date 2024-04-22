@@ -66,15 +66,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
     >
       <div className="bg-gray-300 rounded-2xl group overflow-hidden w-full h-80 flex items-center justify-center relative">
         <Link href={`/product/${permalink}`}>
-          <figure className="relative">
-            <Image
-              src={src}
-              alt="product"
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-              className="object-contain h-auto group-hover:scale-125 transition duration-500"
-            />
-          </figure>
+          <Image
+            src={src}
+            alt="product"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            className="object-contain w-auto h-auto group-hover:scale-125 transition duration-500"
+          />
         </Link>
 
         <div className="card-actions absolute top-4 right-4">
