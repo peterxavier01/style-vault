@@ -11,9 +11,11 @@ export default async function Home() {
   const categories = await getCategories();
 
   return (
-    <main className="">
-      <Hero />
-      <div className="max-w-[1440px] mx-auto px-4 md:px-8 my-12 md:my-24">
+    <main className="max-w-[1440px] mx-auto px-4 md:px-8">
+      <div>
+        <Hero />
+      </div>
+      <div className="my-12 md:my-20">
         <PageContent products={products} categories={categories} />
       </div>
     </main>
