@@ -9,24 +9,29 @@ interface CardProps {
   category: Category;
 }
 const Card: React.FC<CardProps> = ({ category }) => {
+  const { name, slug, assets } = category;
+  const [{ url }] = assets;
+
+  if (!category) return;
+
   return (
     <div className="hover:-translate-y-4 transition duration-300">
       <div className="bg-gray-300 rounded-md flex justify-center items-center h-52">
-        <Link href={`/${category.id}`}>
-          {/* <Image
-            src={src}
-            alt={category}
+        <Link href={`/${slug}`}>
+          <Image
+            src={url}
+            alt={name}
             width={150}
             height={150}
-            className="object-contain aspect-auto"
-          /> */}
+            className="object-cover h-48"
+          />
         </Link>
       </div>
       <Link
-        href={`/${category.id}`}
+        href={`/${slug}`}
         className="flex items-center gap-3 text-slate-800 mt-4 w-fit"
       >
-        <p className="font-semibold text-base link-hover-c">{category.name}</p>
+        <p className="font-semibold text-base link-hover-c">{name}</p>
         <AiOutlineArrowRight size={18} />
       </Link>
     </div>
