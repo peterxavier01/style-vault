@@ -15,7 +15,7 @@ export default async function Home() {
       <div>
         <Hero />
       </div>
-      <div className="my-12 md:my-20">
+      <div className="my-12 md:mt-20 md:mb-14">
         <PageContent products={products} categories={categories} />
       </div>
     </main>
