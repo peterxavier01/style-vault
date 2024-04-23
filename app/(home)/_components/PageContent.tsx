@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { SwiperSlide } from "swiper/react";
 
 import { Product } from "@chec/commerce.js/types/product";
@@ -10,6 +11,7 @@ import Header from "@/components/Header";
 
 import Card from "./Card";
 import { Category } from "@chec/commerce.js/types/category";
+import { categoryCardContainerVariants } from "@/utils/animations";
 
 type PageContentProps = {
   products: Product[];
@@ -22,30 +24,37 @@ const PageContent: React.FC<PageContentProps> = ({ products, categories }) => {
       <section>
         <SlideContainer title="Featured Products">
           {products.map((product) => (
-            <SwiperSlide key={product.id}>
+            <SwiperSlide key={product.id} className="w-full">
               <ProductCard product={product} />
             </SwiperSlide>
           ))}
         </SlideContainer>
       </section>
 
-      <section className="mt-12 md:mt-24 select-none">
+      <section className="mt-10 select-none">
         <Header title="Product Categories" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 gap-y-11">
-          {categories.map((category) => (
-            <Card key={category.id} category={category} />
+        {categories && (
+          <motion.div
+            variants={categoryCardContainerVariants}
+            initial="initial"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 gap-y-11"
+          >
+            {categories.map((category) => (
+              <Card key={category.id} category={category} />
+            ))}
+          </motion.div>
+        )}
+      </section>
+
+      <section className="mt-12 md:mt-20 select-none">
+        <Header title="Best-selling Products" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
+          {products.slice(0, 8).map((product) => (
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
-      </section>
-
-      <section className="mt-12 md:mt-24 select-none">
-        <SlideContainer title="Bestselling Products">
-          {products.map((product) => (
-            <SwiperSlide key={product.id}>
-              <ProductCard product={product} />
-            </SwiperSlide>
-          ))}
-        </SlideContainer>
       </section>
     </>
   );
