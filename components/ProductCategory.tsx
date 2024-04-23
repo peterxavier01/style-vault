@@ -11,7 +11,7 @@ type ProductCatgory = {
 const ProductCategory: React.FC<ProductCatgory> = ({ products }) => {
   return (
     <section>
-      <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+      <div className="mx-auto max-w-[1440px] px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
         <div className="mt-8 sm:flex sm:items-center sm:justify-between">
           <div className="block sm:hidden">
             <button className="flex cursor-pointer items-center gap-2 border-b border-gray-400 pb-1 text-gray-900 transition hover:border-gray-600">
