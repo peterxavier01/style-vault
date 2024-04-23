@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 import Button from "@/components/Button";
 
 import { Category } from "@/types";
+import { categoryCardItemVariants } from "@/utils/animations";
 
 interface CardProps {
   category: Category;
@@ -16,7 +18,13 @@ const Card: React.FC<CardProps> = ({ category }) => {
   if (!category) return;
 
   return (
-    <div className="h-80 bg-gray-300 rounded-2xl flex group justify-center items-center relative overflow-hidden">
+    <motion.div
+      variants={categoryCardItemVariants}
+      initial="initial"
+      whileInView="visible"
+      viewport={{ once: true }}
+      className="h-80 bg-gray-300 rounded-2xl flex group justify-center items-center relative overflow-hidden"
+    >
       <div className="w-full h-full bg-black/10 absolute inset-0 z-10" />
 
       <div>
@@ -39,7 +47,7 @@ const Card: React.FC<CardProps> = ({ category }) => {
           </Button>
         </Link>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
