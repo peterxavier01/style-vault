@@ -1,28 +1,34 @@
 import { cn } from "@/utils";
+import { ProductVariantGroup } from "@chec/commerce.js/types/product-variant-group";
+import { useState } from "react";
 
-const colors = [
-  { id: 1, color: "red" },
-  { id: 2, color: "black" },
-  { id: 3, color: "blue" },
-];
+type ColorProps = {
+  colors: ProductVariantGroup;
+};
 
-const Color = () => {
-  const selected = true;
+const Color = ({ colors }: ColorProps) => {
+  const [selectedColor, setSelectedColor] = useState<number>(0);
+
+  const handleSelectedColor = (index: number) => {
+    setSelectedColor(index);
+  };
 
   return (
     <div className="mb-8">
       <p className="text-main-black font-medium capitalize">Color</p>
-      <div className="flex items-center gap-2 mt-2 relative">
-        {colors.map((color) => (
-          <span
-            key={color.id}
-            style={{ backgroundColor: color.color }}
-            className={cn(
-              "w-4 h-4 rounded-full block",
-              selected ? "color-selected" : ""
-            )}
-          />
-        ))}
+      <div className="flex items-center gap-2 mt-2">
+        {colors &&
+          colors.options.map((color, index) => (
+            <span
+              key={color.id}
+              style={{ backgroundColor: color.name.toLowerCase() }}
+              className={cn(
+                "w-4 h-4 rounded-full block relative",
+                selectedColor === index ? "color-selected" : ""
+              )}
+              onClick={() => handleSelectedColor(index)}
+            />
+          ))}
       </div>
     </div>
   );
