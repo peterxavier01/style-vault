@@ -1,33 +1,38 @@
+import { useState } from "react";
+
+import { ProductVariantGroup } from "@chec/commerce.js/types/product-variant-group";
 import { cn } from "@/utils";
 
-const sizes = [
-  { id: 1, name: "s" },
-  { id: 2, name: "m" },
-  { id: 3, name: "l" },
-  { id: 4, name: "xl" },
-  { id: 5, name: "xxl" },
-];
+type SizeProps = {
+  sizes: ProductVariantGroup;
+};
 
-const Size = () => {
-  const selected = false;
+const Size = ({ sizes }: SizeProps) => {
+  const [selectedSize, setSelectedSize] = useState<number>(0);
 
   return (
-    <div className="mb-8">
-      <p className="text-main-black font-medium capitalize">size</p>
-      <div className="flex items-center gap-2 mt-2 relative">
-        {sizes.map((size) => (
-          <span
-            key={size.id}
-            className={cn(
-              "uppercase w-full max-w-[45px] h-10 rounded-xl text-sm flex items-center justify-center text-main-black hover:text-white hover:bg-primary transition border border-main-black",
-              selected ? "bg-primary text-white" : ""
-            )}
-          >
-            {size.name}
-          </span>
-        ))}
-      </div>
-    </div>
+    <>
+      {sizes && (
+        <div className="mb-8">
+          <p className="text-main-black font-medium capitalize">size</p>
+          <div className="flex items-center gap-2 mt-2 relative">
+            {sizes &&
+              sizes.options.map((size, index) => (
+                <span
+                  key={size.id}
+                  className={cn(
+                    "uppercase w-full max-w-[45px] cursor-default h-10 rounded-xl text-sm flex items-center justify-center text-main-black hover:text-white hover:bg-primary transition border border-main-black",
+                    selectedSize === index ? "bg-primary text-white" : ""
+                  )}
+                  onClick={() => setSelectedSize(index)}
+                >
+                  {size.name}
+                </span>
+              ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
