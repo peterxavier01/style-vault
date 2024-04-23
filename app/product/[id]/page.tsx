@@ -1,4 +1,5 @@
 import PageContent from "./_components/PageContent";
+
 import getProduct from "@/libs/getProduct";
 
 interface ProductProps {
