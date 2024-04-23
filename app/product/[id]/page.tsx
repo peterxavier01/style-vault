@@ -1,3 +1,4 @@
+import PageContent from "./_components/PageContent";
 import getProduct from "@/libs/getProduct";
 
 interface ProductProps {
@@ -10,9 +11,9 @@ const Product: React.FC<ProductProps> = async ({ params: { id } }) => {
   const product = await getProduct(id);
 
   return (
-    <div>
-      <h1>Product</h1>
-    </div>
+    <section className="max-w-[1440px] mx-auto px-4 md:px-8 mb-14">
+      <PageContent product={product} />
+    </section>
   );
 };
 
