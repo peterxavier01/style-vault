@@ -20,16 +20,14 @@
   @apply text-slate-800 hover:text-main-black transition;
 }
 
-.color-selected {
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 18px;
-    height: 2px;
-    @apply bg-main-black
-  }
+.color-selected::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 18px;
+  height: 2px;
+  @apply bg-primary
 }
 
 /****** Slider Styles *******/
