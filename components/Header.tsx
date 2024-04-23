@@ -1,4 +1,7 @@
+import { motion } from "framer-motion";
+
 import { cn } from "@/utils";
+import { headerVariants } from "@/utils/animations";
 
 interface HeaderProps {
   title: string;
@@ -7,14 +10,18 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ title, className }) => {
   return (
-    <h2
+    <motion.h2
+      variants={headerVariants}
+      initial="initial"
+      whileInView="visible"
+      viewport={{ once: true }}
       className={cn(
-        "text-2xl sm:text-3xl md:text-4xl text-slate-800 font-semibold",
+        "text-3xl md:text-4xl text-slate-800 font-semibold",
         className
       )}
     >
       {title}
-    </h2>
+    </motion.h2>
   );
 };
 
