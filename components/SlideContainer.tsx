@@ -59,7 +59,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({ title, children }) => {
   return (
     <>
       <div className="flex items-center justify-between mb-6">
-        <Header title={title} />
+        <Header title={title} className="text-2xl md:text-4xl" />
         <NavArrows prevRef={prevRef} nextRef={nextRef} />
       </div>
       <>
@@ -87,7 +87,6 @@ const SlideContainer: React.FC<SlideContainerProps> = ({ title, children }) => {
               spaceBetween: 20,
             },
           }}
-          className="w-full"
         >
           <div>{children}</div>
         </Swiper>
