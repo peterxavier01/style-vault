@@ -14,14 +14,25 @@ import Size from "@/components/Size";
 import Counter from "@/components/Counter";
 import clientOnly from "@/components/ClientOnly";
 
+import addToCart from "@/libs/addToCart";
+import useCartData from "@/hooks/useCartData";
+import { LineItem } from "@chec/commerce.js/types/line-item";
+
 type PageComponentProps = {
   product: Product;
 };
 
-const srcs = ["/hero.jpg", "/hero.jpg", "/hero.jpg"];
-
 const PageContent = ({ product }: PageComponentProps) => {
   const [selectedImage, setSelectedImage] = useState<string | undefined>("");
+
+  const { cart } = useCartData();
+  const [cartItem, setCartItem] = useState<Partial<LineItem>>({});
+
+  useEffect(() => {
+    cart?.line_items.map((item) => {
+      setCartItem(item);
+    });
+  }, [cart]);
 
   useEffect(() => {
     if (!selectedImage) {
@@ -29,7 +40,9 @@ const PageContent = ({ product }: PageComponentProps) => {
     }
   }, [product, selectedImage]);
 
-  console.log(product);
+  const handleImageSelected = (url: string) => {
+    setSelectedImage(url);
+  };
 
   const sanitizedContent = sanitizeHtml(product.description, {
     allowedTags: ["b", "i", "a", "p"], // allowed tags
@@ -44,22 +57,23 @@ const PageContent = ({ product }: PageComponentProps) => {
         <div className="temporary bg-gray-300 rounded-xl">
           <Image
             src={selectedImage as string}
-            width={300}
-            height={300}
+            width={product.image?.image_dimensions.width}
+            height={product.image?.image_dimensions.height}
             priority
-            className="w-full block rounded-2xl object-cover"
+            className="w-full block rounded-2xl object-contain"
             alt="image-name"
           />
         </div>
-        <div className="flex items-center gap-4 w-fit bg-gray-300 rounded-xl">
+        <div className="flex items-center gap-4 w-fit rounded-xl">
           {product.assets.map((item) => (
             <Image
               key={item.id}
               src={item.url}
-              width={100}
-              height={100}
+              width={item.image_dimensions.width}
+              height={item.image_dimensions.height}
               alt="image-name"
-              className="rounded-2xl object-contain h-auto block"
+              className="rounded-2xl w-full max-w-[100px] md:max-w-[150px] object-contain bg-gray-300 h-auto block"
+              onMouseEnter={() => handleImageSelected(item.url)}
             />
           ))}
         </div>
@@ -77,9 +91,9 @@ const PageContent = ({ product }: PageComponentProps) => {
           className="text-slate-500 text-sm mb-8"
         />
 
-        <Color />
+        <Color colors={product.variant_groups[0]} />
 
-        <Size />
+        <Size sizes={product.variant_groups[1]} />
 
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -90,14 +104,21 @@ const PageContent = ({ product }: PageComponentProps) => {
               {product.price.formatted_with_symbol}
             </p>
           </div>
-          <div>
-            Counter
-            {/* <Counter /> */}
-          </div>
+          {cartItem.quantity && (
+            <div>
+              <Counter
+                quantity={cartItem.quantity as number}
+                cartItem={cartItem as LineItem}
+              />
+            </div>
+          )}
         </div>
 
         <div className="flex items-center gap-4">
-          <Button className="rounded-xl capitalize">
+          <Button
+            className="rounded-xl capitalize"
+            onClick={() => addToCart(product.id, 1)}
+          >
             <MdOutlineShoppingBag size={24} />
             Add to Cart
           </Button>
