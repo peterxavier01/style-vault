@@ -77,7 +77,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
 
         <div className="card-actions absolute top-4 right-4">
           <Button
-            className="bg-white rounded-full border-none w-12 h-12 hover:bg-white flex justify-center items-center"
+            className="bg-white rounded-full border-none w-12 h-12 hover:scale-105 hover:bg-white transition flex justify-center items-center"
             title="Add to cart"
             onClick={() => addToCart(productId, 1)}
           >
