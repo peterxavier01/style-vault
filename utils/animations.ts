@@ -1,24 +1,28 @@
 export const heroTitleVariants = {
   initial: {
-    y: 200,
+    y: -200,
     opacity: 0,
-    duration: 0.5,
   },
   visible: {
     y: 0,
     opacity: 1,
+    transition: {
+      duration: 0.8,
+    },
   },
 };
 
 export const heroSubtitleVariants = {
   initial: {
-    y: -200,
+    y: 200,
     opacity: 0,
-    duration: 0.5,
   },
   visible: {
     y: 0,
     opacity: 1,
+    transition: {
+      duration: 0.8,
+    },
   },
 };
 
@@ -31,7 +35,8 @@ export const heroBtnVariants = {
     scale: 1,
     opacity: 1,
     transition: {
-      delay: 0.5,
+      delay: 1,
+      duration: 0.5,
     },
   },
 };
