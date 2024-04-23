@@ -11,7 +11,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <>
       <Navbar />
       {children}
-      <Newsletter />
+      <div className="px-4 md:px-8 pb-8 md:pb-14">
+        <Newsletter />
+      </div>
       <Footer />
     </>
   );
