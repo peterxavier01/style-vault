@@ -33,9 +33,7 @@ const PageContent: React.FC<PageContentProps> = ({ products, categories }) => {
         <Header title="Product Categories" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 gap-y-11">
           {categories.map((category) => (
-            <div key={category.id}>
-              <Card category={category} />
-            </div>
+            <Card key={category.id} category={category} />
           ))}
         </div>
       </section>
