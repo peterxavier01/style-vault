@@ -40,3 +40,40 @@ export const heroBtnVariants = {
     },
   },
 };
+
+export const headerVariants = {
+  initial: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+    },
+  },
+};
+
+export const categoryCardContainerVariants = {
+  initial: {
+    opacity: 0,
+    y: 20,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      staggerChildren: 0.5,
+      when: "beforeChildren",
+    },
+  },
+};
+
+export const categoryCardItemVariants = {
+  initial: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+  },
+};
