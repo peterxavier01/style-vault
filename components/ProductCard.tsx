@@ -71,7 +71,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
             alt="product"
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            className="object-contain w-auto h-auto group-hover:scale-125 transition duration-500"
+            className="object-contain w-auto h-auto group-hover:scale-105 transition duration-500"
           />
         </Link>
 
@@ -93,7 +93,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
       <div className="card-body">
         <div className="flex flex-col text-slate-800 w-full">
           <Link href={`/product/${permalink}`}>
-            <h2 className="card-title text-sm md:text-base link-hover-custom">
+            <h2 className="card-title truncate text-sm md:text-base link-hover-custom">
               {name}
             </h2>
           </Link>
