@@ -41,7 +41,7 @@ const Card: React.FC<CardProps> = ({ category }) => {
         <h4 className="text-white uppercase text-2xl md:text-4xl font-semibold">
           {name}
         </h4>
-        <Link href={`/${slug}`}>
+        <Link href={`/category/${slug}`}>
           <Button className="bg-white text-main-black rounded-full max-w-[200px] w-full border-none capitalize hover:text-white transition">
             See details
           </Button>
