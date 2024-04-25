@@ -45,14 +45,15 @@
 /**************** RC- PAGINATION STYLES ******************/
 /* Variable Definitions */
 :root {
+  --clr-main: #03343d;
+  --clr-white: #fff;
   --pagination-prefix-cls: rc-pagination;
-  --primary-color: #1890ff;
   --pagination-item-bg: #fff;
   --pagination-item-size: 28px;
   --pagination-item-size-sm: 24px;
   --pagination-font-family: Arial;
   --pagination-font-weight-active: 500;
-  --pagination-item-bg-active: #fff;
+  --pagination-item-bg-active: #03343d;
   --pagination-item-link-bg: #fff;
   --pagination-item-disabled-color-active: #fff;
   --pagination-item-disabled-bg-active: hsl(0, 0%, 96%);
@@ -101,8 +102,8 @@
   vertical-align: middle;
   list-style: none;
   background-color: var(--pagination-item-bg);
-  border: 1px solid #d9d9d9;
-  border-radius: 2px;
+  border: 1px solid var(--clr-main);
+  border-radius: 6px;
   outline: 0;
   cursor: pointer;
   user-select: none;
@@ -111,7 +112,7 @@
 .rc-pagination-item a {
   display: block;
   padding: 0 6px;
-  color: rgba(0, 0, 0, 0.85);
+  color: var(--clr-main);
   transition: none;
 }
 
@@ -121,32 +122,33 @@
 
 .rc-pagination-item:focus,
 .rc-pagination-item:hover {
-  border-color: var(--primary-color);
+  border-color: var(--clr-main);
   transition: all 0.3s;
 }
 
 .rc-pagination-item:hover a {
-  color: var(--primary-color);
+  color: var(--clr-main);
 }
 
 .rc-pagination-item-active {
   font-weight: var(--pagination-font-weight-active);
   background: var(--pagination-item-bg-active);
-  border-color: var(--primary-color);
+  border-color: var(--clr-main);
+  border-radius: 6px;
 }
 
 .rc-pagination-item-active a {
-  color: var(--primary-color);
+  color: var(--clr-white);
 }
 
 .rc-pagination-item-active:focus,
 .rc-pagination-item-active:hover {
-  border-color: #40a9ff;
+  border-color: var(--clr-main);
 }
 
 .rc-pagination-item-active:focus a,
 .rc-pagination-item-active:hover a {
-  color: #40a9ff;
+  color: var(--clr-white);
 }
 
 .rc-pagination-jump-prev,
@@ -261,7 +263,7 @@
 }
 
 .rc-pagination-options-quick-jumper input:hover {
-  border-color: var(--primary-color);
+  border-color: var(--clr-main);
 }
 
 /* Disabled Styles */
