@@ -8,6 +8,7 @@ import { Product } from "@chec/commerce.js/types/product";
 import ProductCard from "@/components/ProductCard";
 import SlideContainer from "@/components/SlideContainer";
 import Header from "@/components/Header";
+import Newsletter from "@/components/Newsletter";
 
 import Card from "./Card";
 import { Category } from "@chec/commerce.js/types/category";
@@ -56,6 +57,10 @@ const PageContent: React.FC<PageContentProps> = ({ products, categories }) => {
           ))}
         </div>
       </section>
+
+      <div className="mt-8">
+        <Newsletter />
+      </div>
     </>
   );
 };
