@@ -12,6 +12,9 @@ const config: Config = {
         primary: "#03343d",
         "main-black": "#040308",
       },
+      gridTemplateColumns: {
+        products: "repeat(auto-fit, minmax(200px, 1fr))",
+      },
     },
   },
   plugins: [require("daisyui")],
