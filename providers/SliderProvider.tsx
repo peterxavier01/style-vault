@@ -1,17 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Cart } from "@chec/commerce.js/types/cart";
 
 import CartSlider from "@/components/CartSlider";
 import LikedSlider from "@/components/LikedSlider";
-import getCart from "@/libs/getCart";
+
 import useCartData from "@/hooks/useCartData";
 
-const SliderProvider = () => {
+interface SliderProviderProps {
+  cart: Cart;
+}
+
+const SliderProvider = ({ cart }: SliderProviderProps) => {
   const { cart: cartData, setCart } = useCartData();
-  getCart()
-    .then((data) => setCart(data))
-    .catch((err) => console.error(err));
+
+  useEffect(() => {
+    cart && setCart(cart);
+  }, [cart, setCart]);
 
   const [isMounted, setIsMounted] = useState(false);
 
