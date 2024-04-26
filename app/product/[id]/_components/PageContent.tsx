@@ -54,11 +54,11 @@ const PageContent = ({ product }: PageComponentProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
       <div className="flex flex-col gap-4">
-        <div className="temporary bg-gray-300 rounded-xl">
+        <div className="temporary w-full min-h-[350px] md:min-h-[400px] bg-gray-300 rounded-xl relative">
           <Image
             src={selectedImage as string}
-            width={product.image?.image_dimensions.width}
-            height={product.image?.image_dimensions.height}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority
             className="w-full block rounded-2xl object-contain"
             alt="image-name"
@@ -66,15 +66,16 @@ const PageContent = ({ product }: PageComponentProps) => {
         </div>
         <div className="flex items-center gap-4 w-fit rounded-xl">
           {product.assets.map((item) => (
-            <Image
-              key={item.id}
-              src={item.url}
-              width={item.image_dimensions.width}
-              height={item.image_dimensions.height}
-              alt="image-name"
-              className="rounded-2xl w-full max-w-[100px] md:max-w-[150px] object-contain bg-gray-300 h-auto block"
-              onMouseEnter={() => handleImageSelected(item.url)}
-            />
+            <div key={item.id} className="relative bg-gray-300 rounded-xl">
+              <Image
+                src={item.url}
+                width={item.image_dimensions.width}
+                height={item.image_dimensions.height}
+                alt="image-name"
+                className="rounded-2xl w-full max-w-[100px] md:max-w-[130px] h-auto object-contain bg-gray-300 block"
+                onMouseEnter={() => handleImageSelected(item.url)}
+              />
+            </div>
           ))}
         </div>
       </div>
