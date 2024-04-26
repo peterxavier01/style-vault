@@ -21,14 +21,13 @@ import {
   AiFillHome,
 } from "react-icons/ai";
 import { FaFemale, FaMale } from "react-icons/fa";
-import { BiSolidShoppingBag, BiCertification } from "react-icons/bi";
+import { BiSolidShoppingBag } from "react-icons/bi";
 
 const links = [
   { id: 1, name: "Home", href: "/", icon: AiFillHome },
-  { id: 2, name: "Men", href: "/men", icon: FaMale },
-  { id: 3, name: "Women", href: "/women", icon: FaFemale },
+  { id: 2, name: "Men", href: "/category/men", icon: FaMale },
+  { id: 3, name: "Women", href: "/category/women", icon: FaFemale },
   { id: 4, name: "Shop All", href: "/shop", icon: BiSolidShoppingBag },
-  { id: 5, name: "Bestsellers", href: "/bestsellers", icon: BiCertification },
 ];
 
 const Navbar = () => {
