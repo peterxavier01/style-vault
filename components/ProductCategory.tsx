@@ -4,17 +4,23 @@ import { useRouter } from "next/navigation";
 
 import { Product } from "@chec/commerce.js/types/product";
 import { Category } from "@chec/commerce.js/types/category";
+import { Cart } from "@chec/commerce.js/types/cart";
 
 import ProductCard from "./ProductCard";
 import Dropdown from "./Dropdown";
 import Paging from "./Paging";
 
 type ProductCatgory = {
+  cart: Cart;
   products: Product[];
   category: Category;
 };
 
-const ProductCategory: React.FC<ProductCatgory> = ({ products, category }) => {
+const ProductCategory: React.FC<ProductCatgory> = ({
+  products,
+  category,
+  cart,
+}) => {
   const router = useRouter();
 
   const handleFilterProduct = (slug: string) => {
@@ -59,7 +65,7 @@ const ProductCategory: React.FC<ProductCatgory> = ({ products, category }) => {
               products.map((product) => {
                 return (
                   <li key={product.id}>
-                    <ProductCard product={product} />
+                    <ProductCard product={product} cart={cart} />
                   </li>
                 );
               })}
