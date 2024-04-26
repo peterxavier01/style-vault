@@ -1,6 +1,8 @@
+import { ProductCategory } from "@/types";
+
 type DropdownProps = {
   title: string;
-  content: string[];
+  content: ProductCategory[];
   onClick: (slug: string) => void;
 };
 
@@ -15,10 +17,10 @@ const Dropdown = ({ title, content, onClick }: DropdownProps) => {
         {content.map((item, index) => (
           <p
             key={index}
-            onClick={() => onClick(item)}
+            onClick={() => onClick(item.url)}
             className="text-gray-300 cursor-pointer text-xs sm:text-base capitalize border-b border-b-transparent hover:border-b hover:border-gray-300 transition"
           >
-            {item}
+            {item.name}
           </p>
         ))}
       </div>
