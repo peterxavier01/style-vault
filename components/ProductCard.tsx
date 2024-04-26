@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
@@ -9,15 +11,20 @@ import { TbShoppingCartCheck } from "react-icons/tb";
 
 import Button from "./Button";
 import addToCart from "@/libs/addToCart";
-import getCart from "@/libs/getCart";
 import { Product } from "@chec/commerce.js/types/product";
+import { Cart } from "@chec/commerce.js/types/cart";
 
 interface ProductCardProps {
   product: Product;
   className?: string;
+  cart: Cart;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
+const ProductCard: React.FC<ProductCardProps> = ({
+  product,
+  className,
+  cart,
+}) => {
   const {
     name,
     price: { formatted_with_symbol },
@@ -39,14 +46,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
   });
 
   const debouncedFunction = debounce(() => {
-    getCart()
-      .then((cart) => {
-        const isInCart = cart.line_items.some(
-          (item) => item.product_id === productId
-        );
-        setproductInCart((prev) => ({ ...prev, inCart: isInCart }));
-      })
-      .catch((err) => console.error(err));
+    try {
+      const isInCart = cart.line_items.some(
+        (item) => item.product_id === productId
+      );
+      setproductInCart((prev) => ({ ...prev, inCart: isInCart }));
+    } catch (error) {
+      console.error(error);
+    }
   }, 300);
 
   const isProductInCart = useCallback(() => {
