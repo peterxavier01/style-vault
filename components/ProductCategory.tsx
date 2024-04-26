@@ -9,6 +9,7 @@ import { Cart } from "@chec/commerce.js/types/cart";
 import ProductCard from "./ProductCard";
 import Dropdown from "./Dropdown";
 import Paging from "./Paging";
+import { kidCategories, menCategories, womenCategories } from "@/utils";
 
 type ProductCatgory = {
   cart: Cart;
@@ -43,17 +44,17 @@ const ProductCategory: React.FC<ProductCatgory> = ({
           <div className="flex flex-row sm:flex-col gap-3">
             <Dropdown
               title="men"
-              content={["shirts", "shoes", "accessories"]}
+              content={menCategories}
               onClick={handleFilterProduct}
             />
             <Dropdown
               title="women"
-              content={["shirts", "shoes", "accessories"]}
+              content={womenCategories}
               onClick={handleFilterProduct}
             />
             <Dropdown
               title="kids"
-              content={["shirts", "shoes", "accessories"]}
+              content={kidCategories}
               onClick={handleFilterProduct}
             />
           </div>
