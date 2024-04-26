@@ -25,3 +25,9 @@ export interface Category {
   meta: any;
   assets?: Asset[];
 }
+
+export type ProductCategory = {
+  id: number;
+  name: string;
+  url: string;
+};

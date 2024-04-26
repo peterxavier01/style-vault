@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 import Button from "@/components/Button";
 
-import { Category } from "@/types";
+import { Category } from "@/types/";
 import { categoryCardItemVariants } from "@/utils/animations";
 
 interface CardProps {
