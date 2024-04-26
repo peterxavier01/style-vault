@@ -37,6 +37,6 @@
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.9",
     "@types/sanitize-html": "^2.11.0",
-    "daisyui": "^3.7.5"
+    "daisyui": "^4.10.2"
   }
 }
