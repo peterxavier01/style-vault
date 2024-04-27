@@ -7,7 +7,6 @@ import SliderProvider from "@/providers/SliderProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
 
 import Layout from "@/components/Layout";
-import getCart from "@/libs/getCart";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -25,13 +24,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cart = await getCart();
-
   return (
     <html lang="en">
       <body className={poppins.className}>
         <ToasterProvider />
-        <SliderProvider cart={cart} />
+        <SliderProvider />
         <Layout>{children}</Layout>
       </body>
     </html>

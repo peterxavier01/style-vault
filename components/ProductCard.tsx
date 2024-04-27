@@ -12,19 +12,14 @@ import { TbShoppingCartCheck } from "react-icons/tb";
 import Button from "./Button";
 import addToCart from "@/libs/addToCart";
 import { Product } from "@chec/commerce.js/types/product";
-import { Cart } from "@chec/commerce.js/types/cart";
+import useCartData from "@/hooks/useCartData";
 
 interface ProductCardProps {
   product: Product;
   className?: string;
-  cart: Cart;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
-  product,
-  className,
-  cart,
-}) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
   const {
     name,
     price: { formatted_with_symbol },
@@ -33,11 +28,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
     image,
   } = product;
 
+  const cart = useCartData((state) => state.cart);
+
   const src = image ? image.url : "";
 
   type initialStateType = {
     product: Product;
-    inCart: boolean;
+    inCart: boolean | undefined;
   };
 
   const [productInCart, setproductInCart] = useState<initialStateType>({
@@ -47,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const debouncedFunction = debounce(() => {
     try {
-      const isInCart = cart.line_items.some(
+      const isInCart = cart?.line_items.some(
         (item) => item.product_id === productId
       );
       setproductInCart((prev) => ({ ...prev, inCart: isInCart }));
@@ -71,14 +68,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
         className
       )}
     >
-      <div className="bg-gray-300 rounded-2xl group overflow-hidden w-full h-80 flex items-center justify-center relative">
+      <div className="rounded-2xl bg-gray-300 group overflow-hidden w-full h-80 flex items-center justify-center relative">
         <Link href={`/product/${permalink}`}>
           <Image
             src={src}
             alt="product"
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            className="object-contain w-auto h-auto group-hover:scale-105 transition duration-500"
+            loading="eager"
+            sizes="calc(100vw - 32px)"
+            className="object-cover w-full group-hover:scale-105 transition duration-500"
           />
         </Link>
 
