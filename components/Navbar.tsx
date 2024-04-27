@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import useCartSlider from "@/hooks/useCartSlider";
 import useLikedSlider from "@/hooks/useLikedSlide";
@@ -20,17 +20,29 @@ import {
   AiOutlineShoppingCart,
   AiFillHome,
 } from "react-icons/ai";
-import { FaFemale, FaMale } from "react-icons/fa";
+import { FaChild, FaFemale, FaMale } from "react-icons/fa";
 import { BiSolidShoppingBag } from "react-icons/bi";
+import getCart from "@/libs/getCart";
 
 const links = [
   { id: 1, name: "Home", href: "/", icon: AiFillHome },
   { id: 2, name: "Men", href: "/category/men", icon: FaMale },
   { id: 3, name: "Women", href: "/category/women", icon: FaFemale },
+  { id: 4, name: "Kids", href: "/category/kids", icon: FaChild },
   { id: 4, name: "Shop All", href: "/shop", icon: BiSolidShoppingBag },
 ];
 
 const Navbar = () => {
+  const { cart, setCart } = useCartData();
+
+  useEffect(() => {
+    getCart()
+      .then((cart) => {
+        setCart(cart);
+      })
+      .catch((err) => console.log(err));
+  }, [setCart]);
+
   const [isOpen, setIsOpen] = useState(false);
   const NavToggle = isOpen ? AiOutlineClose : AiOutlineMenu;
 
@@ -38,7 +50,6 @@ const Navbar = () => {
 
   const cartSlider = useCartSlider();
   const likedSlider = useLikedSlider();
-  const { cart } = useCartData();
 
   const handleClick = () => {
     setIsOpen((prev) => !prev);
