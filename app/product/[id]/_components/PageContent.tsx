@@ -60,19 +60,22 @@ const PageContent = ({ product }: PageComponentProps) => {
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority
-            className="w-full block rounded-2xl object-contain"
+            className="w-full block rounded-2xl object-cover"
             alt="image-name"
           />
         </div>
         <div className="flex items-center gap-4 w-fit rounded-xl">
           {product.assets.map((item) => (
-            <div key={item.id} className="relative bg-gray-300 rounded-xl">
+            <div
+              key={item.id}
+              className="relative overflow-hidden flex items-center justify-center w-[150px] h-[140px] bg-gray-300 rounded-xl"
+            >
               <Image
                 src={item.url}
                 width={item.image_dimensions.width}
                 height={item.image_dimensions.height}
                 alt="image-name"
-                className="rounded-2xl w-full max-w-[100px] md:max-w-[130px] h-auto object-contain bg-gray-300 block"
+                className="rounded-2xl object-contain bg-gray-300 block"
                 onMouseEnter={() => handleImageSelected(item.url)}
               />
             </div>
