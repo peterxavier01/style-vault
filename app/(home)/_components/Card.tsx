@@ -32,7 +32,8 @@ const Card: React.FC<CardProps> = ({ category }) => {
           src={url}
           alt={name}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+          loading="eager"
+          sizes="(min-width: 1520px) 332px, (min-width: 1040px) 21.74vw, (min-width: 640px) 45.79vw, calc(100vw - 32px)"
           className="object-cover h-48 w-auto group-hover:scale-105 transition duration-300"
         />
       </div>
