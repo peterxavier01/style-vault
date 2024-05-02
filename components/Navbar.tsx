@@ -3,14 +3,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
 import { useEffect, useState } from "react";
+import { Session, User } from "@supabase/supabase-js";
 
 import useCartSlider from "@/hooks/useCartSlider";
 import useLikedSlider from "@/hooks/useLikedSlide";
 import useCartData from "@/hooks/useCartData";
+import getCart from "@/libs/getCart";
+import { createClient } from "@/utils/supabase/client";
 
 import clientOnly from "./ClientOnly";
+import Button from "./Button";
+import UserMenu from "./UserMenu";
 
 import {
   AiOutlineSearch,
@@ -22,18 +26,42 @@ import {
 } from "react-icons/ai";
 import { FaChild, FaFemale, FaMale } from "react-icons/fa";
 import { BiSolidShoppingBag } from "react-icons/bi";
-import getCart from "@/libs/getCart";
 
 const links = [
   { id: 1, name: "Home", href: "/", icon: AiFillHome },
   { id: 2, name: "Men", href: "/category/men", icon: FaMale },
   { id: 3, name: "Women", href: "/category/women", icon: FaFemale },
   { id: 4, name: "Kids", href: "/category/kids", icon: FaChild },
-  { id: 4, name: "Shop All", href: "/shop", icon: BiSolidShoppingBag },
+  { id: 5, name: "Shop All", href: "/shop", icon: BiSolidShoppingBag },
 ];
 
-const Navbar = () => {
+interface NavbarProps {
+  data: {
+    user: User | null;
+  };
+}
+
+const Navbar = ({ data }: NavbarProps) => {
   const { cart, setCart } = useCartData();
+
+  const user = data?.user;
+
+  // const supabase = createClient();
+  // const [session, setSession] = useState<Session | null>(null);
+
+  // useEffect(() => {
+  //   supabase.auth
+  //     .getSession()
+  //     .then(({ data: { session } }) => setSession(session));
+
+  //   const {
+  //     data: { subscription },
+  //   } = supabase.auth.onAuthStateChange((_event, session) => {
+  //     setSession(session);
+  //   });
+
+  //   return () => subscription.unsubscribe();
+  // }, [supabase]);
 
   useEffect(() => {
     getCart()
@@ -128,12 +156,21 @@ const Navbar = () => {
               </span>
             )}
           </div>
+
           <span
             className="cursor-pointer text-slate-600 hover:text-slate-900 active:scale-90"
             onClick={likedSlider.onOpen}
           >
             <AiOutlineHeart size={24} />
           </span>
+
+          {user ? (
+            <UserMenu user={user} />
+          ) : (
+            <Button>
+              <Link href="/login">Sign in</Link>
+            </Button>
+          )}
         </div>
       </div>
     </header>
