@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-const Error = () => {
+const ErrorPage = () => {
   return (
     <section className="grid h-screen px-4 bg-white place-content-center">
       <div className="text-center">
@@ -25,4 +25,4 @@ const Error = () => {
   );
 };
 
-export default Error;
+export default ErrorPage;
