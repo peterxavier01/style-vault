@@ -4,17 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Session, User } from "@supabase/supabase-js";
 
 import useCartSlider from "@/hooks/useCartSlider";
 import useLikedSlider from "@/hooks/useLikedSlide";
 import useCartData from "@/hooks/useCartData";
 import getCart from "@/libs/getCart";
-import { createClient } from "@/utils/supabase/client";
 
 import clientOnly from "./ClientOnly";
-import Button from "./Button";
-import UserMenu from "./UserMenu";
 
 import {
   AiOutlineSearch,
@@ -35,33 +31,8 @@ const links = [
   { id: 5, name: "Shop All", href: "/shop", icon: BiSolidShoppingBag },
 ];
 
-interface NavbarProps {
-  data: {
-    user: User | null;
-  };
-}
-
-const Navbar = ({ data }: NavbarProps) => {
+const Navbar = () => {
   const { cart, setCart } = useCartData();
-
-  const user = data?.user;
-
-  // const supabase = createClient();
-  // const [session, setSession] = useState<Session | null>(null);
-
-  // useEffect(() => {
-  //   supabase.auth
-  //     .getSession()
-  //     .then(({ data: { session } }) => setSession(session));
-
-  //   const {
-  //     data: { subscription },
-  //   } = supabase.auth.onAuthStateChange((_event, session) => {
-  //     setSession(session);
-  //   });
-
-  //   return () => subscription.unsubscribe();
-  // }, [supabase]);
 
   useEffect(() => {
     getCart()
@@ -163,14 +134,6 @@ const Navbar = ({ data }: NavbarProps) => {
           >
             <AiOutlineHeart size={24} />
           </span>
-
-          {user ? (
-            <UserMenu user={user} />
-          ) : (
-            <Button>
-              <Link href="/login">Sign in</Link>
-            </Button>
-          )}
         </div>
       </div>
     </header>
