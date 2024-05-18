@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 
 import sanitizeHtml from "sanitize-html";
 import { Product } from "@chec/commerce.js/types/product";
-import { AiOutlineHeart } from "react-icons/ai";
 import { MdOutlineShoppingBag } from "react-icons/md";
 
 import Button from "@/components/Button";
@@ -125,12 +124,6 @@ const PageContent = ({ product }: PageComponentProps) => {
           >
             <MdOutlineShoppingBag size={24} />
             Add to Cart
-          </Button>
-          <Button className="bg-transparent rounded-xl border group border-main-black">
-            <AiOutlineHeart
-              size={24}
-              className="text-main-black group-hover:text-white transition"
-            />
           </Button>
         </div>
       </div>
