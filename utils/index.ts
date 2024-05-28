@@ -22,3 +22,25 @@ export const kidCategories = [
   { id: 2, name: "Shoes", url: "kids-shoes" },
   { id: 3, name: "Accessories", url: "kids-accessories" },
 ];
+
+// Remove hyphen from string
+export function removeHyphen(str: string) {
+  return str.replace(/-/g, "");
+}
+
+// Get courrency subunit
+const currencySubunits: Record<string, number> = {
+  USD: 100, // cents
+  EUR: 100, // cents
+  GBP: 100, // pence
+  JPY: 1, // yen
+  NGN: 100, // kobo
+};
+
+export function convertToSubunit(amount: number, currency: string) {
+  const subunit = currencySubunits[currency];
+  if (subunit === undefined) {
+    throw new Error(`Unsupported currency: ${currency}`);
+  }
+  return amount * subunit;
+}
