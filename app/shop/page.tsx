@@ -1,15 +1,15 @@
-import Jumbotron from "@/components/Jumbotron";
+import { Product } from "@chec/commerce.js/types/product";
 
-export default function Shop() {
+import ProductCategory from "@/components/ProductCategory";
+
+import getProducts from "@/libs/getProducts";
+
+export default async function Shop() {
+  const products: Product[] = await getProducts();
+
   return (
-    <main className="">
-      <Jumbotron
-        header="Our Shop"
-        subheader="Browse Our Complete Collection of Clothing, Accessories, and More"
-        src="/shirt-hero.jpg"
-        alt="A Stylish Shirt"
-      />
-      <h1 className="text-3xl font-bold">Test Content</h1>
+    <main>
+      <ProductCategory products={products} categoryName="Shop" />
     </main>
   );
 }
