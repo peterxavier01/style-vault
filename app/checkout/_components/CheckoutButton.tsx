@@ -5,7 +5,6 @@ import useCheckoutData from "@/hooks/useCheckoutData";
 
 import Button from "@/components/Button";
 import { IFormData } from "./CheckoutForm";
-import { refreshCart } from "@/libs/updateCart";
 import { convertToSubunit } from "@/utils";
 
 interface CheckoutButtonProps {
@@ -30,17 +29,15 @@ const CheckoutButton = ({
       checkoutLiveObject?.total.raw || 0,
       checkoutLiveObject?.currency.code.toUpperCase() || ""
     ),
+    firstname: checkoutData?.firstName,
+    lastname: checkoutData?.lastName,
+    phone: checkoutData?.mobileNumber,
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_API_KEY as string,
   };
-
-  async function onCheckoutComplete() {
-    await refreshCart();
-  }
 
   const onSuccess: callback | undefined = (reference: any) => {
     console.log(reference);
     setActiveStep(activeStep + 1);
-    onCheckoutComplete();
   };
 
   const initializePayment = usePaystackPayment(config);
