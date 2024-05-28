@@ -1,4 +1,4 @@
-import { cn } from "@/utils";
+import { cn, removeHyphen } from "@/utils";
 import { ProductVariantGroup } from "@chec/commerce.js/types/product-variant-group";
 import { useState } from "react";
 
@@ -14,23 +14,30 @@ const Color = ({ colors }: ColorProps) => {
   };
 
   return (
-    <div className="mb-8">
-      <p className="text-main-black font-medium capitalize">Color</p>
-      <div className="flex items-center gap-2 mt-2">
-        {colors &&
-          colors.options.map((color, index) => (
-            <span
-              key={color.id}
-              style={{ backgroundColor: color.name.toLowerCase() }}
-              className={cn(
-                "w-4 h-4 rounded-full block relative",
-                selectedColor === index ? "color-selected" : ""
-              )}
-              onClick={() => handleSelectedColor(index)}
-            />
-          ))}
-      </div>
-    </div>
+    <>
+      {colors ? (
+        <div className="mb-8">
+          <p className="text-main-black font-medium capitalize">Color</p>
+          <div className="flex items-center gap-2 mt-2">
+            {colors &&
+              colors.options.map((color, index) => (
+                <span
+                  title={color.name}
+                  key={color.id}
+                  style={{
+                    backgroundColor: removeHyphen(color.name.toLowerCase()),
+                  }}
+                  className={cn(
+                    "w-4 h-4 rounded-full block relative border border-gray-500",
+                    selectedColor === index ? "color-selected" : ""
+                  )}
+                  onClick={() => handleSelectedColor(index)}
+                />
+              ))}
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 };
 
