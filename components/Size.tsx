@@ -12,7 +12,7 @@ const Size = ({ sizes }: SizeProps) => {
 
   return (
     <>
-      {sizes && (
+      {sizes ? (
         <div className="mb-8">
           <p className="text-main-black font-medium capitalize">size</p>
           <div className="flex items-center gap-2 mt-2 relative">
@@ -31,7 +31,7 @@ const Size = ({ sizes }: SizeProps) => {
               ))}
           </div>
         </div>
-      )}
+      ) : null}
     </>
   );
 };
