@@ -17,12 +17,6 @@ export const womenCategories = [
   { id: 3, name: "Accessories", url: "womens-accessories" },
 ];
 
-export const kidCategories = [
-  { id: 1, name: "Shirts", url: "kids-shirts" },
-  { id: 2, name: "Shoes", url: "kids-shoes" },
-  { id: 3, name: "Accessories", url: "kids-accessories" },
-];
-
 // Remove hyphen from string
 export function removeHyphen(str: string) {
   return str.replace(/-/g, "");
@@ -44,3 +38,9 @@ export function convertToSubunit(amount: number, currency: string) {
   }
   return amount * subunit;
 }
+
+export const steps = [
+  { label: "Checkout Form" },
+  { label: "Order Summary" },
+  { label: "Order Confirmation" },
+];
