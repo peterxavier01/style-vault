@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 
 import CartSlider from "@/components/CartSlider";
-import LikedSlider from "@/components/LikedSlider";
 
 import useCartData from "@/hooks/useCartData";
 
@@ -21,7 +20,6 @@ const SliderProvider = () => {
   return (
     <>
       <CartSlider cartData={cartData} />
-      <LikedSlider />
     </>
   );
 };
