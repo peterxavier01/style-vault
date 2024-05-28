@@ -25,7 +25,7 @@ const Hero = () => {
             variants={heroTitleVariants}
             initial="initial"
             animate="visible"
-            className="text-4xl text-white sm:text-[40px] leading-[50px] md:text-5xl font-bold"
+            className="text-3xl sm:text-4xl text-white sm:text-[40px] sm:leading-[50px] md:text-5xl font-bold"
           >
             Elevate Your Wardrobe with Our Premium Shirts
           </motion.h1>
