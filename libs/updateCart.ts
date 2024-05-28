@@ -1,6 +1,8 @@
 import commerce from "@/utils/commerce";
 import toast from "react-hot-toast";
 
+import useCartData from "@/hooks/useCartData";
+
 export const incrementQuantity = async (
   productId: string,
   quantity: number
@@ -54,8 +56,10 @@ export async function emptyCart() {
 }
 
 export async function refreshCart() {
+  const setCart = useCartData.getState().setCart;
+
   try {
-    await commerce.cart.refresh();
+    setCart(await commerce.cart.refresh());
   } catch (error) {
     toast.error("Error clearing cart");
   }
