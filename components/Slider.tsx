@@ -1,5 +1,7 @@
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
+import useCartSlider from "@/hooks/useCartSlider";
+
 import { cn } from "@/utils";
 
 interface SliderProps {
@@ -17,25 +19,35 @@ const Slider: React.FC<SliderProps> = ({
   isOpen,
   className,
 }) => {
+  const onClose = useCartSlider((state) => state.onClose);
+
   return (
-    <div
-      className={cn(
-        "fixed right-0 inset-y-0 h-full min-h-screen w-[80%] md:w-[25rem] bg-white z-[200] py-12 px-4 duration-[300ms] transition overflow-y-scroll",
-        className,
-        {
-          "translate-x-[0%]": isOpen,
-          "translate-x-[100%]": !isOpen,
-        }
-      )}
-    >
-      <div className="flex items-center justify-between border-b border-b-slate-300 w-full pb-2">
-        <p className="text-lg font-medium text-slate-800">{title}</p>
-        <span className="cursor-pointer" onClick={onClick}>
-          <AiOutlineCloseCircle size={26} />
-        </span>
+    <>
+      {isOpen ? ( // Show ovelay if slider is open
+        <div
+          className="w-full fixed inset-0 h-full min-h-screen bg-black/20 z-[100]"
+          onClick={onClose}
+        />
+      ) : null}
+      <div
+        className={cn(
+          "fixed right-0 inset-y-0 h-full min-h-screen w-[80%] md:w-[25rem] bg-white z-[200] px-4 duration-[300ms] transition overflow-y-scroll",
+          className,
+          {
+            "translate-x-[0%]": isOpen,
+            "translate-x-[100%]": !isOpen,
+          }
+        )}
+      >
+        <div className="flex sticky bg-white z-30 pt-8 top-0 items-center justify-between border-b border-b-slate-300 w-full pb-2">
+          <p className="text-lg font-medium text-slate-800">{title}</p>
+          <span className="cursor-pointer" onClick={onClick}>
+            <AiOutlineCloseCircle size={26} />
+          </span>
+        </div>
+        {children}
       </div>
-      {children}
-    </div>
+    </>
   );
 };
 
