@@ -18,14 +18,14 @@ import {
   AiOutlineShoppingCart,
   AiFillHome,
 } from "react-icons/ai";
-import { FaChild, FaFemale, FaMale } from "react-icons/fa";
+import { FaFemale, FaMale } from "react-icons/fa";
 import { BiSolidShoppingBag } from "react-icons/bi";
+import Search from "./Search";
 
 const links = [
   { id: 1, name: "Home", href: "/", icon: AiFillHome },
   { id: 2, name: "Men", href: "/category/men", icon: FaMale },
   { id: 3, name: "Women", href: "/category/women", icon: FaFemale },
-  { id: 4, name: "Kids", href: "/category/kids", icon: FaChild },
   { id: 5, name: "Shop All", href: "/shop", icon: BiSolidShoppingBag },
 ];
 
@@ -89,10 +89,10 @@ const Navbar = () => {
                     onClick={() => setIsOpen(false)}
                   >
                     <div className="hidden max-md:block">
-                      <Icon size={18} />
+                      <Icon size={22} />
                     </div>
                     <li
-                      className={`text-base hover:text-main-black transition ${
+                      className={`text-lg md:text-base hover:text-main-black transition ${
                         isActive
                           ? "text-main-black font-bold"
                           : "text-slate-500 font-medium"
@@ -115,9 +115,7 @@ const Navbar = () => {
         </button>
 
         <div className="flex items-center gap-4 md:gap-6">
-          <span className="cursor-pointer text-slate-600 hover:text-slate-900 active:scale-90">
-            <AiOutlineSearch size={24} />
-          </span>
+          <Search />
           <div
             className="cursor-pointer relative text-slate-600 hover:text-slate-900 active:scale-90"
             onClick={cartSlider.onOpen}
