@@ -16,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({ title, className }) => {
       whileInView="visible"
       viewport={{ once: true }}
       className={cn(
-        "text-3xl md:text-4xl text-slate-800 font-semibold",
+        "text-3xl md:text-4xl text-slate-800 font-bold",
         className
       )}
     >
