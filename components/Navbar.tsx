@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import useCartSlider from "@/hooks/useCartSlider";
-import useLikedSlider from "@/hooks/useLikedSlide";
 import useCartData from "@/hooks/useCartData";
 import getCart from "@/libs/getCart";
 
@@ -14,7 +13,6 @@ import clientOnly from "./ClientOnly";
 
 import {
   AiOutlineSearch,
-  AiOutlineHeart,
   AiOutlineClose,
   AiOutlineMenu,
   AiOutlineShoppingCart,
@@ -35,12 +33,17 @@ const Navbar = () => {
   const { cart, setCart } = useCartData();
 
   useEffect(() => {
-    getCart()
-      .then((cart) => {
-        setCart(cart);
-      })
-      .catch((err) => console.log(err));
-  }, [setCart]);
+    const getCartData = async () => {
+      try {
+        const data = await getCart();
+        setCart(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getCartData();
+  }, [setCart, cart]);
 
   const [isOpen, setIsOpen] = useState(false);
   const NavToggle = isOpen ? AiOutlineClose : AiOutlineMenu;
@@ -48,14 +51,13 @@ const Navbar = () => {
   const pathname = usePathname();
 
   const cartSlider = useCartSlider();
-  const likedSlider = useLikedSlider();
 
   const handleClick = () => {
     setIsOpen((prev) => !prev);
   };
 
   return (
-    <header className="sticky top-0 z-20 bg-white">
+    <header className="sticky top-0 z-50 bg-white">
       <div className="navbar justify-between py-4 px-12 max-md:px-4 max-w-[1440px] mx-auto">
         <div className="max-md:mx-auto">
           <Link href="/">
@@ -127,13 +129,6 @@ const Navbar = () => {
               </span>
             )}
           </div>
-
-          <span
-            className="cursor-pointer text-slate-600 hover:text-slate-900 active:scale-90"
-            onClick={likedSlider.onOpen}
-          >
-            <AiOutlineHeart size={24} />
-          </span>
         </div>
       </div>
     </header>
