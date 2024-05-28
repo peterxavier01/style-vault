@@ -2,16 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
-import debounce from "lodash.debounce";
+import { useEffect, useState } from "react";
 
 import { twMerge } from "tailwind-merge";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { TbShoppingCartCheck } from "react-icons/tb";
 
 import Button from "./Button";
-import addToCart from "@/libs/addToCart";
+
 import { Product } from "@chec/commerce.js/types/product";
+import addToCart from "@/libs/addToCart";
 import useCartData from "@/hooks/useCartData";
 
 interface ProductCardProps {
@@ -42,7 +42,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
     inCart: false,
   });
 
-  const debouncedFunction = debounce(() => {
+  // // Check if a product is already in the cart
+  useEffect(() => {
     try {
       const isInCart = cart?.line_items.some(
         (item) => item.product_id === productId
@@ -51,15 +52,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
     } catch (error) {
       console.error(error);
     }
-  }, 300);
-
-  const isProductInCart = useCallback(() => {
-    debouncedFunction();
-  }, [debouncedFunction]);
-
-  useEffect(() => {
-    isProductInCart();
-  }, [isProductInCart]);
+  }, [cart, productId]);
 
   return (
     <div
