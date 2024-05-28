@@ -58,6 +58,8 @@
   --pagination-item-disabled-color-active: #fff;
   --pagination-item-disabled-bg-active: hsl(0, 0%, 96%);
   --pagination-item-input-bg: #fff;
+
+  --primary: #03343d;
 }
 
 /* Pagination Styles */
