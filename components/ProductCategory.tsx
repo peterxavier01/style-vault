@@ -8,25 +8,41 @@ import { Category } from "@chec/commerce.js/types/category";
 import ProductCard from "./ProductCard";
 import Dropdown from "./Dropdown";
 import Paging from "./Paging";
-import { kidCategories, menCategories, womenCategories } from "@/utils";
+import { menCategories, womenCategories } from "@/utils";
 
 type ProductCatgory = {
   products: Product[];
-  category: Category;
+  category?: Category;
+  categoryName?: string;
 };
 
-const ProductCategory: React.FC<ProductCatgory> = ({ products, category }) => {
+const ProductCategory: React.FC<ProductCatgory> = ({
+  products,
+  category,
+  categoryName,
+}) => {
   const router = useRouter();
 
+  let isMobile;
+  if (typeof window !== "undefined") {
+    isMobile = window.matchMedia("(max-width: 767px)").matches;
+  }
+
   const handleFilterProduct = (slug: string) => {
-    router.push(slug);
+    if (typeof window !== "undefined") {
+      if (!window.location.href.includes("category")) {
+        router.push(`/category/${slug}`);
+      } else {
+        router.push(slug);
+      }
+    }
   };
 
   return (
     <section className="px-4 md:px-8 max-w-[1440px] mx-auto mb-8">
       <div className="bg-primary rounded-2xl w-full min-h-[250px] flex items-center justify-center">
         <h1 className="text-white text-3xl md:text-5xl text-center tracking-wide font-semibold">
-          {category.name}
+          {category?.name || categoryName}
         </h1>
       </div>
 
@@ -38,17 +54,13 @@ const ProductCategory: React.FC<ProductCatgory> = ({ products, category }) => {
           <div className="flex flex-row sm:flex-col gap-3">
             <Dropdown
               title="men"
+              checked={isMobile ? false : true}
               content={menCategories}
               onClick={handleFilterProduct}
             />
             <Dropdown
               title="women"
               content={womenCategories}
-              onClick={handleFilterProduct}
-            />
-            <Dropdown
-              title="kids"
-              content={kidCategories}
               onClick={handleFilterProduct}
             />
           </div>
