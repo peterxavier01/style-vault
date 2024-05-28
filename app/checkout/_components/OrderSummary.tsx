@@ -3,10 +3,11 @@ import { SetStateAction, useEffect } from "react";
 import { CheckoutToken } from "@chec/commerce.js/types/checkout-token";
 
 import commerce from "@/utils/commerce";
-import CartItem from "@/components/CartItem";
 import useCheckoutData from "@/hooks/useCheckoutData";
-import CheckoutButton from "./CheckoutButton";
+
+import CartItem from "@/components/CartItem";
 import Button from "@/components/Button";
+import CheckoutButton from "./CheckoutButton";
 
 interface OrderSummaryProps {
   checkoutToken: CheckoutToken | null;
