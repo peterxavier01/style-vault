@@ -7,6 +7,7 @@ import { MdArrowBackIos } from "react-icons/md";
 import { CheckoutToken } from "@chec/commerce.js/types/checkout-token";
 
 import commerce from "@/utils/commerce";
+import { steps } from "@/utils";
 import useCartData from "@/hooks/useCartData";
 
 import CheckoutForm from "./CheckoutForm";
@@ -20,24 +21,33 @@ const PageComponent = () => {
   const [checkoutToken, setCheckoutToken] = useState<CheckoutToken | null>(
     null
   );
+  const [isLoading, setIsLoading] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
 
-  const steps = [
-    { label: "Checkout Form" },
-    { label: "Order Summary" },
-    { label: "Order Confirmation" },
-  ];
-
   function getSectionComponent() {
+    if (isLoading) {
+      return (
+        <section className="grid md:grid-cols-2 max-w-4xl gap-4 mt-6 mb-8 mx-auto min-h-[500px] h-full w-full">
+          {Array(10)
+            .fill("")
+            .map((index: number) => (
+              <div key={index} className="skeleton w-full h-14 rounded-lg" />
+            ))}
+          <div className="skeleton w-full max-w-xs rounded-lg mt-4 mx-auto col-span-2 h-14" />
+        </section>
+      );
+    }
+
     switch (activeStep) {
       case 0:
-        return checkoutToken ? (
+        return (
           <CheckoutForm
             checkoutToken={checkoutToken}
             activeStep={activeStep}
             setActiveStep={setActiveStep}
           />
-        ) : null;
+        );
+
       case 1:
         return (
           <OrderSummary
@@ -60,6 +70,7 @@ const PageComponent = () => {
     };
 
     cart ? getToken(cart?.id) : null;
+    setIsLoading(false);
   }, [cart]);
 
   return (
