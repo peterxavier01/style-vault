@@ -4,14 +4,19 @@ import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
 import { LineItem } from "@chec/commerce.js/types/line-item";
 
-import { removeItem } from "@/libs/updateCart";
 import Counter from "./Counter";
 
 interface CartItemProps {
   cartItem: LineItem;
+  onRemoveItem: (id: string) => void;
+  showCloseBtn: boolean;
 }
 
-const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
+const CartItem: React.FC<CartItemProps> = ({
+  cartItem,
+  onRemoveItem,
+  showCloseBtn,
+}) => {
   const {
     image,
     name,
@@ -21,13 +26,13 @@ const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
 
   return (
     <div className="grid grid-cols-3 gap-x-4">
-      <div className="bg-gray-300 h-24 hover:bg-gray-400 duration-200 transition rounded-lg flex items-center justify-center">
+      <div className="bg-gray-300 h-24 relative overflow-hidden w-full hover:bg-gray-400 duration-200 transition rounded-lg flex items-center justify-center">
         <Image
           src={src}
           alt={name}
-          width={60}
-          height={60}
-          className="object-contain w-auto h-auto"
+          fill
+          sizes="100%"
+          className="object-cover w-auto h-auto"
         />
       </div>
 
@@ -38,12 +43,14 @@ const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
               {name}
             </p>
           </Link>
-          <span
-            className="cursor-pointer"
-            onClick={() => removeItem(cartItem.id)}
-          >
-            <AiOutlineClose />
-          </span>
+          {showCloseBtn ? (
+            <span
+              className="cursor-pointer"
+              onClick={() => onRemoveItem(cartItem.id)}
+            >
+              <AiOutlineClose />
+            </span>
+          ) : null}
         </div>
 
         <div className="flex justify-between items-center">
