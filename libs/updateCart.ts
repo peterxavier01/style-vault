@@ -29,9 +29,9 @@ export const decrementQuantity = async (
   }
 };
 
-function handleUpdateCart() {
+async function handleUpdateCart() {
   try {
-    commerce.cart.retrieve();
+    await commerce.cart.retrieve();
   } catch (error) {
     toast.error("Error fetching cart");
   }
@@ -42,5 +42,21 @@ export async function removeItem(productId: string) {
     await commerce.cart.remove(productId);
   } catch (error) {
     toast.error("Error removing item from cart");
+  }
+}
+
+export async function emptyCart() {
+  try {
+    await commerce.cart.empty();
+  } catch (error) {
+    toast.error("Error clearing cart");
+  }
+}
+
+export async function refreshCart() {
+  try {
+    await commerce.cart.refresh();
+  } catch (error) {
+    toast.error("Error clearing cart");
   }
 }
