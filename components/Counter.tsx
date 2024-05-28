@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { LineItem } from "@chec/commerce.js/types/line-item";
 
@@ -9,20 +12,48 @@ interface CounterProps {
 }
 
 const Counter: React.FC<CounterProps> = ({ quantity, cartItem }) => {
+  const [optimisticQuantity, setOptimisticQuantity] = useState(quantity);
+
+  useEffect(() => {
+    setOptimisticQuantity(quantity);
+  }, [quantity]);
+
+  const handleIncrement = async () => {
+    setOptimisticQuantity(optimisticQuantity + 1);
+    try {
+      await incrementQuantity(cartItem.id, optimisticQuantity);
+    } catch (error) {
+      setOptimisticQuantity(optimisticQuantity);
+    }
+  };
+
+  const handleDecrement = async () => {
+    if (optimisticQuantity > 0) {
+      setOptimisticQuantity(optimisticQuantity - 1);
+      try {
+        await decrementQuantity(cartItem.id, optimisticQuantity);
+      } catch (error) {
+        setOptimisticQuantity(optimisticQuantity);
+      }
+    }
+  };
+
   return (
-    <div className="flex items-center border-2 border-slate-400 text-slate-500 gap-4 px-2 py-1">
+    <div className="flex border border-slate-400 gap-4 h-9">
       <span
-        className="text-red-500 cursor-pointer"
-        onClick={() => decrementQuantity(cartItem.id, quantity)}
+        className="text-slate-700 px-3 flex items-center h-full cursor-pointer bg-gray-400/10"
+        onClick={handleDecrement}
       >
         <AiOutlineMinus />
       </span>
-      <span className="font-semibold text-slate-800">{quantity}</span>
+      <span className="font-semibold px-2 text-slate-800 flex items-center">
+        {optimisticQuantity}
+      </span>
       <span
-        className="text-green-500 cursor-pointer"
-        onClick={() => incrementQuantity(cartItem.id, quantity)}
+        className="bg-primary h-full px-3 cursor-pointer flex items-center"
+        onClick={handleIncrement}
       >
-        <AiOutlinePlus />
+        <AiOutlinePlus className="text-white" />
       </span>
     </div>
   );
