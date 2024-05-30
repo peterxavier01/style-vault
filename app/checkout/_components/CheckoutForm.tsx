@@ -158,7 +158,7 @@ const CheckoutForm = ({
   return (
     <>
       <form
-        className="w-full max-w-4xl mx-auto grid sm:grid-cols-2 gap-4 mt-6 mb-8"
+        className="w-full max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 mb-8"
         onSubmit={handleSubmit(onSubmit)}
       >
         <TextInput
@@ -241,7 +241,7 @@ const CheckoutForm = ({
 
         <Button
           type="submit"
-          className="w-full max-w-xs mt-4 mx-auto col-span-2 disabled:bg-primary/80 disabled:text-gray-300 disabled:cursor-not-allowed focus-visible:outline focus-visible:outline-primary"
+          className="w-full max-w-xs mt-4 mx-auto sm:col-span-2 disabled:bg-primary/80 disabled:text-gray-300 disabled:cursor-not-allowed focus-visible:outline focus-visible:outline-primary"
           disabled={!isDirty || !isValid}
         >
           Next
