@@ -12,7 +12,6 @@ import getCart from "@/libs/getCart";
 import clientOnly from "./ClientOnly";
 
 import {
-  AiOutlineSearch,
   AiOutlineClose,
   AiOutlineMenu,
   AiOutlineShoppingCart,
