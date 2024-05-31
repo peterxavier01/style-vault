@@ -7,6 +7,7 @@ import SliderProvider from "@/providers/SliderProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
 
 import Layout from "@/components/Layout";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,9 +28,17 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <ToasterProvider />
-        <SliderProvider />
-        <Layout>{children}</Layout>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ToasterProvider />
+          <SliderProvider />
+
+          <Layout>{children}</Layout>
+        </ThemeProvider>
       </body>
     </html>
   );
