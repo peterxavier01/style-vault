@@ -8,16 +8,12 @@
   box-sizing: border-box;
 }
 
-/****** Temp fix for default light mode *****/
-@media (prefers-color-scheme: dark) {
-  body {
-    background: #fff;
-    color: #555;
-  }
+body {
+  @apply bg-white dark:bg-dark-primary;
 }
 
 .link-hover-custom {
-  @apply text-slate-800 hover:text-main-black transition;
+  @apply text-slate-800 hover:text-main-black dark:text-gray-300 dark:hover:text-white transition;
 }
 
 .color-selected::after {
@@ -27,7 +23,7 @@
   left: 0;
   width: 18px;
   height: 2px;
-  @apply bg-primary
+  @apply bg-primary dark:bg-gray-300
 }
 
 /****** Slider Styles *******/
@@ -39,7 +35,15 @@
 }
 
 ::-webkit-scrollbar {
-  display: none;
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-dark-secondary
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 rounded-lg
 }
 
 /**************** RC- PAGINATION STYLES ******************/
@@ -199,11 +203,15 @@
 .rc-pagination-prev button:after {
   content: "‹";
   display: block;
+  padding-inline: 1em;
+  @apply bg-gray-200 dark:bg-dark-secondary dark:text-white
 }
 
 .rc-pagination-next button:after {
   content: "›";
   display: block;
+  padding-inline: 1em;
+  @apply bg-gray-200 dark:bg-dark-secondary dark:text-white
 }
 
 .rc-pagination-disabled,
