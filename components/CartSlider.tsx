@@ -17,10 +17,10 @@ const EmptyCart = () => {
 
   return (
     <div className="flex flex-col items-center mt-8">
-      <span className="text-slate-800 mb-4">
+      <span className="text-slate-800 dark:text-gray-300 mb-4">
         <BsBagX size={120} />
       </span>
-      <p className="font-medium text-base md:text-lg text-slate-800 mb-4">
+      <p className="font-medium text-base md:text-lg text-slate-800 dark:text-gray-300 mb-4">
         Your shopping cart is empty
       </p>
       <Link href="/shop" className="w-full" onClick={cartSlider.onClose}>
@@ -110,10 +110,10 @@ const FilledCart: React.FC<FilledCartProps> = ({ cartData: cart }) => {
         </Button>
       ) : null}
 
-      <div className="border-t border-slate-300 pt-4 sticky bottom-0 bg-white pb-8">
+      <div className="border-t border-slate-300 pt-4 sticky bottom-0 bg-white dark:bg-dark-secondary pb-8">
         <p className="flex items-center justify-between text-xl">
-          <span className="font-bold text-slate-800">Subtotal</span>
-          <span className="font-bold text-slate-800">
+          <span className="font-bold text-slate-800 dark:text-gray-300">Subtotal</span>
+          <span className="font-bold text-slate-800 dark:text-gray-300">
             {cart?.subtotal.formatted_with_symbol}
           </span>
         </p>

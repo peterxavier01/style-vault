@@ -39,13 +39,13 @@ const CartItem: React.FC<CartItemProps> = ({
       <div className="col-span-2">
         <div className="flex justify-between items-center mb-1">
           <Link href={`/${name.toLowerCase()}`}>
-            <p className="text-slate-800 font-semibold text-base link-hover-c">
+            <p className="text-slate-800 dark:text-gray-300 font-semibold text-base link-hover-c">
               {name}
             </p>
           </Link>
           {showCloseBtn ? (
             <span
-              className="cursor-pointer"
+              className="cursor-pointer text-slate-800 dark:text-gray-300"
               onClick={() => onRemoveItem(cartItem.id)}
             >
               <AiOutlineClose />
@@ -55,7 +55,7 @@ const CartItem: React.FC<CartItemProps> = ({
 
         <div className="flex justify-between items-center">
           <Counter quantity={cartItem.quantity} cartItem={cartItem} />
-          <p className="text-slate-800 text-sm md:text-base">
+          <p className="text-slate-800 dark:text-gray-300 text-sm md:text-base">
             {formatted_with_symbol}
           </p>
         </div>

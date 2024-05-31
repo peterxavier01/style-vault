@@ -43,7 +43,7 @@ const OrderSummary = ({
     <>
       {checkoutLiveObject && checkoutLiveObject?.line_items.length > 0 ? (
         <section className="col-span-1 h-full max-w-xl mx-auto">
-          <div className="bg-white rounded-md px-4 py-8 flex flex-col gap-6 h-full">
+          <div className="bg-white dark:bg-dark-secondary rounded-md px-4 py-8 flex flex-col gap-6 h-full">
             {checkoutLiveObject?.line_items.map((product) => (
               <CartItem
                 key={product.id}

@@ -89,7 +89,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
       </div>
 
       <div className="card-body">
-        <div className="flex flex-col text-slate-800 w-full">
+        <div className="flex flex-col text-slate-800 dark:text-gray-300 w-full">
           <Link href={`/product/${permalink}`}>
             <h2 className="card-title truncate text-sm md:text-base link-hover-custom">
               {name}

@@ -10,10 +10,12 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <label className="form-control w-full">
         <div className="label">
-          <span className="label-text text-slate-700">{label}</span>
+          <span className="label-text text-slate-700 dark:text-gray-400">
+            {label}
+          </span>
         </div>
         <select
-          className="select select-bordered bg-white"
+          className="select select-bordered dark:border-none bg-white dark:bg-dark-secondary"
           value={value}
           ref={ref}
           {...props}

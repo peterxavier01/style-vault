@@ -41,12 +41,12 @@ const Counter: React.FC<CounterProps> = ({ quantity, cartItem }) => {
   return (
     <div className="flex border border-slate-400 gap-4 h-9">
       <span
-        className="text-slate-700 px-3 flex items-center h-full cursor-pointer bg-gray-400/10"
+        className="text-slate-700 dark:text-slate-300 px-3 flex items-center h-full cursor-pointer bg-gray-400/10"
         onClick={handleDecrement}
       >
         <AiOutlineMinus />
       </span>
-      <span className="font-semibold px-2 text-slate-800 flex items-center">
+      <span className="font-semibold px-2 text-slate-800 dark:text-gray-300 flex items-center">
         {optimisticQuantity}
       </span>
       <span

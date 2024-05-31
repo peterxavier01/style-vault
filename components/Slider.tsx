@@ -31,7 +31,7 @@ const Slider: React.FC<SliderProps> = ({
       ) : null}
       <div
         className={cn(
-          "fixed right-0 inset-y-0 h-full min-h-screen w-[80%] md:w-[25rem] bg-white z-[200] px-4 duration-[300ms] transition overflow-y-scroll",
+          "fixed right-0 inset-y-0 h-full overscroll-contain min-h-screen w-[80%] md:w-[25rem] bg-white dark:bg-dark-secondary z-[200] px-4 duration-[300ms] transition overflow-y-scroll",
           className,
           {
             "translate-x-[0%]": isOpen,
@@ -39,10 +39,10 @@ const Slider: React.FC<SliderProps> = ({
           }
         )}
       >
-        <div className="flex sticky bg-white z-30 pt-8 top-0 items-center justify-between border-b border-b-slate-300 w-full pb-2">
-          <p className="text-lg font-medium text-slate-800">{title}</p>
+        <div className="flex sticky bg-white dark:bg-dark-secondary z-30 pt-8 top-0 items-center justify-between border-b border-b-slate-300 w-full pb-2">
+          <p className="text-lg font-medium text-slate-800 dark:text-gray-300">{title}</p>
           <span className="cursor-pointer" onClick={onClick}>
-            <AiOutlineCloseCircle size={26} />
+            <AiOutlineCloseCircle size={26} className="text-slate-800 dark:text-gray-300" />
           </span>
         </div>
         {children}

@@ -85,15 +85,15 @@ const PageContent = ({ product }: PageComponentProps) => {
         </div>
 
         <div>
-          <p className="text-slate-500 text-base font-medium mb-2">
+          <p className="text-slate-500 dark:text-slate-400 text-base font-medium mb-2">
             {product.categories[0].name}
           </p>
-          <h1 className="text-3xl md:text-5xl font-bold text-main-black mb-4">
+          <h1 className="text-3xl md:text-5xl font-bold text-main-black dark:text-gray-100 mb-4">
             {product.name}
           </h1>
           <p
             dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-            className="text-slate-500 text-sm mb-8"
+            className="text-slate-500 dark:text-slate-400 text-sm mb-8"
           />
 
           <Color colors={product.variant_groups[0]} />
@@ -102,10 +102,10 @@ const PageContent = ({ product }: PageComponentProps) => {
 
           <div className="flex items-center justify-between mb-8">
             <div>
-              <p className="text-main-black font-medium capitalize mb-2">
+              <p className="text-main-black dark:text-gray-300 font-medium capitalize mb-2">
                 total price
               </p>
-              <p className="text-3xl text-main-black font-semibold">
+              <p className="text-3xl text-main-black dark:text-gray-100 font-semibold">
                 {product.price.formatted_with_symbol}
               </p>
             </div>

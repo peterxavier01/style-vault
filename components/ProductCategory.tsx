@@ -48,7 +48,7 @@ const ProductCategory: React.FC<ProductCatgory> = ({
 
       <div className="mt-8 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-11">
         <div className="col-span-1">
-          <h4 className="text-xl font-semibold text-primary mb-2 uppercase">
+          <h4 className="text-xl font-semibold text-primary dark:text-gray-300 mb-2 uppercase">
             Categories
           </h4>
           <div className="flex flex-row sm:flex-col gap-3">

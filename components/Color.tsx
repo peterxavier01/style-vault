@@ -17,7 +17,7 @@ const Color = ({ colors }: ColorProps) => {
     <>
       {colors ? (
         <div className="mb-8">
-          <p className="text-main-black font-medium capitalize">Color</p>
+          <p className="text-main-black dark:text-gray-300 font-medium capitalize">Color</p>
           <div className="flex items-center gap-2 mt-2">
             {colors &&
               colors.options.map((color, index) => (
@@ -28,7 +28,7 @@ const Color = ({ colors }: ColorProps) => {
                     backgroundColor: removeHyphen(color.name.toLowerCase()),
                   }}
                   className={cn(
-                    "w-4 h-4 rounded-full block relative border border-gray-500",
+                    "w-4 h-4 rounded-full cursor-pointer block relative border border-gray-500 dark:border-gray-300",
                     selectedColor === index ? "color-selected" : ""
                   )}
                   onClick={() => handleSelectedColor(index)}

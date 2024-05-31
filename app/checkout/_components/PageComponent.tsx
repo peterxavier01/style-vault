@@ -78,7 +78,7 @@ const PageComponent = () => {
       <section>
         <Link
           href="/shop"
-          className="flex items-center text-primary mb-2 w-fit"
+          className="flex items-center text-primary dark:text-gray-300 mb-2 w-fit"
         >
           <MdArrowBackIos />
           Back to shop

@@ -21,12 +21,17 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     return (
       <label className="w-full">
         <div className="label">
-          <span className="label-text text-slate-700">{label}</span>
+          <span className="label-text text-slate-700 dark:text-gray-400">
+            {label}
+          </span>
         </div>
         <input
           type={type}
           placeholder={placeholder}
-          className={cn("input border-slate-300 bg-white w-full", className)}
+          className={cn(
+            "input border-slate-300 bg-white dark:bg-dark-secondary dark:text-gray-300 w-full dark:border-none",
+            className
+          )}
           ref={ref}
           {...props}
           disabled={disabled}

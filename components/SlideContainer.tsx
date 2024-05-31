@@ -18,18 +18,15 @@ interface NavArrowsProps {
 }
 
 const NavArrows: React.FC<NavArrowsProps> = ({ prevRef, nextRef }) => {
+  const iconStyles =
+    "border-primary dark:border-gray-300 border-[1px] text-primary dark:text-gray-300 active:scale-95 hover:bg-primary dark:hover:bg-gray-300 dark:hover:text-primary hover:text-white transition rounded-full p-3";
+
   return (
     <div className="flex items-center gap-2 md:gap-4">
-      <span
-        ref={prevRef}
-        className="border-primary border-[1px] text-primary active:scale-95 hover:bg-primary hover:text-white transition rounded-full p-3"
-      >
+      <span ref={prevRef} className={iconStyles}>
         <MdKeyboardArrowLeft size={15} className="slide-icons" />
       </span>
-      <span
-        ref={nextRef}
-        className="border-primary border-[1px] text-primary hover:bg-primary active:scale-95 hover:text-white transition rounded-full p-3"
-      >
+      <span ref={nextRef} className={iconStyles}>
         <MdKeyboardArrowRight size={15} className="slide-icons" />
       </span>
     </div>
