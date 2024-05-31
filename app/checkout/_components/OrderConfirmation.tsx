@@ -25,18 +25,18 @@ const OrderConfirmation = () => {
       <Confetti
         width={width}
         height={height}
-        gravity={0.12}
+        gravity={0.1}
         numberOfPieces={2000}
         recycle={false}
       />
-      <h1 className="text-4xl font-semibold text-slate-800 text-center">
+      <h1 className="text-4xl font-semibold text-slate-800 dark:text-gray-100 text-center">
+        Success! Your Order is Confirmed and On Its Way
+      </h1>
+      <p className="text-center text-slate-800 dark:text-gray-300 md:text-lg">
         Thank you{" "}
         <span className="capitalize font-bold">{checkoutData?.firstName}</span>!
-        Your Order is Confirmed and On Its Way
-      </h1>
-      <p className="text-center text-slate-800 md:text-lg">
-        Thank you for shopping with us. Your purchase has been successfully
-        processed and your items will be with you shortly.
+        for shopping with us. Your purchase has been successfully processed and
+        your items will be with you shortly.
       </p>
 
       <Link href="/shop">
