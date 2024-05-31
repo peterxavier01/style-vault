@@ -23,8 +23,8 @@ const ProductSearchCard = ({
 
   return (
     <Link href={`/product/${product.permalink}`} onClick={handleClick}>
-      <div className="flex gap-4 mb-4 hover:bg-white/5 p-4 rounded-xl">
-        <div className="relative w-24 h-24">
+      <div className="flex w-full gap-4 mb-4 hover:bg-black/5 dark:hover:bg-white/5 p-4 rounded-xl">
+        <div className="relative w-20 h-20 md:w-24 md:h-24 flex-shrink-0">
           <Image
             src={src}
             alt={product.name.toLowerCase()}
@@ -34,11 +34,11 @@ const ProductSearchCard = ({
           />
         </div>
 
-        <div className="flex flex-col items-start">
-          <h2 className="text-white text-lg font-semibold truncate line-clamp-1">
+        <div className="flex flex-col items-start h-max">
+          <h2 className="text-slate-800 dark:text-white text-base md:text-lg font-semibold text-ellipsis line-clamp-1">
             {product.name}
           </h2>
-          <p className="text-slate-400 text-lg font-medium">
+          <p className="text-slate-600 dark:text-slate-400 text-base md:text-lg font-medium">
             {product.price.formatted_with_symbol}
           </p>
         </div>
