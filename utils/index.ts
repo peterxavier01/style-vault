@@ -39,8 +39,19 @@ export function convertToSubunit(amount: number, currency: string) {
   return amount * subunit;
 }
 
+// Steps for checkout process
 export const steps = [
   { label: "Checkout Form" },
   { label: "Order Summary" },
   { label: "Order Confirmation" },
 ];
+
+// Fisher-Yates Shuffle algorithm
+export function shuffleArray<T>(array: T[]) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+    // swap elements array[i] and array[j]
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
