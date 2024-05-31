@@ -8,14 +8,28 @@ import { Product } from "@chec/commerce.js/types/product";
 import ProductSearchCard from "./ProductSearchCard";
 
 import getProducts from "@/libs/getProducts";
+import { shuffleArray } from "@/utils";
 
 const Search = () => {
   const modalRef = useRef<HTMLDialogElement | null>(null);
   const [products, setProducts] = useState<Product[] | null>(null);
+  const [shuffledProducts, setShuffledProducts] = useState<Product[] | null>(
+    null
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<
     Product[] | undefined
   >(undefined);
+
+  // Show a shuffled list of products when there is no search query
+  useEffect(() => {
+    if (products) {
+      let newArray = [...products];
+      newArray = newArray.slice(0, 4); // limit shuffled products list to 3
+      newArray = shuffleArray(newArray);
+      setShuffledProducts(newArray);
+    }
+  }, [products]);
 
   const openModal = () => {
     if (modalRef.current) {
@@ -47,25 +61,25 @@ const Search = () => {
   return (
     <>
       <button
-        className="cursor-pointer text-slate-600 hover:text-slate-900 active:scale-90"
+        className="cursor-pointer text-slate-600 dark:text-gray-300 hover:text-slate-900 hover:dark:text-white active:scale-90"
         onClick={openModal}
       >
         <AiOutlineSearch size={24} />
       </button>
 
       <dialog className="modal" ref={modalRef}>
-        <div className="modal-box">
+        <div className="modal-box bg-white dark:bg-dark-primary">
           <input
             type="text"
             placeholder="Search products..."
             value={searchQuery}
             onChange={handleSearch}
-            className="w-full input bg-gray-100 rounded-xl text-slate-800 mb-6 py-8 placeholder:text-slate-600"
+            className="w-full input bg-black/5 dark:bg-dark-secondary rounded-xl text-slate-800 dark:text-gray-300 mb-6 py-8 placeholder:text-slate-500 dark:placeholder:text-slate-300"
           />
 
           <ul>
-            {searchQuery.length > 0
-              ? filteredProducts?.map((product) => (
+            {searchQuery.length === 0
+              ? shuffledProducts?.map((product) => (
                   <ProductSearchCard
                     key={product.id}
                     product={product}
@@ -73,7 +87,16 @@ const Search = () => {
                     setSearchQuery={setSearchQuery}
                   />
                 ))
-              : null}
+              : searchQuery.length > 0
+                ? filteredProducts?.map((product) => (
+                    <ProductSearchCard
+                      key={product.id}
+                      product={product}
+                      modalRef={modalRef}
+                      setSearchQuery={setSearchQuery}
+                    />
+                  ))
+                : null}
           </ul>
         </div>
 
