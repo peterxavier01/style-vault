@@ -20,9 +20,6 @@ const Card: React.FC<CardProps> = ({ category }) => {
   return (
     <motion.div
       variants={categoryCardItemVariants}
-      initial="initial"
-      whileInView="visible"
-      viewport={{ once: true }}
       className="h-80 bg-gray-300 rounded-2xl flex group justify-center items-center relative overflow-hidden"
     >
       <div className="w-full h-full bg-black/10 absolute inset-0 z-10" />
