@@ -42,9 +42,9 @@ const Hero = () => {
             initial="initial"
             animate="visible"
           >
-            <Link href="/category/shirts">
+            <Link href="/category/shoes">
               <Button className="rounded-full w-full hover:text-white max-w-[200px] bg-white text-main-black">
-                Shop Shirts Now
+                Shop Shoes Now
               </Button>
             </Link>
           </motion.div>
