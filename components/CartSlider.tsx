@@ -35,31 +35,6 @@ type FilledCartProps = {
 };
 
 const FilledCart: React.FC<FilledCartProps> = ({ cartData: cart }) => {
-  // const [optimisticCart, setOptimisticCart] = useState<LineItem[] | undefined>(
-  //   undefined
-  // );
-
-  // useEffect(() => {
-  //   setOptimisticCart(cart?.line_items);
-  // }, [cart?.line_items]);
-
-  // console.log(optimisticCart);
-
-  // const handleRemoveItem = async (id: string) => {
-  //   const newCartArr = optimisticCart?.filter((product) => {
-  //     return product.id !== id;
-  //   });
-
-  //   if (newCartArr) {
-  //     setOptimisticCart(newCartArr);
-  //     try {
-  //       await removeItem(id);
-  //     } catch (error) {
-  //       setOptimisticCart(cart?.line_items);
-  //     }
-  //   }
-  // };
-
   const cartSlider = useCartSlider();
 
   const [optimisticCart, setOptimisticCart] = useState<LineItem[] | undefined>(
@@ -112,14 +87,18 @@ const FilledCart: React.FC<FilledCartProps> = ({ cartData: cart }) => {
 
       <div className="border-t border-slate-300 pt-4 sticky bottom-0 bg-white dark:bg-dark-secondary pb-8">
         <p className="flex items-center justify-between text-xl">
-          <span className="font-bold text-slate-800 dark:text-gray-300">Subtotal</span>
+          <span className="font-bold text-slate-800 dark:text-gray-300">
+            Subtotal
+          </span>
           <span className="font-bold text-slate-800 dark:text-gray-300">
             {cart?.subtotal.formatted_with_symbol}
           </span>
         </p>
         <p className="flex items-center gap-2 mt-4">
           <span className="block w-2 h-2 bg-primary rounded-full" />
-          <span>Shipping rates and taxes are calculated at checkout</span>
+          <span className="text-slate-800 dark:text-gray-100">
+            Shipping rates and taxes are calculated at checkout
+          </span>
         </p>
         <Link href="/checkout">
           <Button className="w-full mt-4" onClick={cartSlider.onClose}>
