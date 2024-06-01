@@ -59,7 +59,8 @@ export async function refreshCart() {
   const setCart = useCartData.getState().setCart;
 
   try {
-    setCart(await commerce.cart.refresh());
+    await commerce.cart.refresh();
+    setCart(null);
   } catch (error) {
     toast.error("Error clearing cart");
   }
