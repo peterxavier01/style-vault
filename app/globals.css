@@ -46,6 +46,11 @@ body {
   @apply bg-gray-400 rounded-lg
 }
 
+/*** Custom Stepper Styles  **/
+#RFS-Label {
+  @apply text-slate-600 dark:text-gray-300
+}
+
 /**************** RC- PAGINATION STYLES ******************/
 /* Variable Definitions */
 :root {
