@@ -26,7 +26,7 @@ const OrderConfirmation = () => {
         width={width}
         height={height}
         gravity={0.1}
-        numberOfPieces={2000}
+        numberOfPieces={1000}
         recycle={false}
       />
       <h1 className="text-4xl font-semibold text-slate-800 dark:text-gray-100 text-center">
@@ -34,7 +34,7 @@ const OrderConfirmation = () => {
       </h1>
       <p className="text-center text-slate-800 dark:text-gray-300 md:text-lg">
         Thank you{" "}
-        <span className="capitalize font-bold">{checkoutData?.firstName}</span>!
+        <span className="capitalize font-bold">{checkoutData?.firstName}</span>{" "}
         for shopping with us. Your purchase has been successfully processed and
         your items will be with you shortly.
       </p>
