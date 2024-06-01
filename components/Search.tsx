@@ -25,7 +25,7 @@ const Search = () => {
   useEffect(() => {
     if (products) {
       let newArray = [...products];
-      newArray = newArray.slice(0, 4); // limit shuffled products list to 3
+      newArray = newArray.slice(0, 3); // limit shuffled products list to 3
       newArray = shuffleArray(newArray);
       setShuffledProducts(newArray);
     }
@@ -68,13 +68,13 @@ const Search = () => {
       </button>
 
       <dialog className="modal" ref={modalRef}>
-        <div className="modal-box bg-white dark:bg-dark-primary">
+        <div className="modal-box bg-white dark:bg-dark-secondary">
           <input
             type="text"
             placeholder="Search products..."
             value={searchQuery}
             onChange={handleSearch}
-            className="w-full input bg-black/5 dark:bg-dark-secondary rounded-xl text-slate-800 dark:text-gray-300 mb-6 py-8 placeholder:text-slate-500 dark:placeholder:text-slate-300"
+            className="w-full input bg-black/5 dark:bg-dark-primary rounded-xl text-slate-800 dark:text-gray-300 mb-6 py-8 placeholder:text-slate-500 dark:placeholder:text-slate-300"
           />
 
           <ul>
