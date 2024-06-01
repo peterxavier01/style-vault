@@ -27,7 +27,7 @@ const Hero = () => {
             animate="visible"
             className="text-3xl sm:text-4xl text-white sm:text-[40px] sm:leading-[50px] md:text-5xl font-bold"
           >
-            Elevate Your Wardrobe with Our Premium Shirts
+            Step Up Your Style with Our Premium Shoes
           </motion.h1>
           <motion.p
             variants={heroSubtitleVariants}
@@ -35,7 +35,7 @@ const Hero = () => {
             animate="visible"
             className="py-6 text-white max-w-sm text-center"
           >
-            Discover the Perfect Fit and Style for Every Occasion
+            Find the Perfect Fit and Style for Every Occasion
           </motion.p>
           <motion.div
             variants={heroBtnVariants}
