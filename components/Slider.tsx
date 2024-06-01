@@ -31,7 +31,7 @@ const Slider: React.FC<SliderProps> = ({
       ) : null}
       <div
         className={cn(
-          "fixed right-0 inset-y-0 h-full overscroll-contain min-h-screen w-[80%] md:w-[25rem] bg-white dark:bg-dark-secondary z-[200] px-4 duration-[300ms] transition overflow-y-scroll",
+          "fixed right-0 inset-y-0 h-full min-h-screen w-[80%] md:w-[25rem] bg-white dark:bg-dark-secondary z-[200] px-4 duration-[300ms] transition overflow-y-scroll",
           className,
           {
             "translate-x-[0%]": isOpen,

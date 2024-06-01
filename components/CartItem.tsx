@@ -39,7 +39,7 @@ const CartItem: React.FC<CartItemProps> = ({
       <div className="col-span-2">
         <div className="flex justify-between items-center mb-1">
           <Link href={`/${name.toLowerCase()}`}>
-            <p className="text-slate-800 dark:text-gray-300 font-semibold text-base link-hover-c">
+            <p className="text-slate-800 dark:text-gray-300 font-semibold text-base link-hover-c text-ellipsis line-clamp-1">
               {name}
             </p>
           </Link>
@@ -53,7 +53,7 @@ const CartItem: React.FC<CartItemProps> = ({
           ) : null}
         </div>
 
-        <div className="flex justify-between items-center">
+        <div className="flex flex-wrap gap-2 sm:flex-nowrap justify-between items-center">
           <Counter quantity={cartItem.quantity} cartItem={cartItem} />
           <p className="text-slate-800 dark:text-gray-300 text-sm md:text-base">
             {formatted_with_symbol}

@@ -15,7 +15,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
           </span>
         </div>
         <select
-          className="select select-bordered dark:border-none bg-white dark:bg-dark-secondary"
+          className="select select-bordered dark:border-none bg-white dark:bg-dark-secondary text-slate-800 dark:text-gray-300"
           value={value}
           ref={ref}
           {...props}

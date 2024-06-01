@@ -55,13 +55,13 @@ const OrderSummary = ({
 
             <div className="mt-auto">
               <div className="border-y border-slate-300 py-2">
-                <p className="flex items-center justify-between">
+                <p className="flex items-center justify-between text-slate-800 dark:text-gray-300">
                   <span>Subtotal</span>
                   <span>
                     {checkoutLiveObject?.subtotal.formatted_with_symbol}
                   </span>
                 </p>
-                <p className="flex items-center justify-between mt-4">
+                <p className="flex items-center justify-between mt-4 text-slate-800 dark:text-gray-300">
                   <span>Shipping</span>
                   <span>
                     {checkoutLiveObject?.shipping?.price
@@ -70,7 +70,7 @@ const OrderSummary = ({
                 </p>
               </div>
 
-              <p className="flex items-center justify-between mt-4">
+              <p className="flex items-center justify-between mt-4 text-slate-800 dark:text-gray-300">
                 <span>
                   Total ({checkoutLiveObject.currency.code.toUpperCase()})
                 </span>
