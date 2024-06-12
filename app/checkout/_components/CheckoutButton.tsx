@@ -24,10 +24,10 @@ const CheckoutButton = ({
 
   const config: PaystackProps | undefined = {
     reference: new Date().getTime().toString(),
-    email: checkoutData?.email || "",
+    email: checkoutData?.email ?? "",
     amount: convertToSubunit(
-      checkoutLiveObject?.total.raw || 0,
-      checkoutLiveObject?.currency.code.toUpperCase() || ""
+      checkoutLiveObject?.total.raw ?? 0,
+      checkoutLiveObject?.currency.code.toUpperCase() ?? ""
     ),
     firstname: checkoutData?.firstName,
     lastname: checkoutData?.lastName,
