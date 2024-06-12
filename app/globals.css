@@ -129,16 +129,13 @@ body {
 
 .rc-pagination-item:hover a {
   text-decoration: none;
+  color: var(--clr-main);
 }
 
 .rc-pagination-item:focus,
 .rc-pagination-item:hover {
   border-color: var(--clr-main);
   transition: all 0.3s;
-}
-
-.rc-pagination-item:hover a {
-  color: var(--clr-main);
 }
 
 .rc-pagination-item-active {
