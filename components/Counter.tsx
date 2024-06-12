@@ -11,7 +11,7 @@ interface CounterProps {
   cartItem: LineItem;
 }
 
-const Counter: React.FC<CounterProps> = React.memo(({ quantity, cartItem }) => {
+const Counter: React.FC<CounterProps> = ({ quantity, cartItem }) => {
   const [optimisticQuantity, setOptimisticQuantity] = useState(quantity);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const Counter: React.FC<CounterProps> = React.memo(({ quantity, cartItem }) => {
       </span>
     </div>
   );
-});
+};
 
 Counter.displayName = "Counter";
 
