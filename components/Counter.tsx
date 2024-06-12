@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { LineItem } from "@chec/commerce.js/types/line-item";
 
@@ -11,7 +11,7 @@ interface CounterProps {
   cartItem: LineItem;
 }
 
-const Counter: React.FC<CounterProps> = ({ quantity, cartItem }) => {
+const Counter: React.FC<CounterProps> = React.memo(({ quantity, cartItem }) => {
   const [optimisticQuantity, setOptimisticQuantity] = useState(quantity);
 
   useEffect(() => {
@@ -57,6 +57,8 @@ const Counter: React.FC<CounterProps> = ({ quantity, cartItem }) => {
       </span>
     </div>
   );
-};
+});
+
+Counter.displayName = "Counter";
 
 export default Counter;
