@@ -13,6 +13,7 @@ import Button from "./Button";
 import { Product } from "@chec/commerce.js/types/product";
 import addToCart from "@/libs/addToCart";
 import useCartData from "@/hooks/useCartData";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   product: Product;
@@ -27,6 +28,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
     permalink,
     image,
   } = product;
+
+  const router = useRouter();
 
   const cart = useCartData((state) => state.cart);
 
@@ -77,7 +80,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
           <Button
             className="bg-white rounded-full border-none w-12 h-12 hover:scale-105 hover:bg-white transition flex justify-center items-center"
             title="Add to cart"
-            onClick={() => addToCart(productId, 1)}
+            onClick={() => {
+              addToCart(productId, 1);
+              router.refresh();
+            }}
           >
             {!productInCart.inCart ? (
               <AiOutlineShoppingCart size={28} className="text-slate-800" />
