@@ -66,9 +66,12 @@ const Search = () => {
   };
 
   const debouncedProductFilter = debounce(() => {
+    const lowerCaseSearchQuery = searchQuery.toLowerCase();
+
     const filteredProducts = products?.filter((product) =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      product.name.toLowerCase().includes(lowerCaseSearchQuery)
     );
+
     setFilteredProducts(filteredProducts);
   }, 500);
 
@@ -94,25 +97,17 @@ const Search = () => {
           />
 
           <ul>
-            {searchQuery.length === 0
-              ? shuffledProducts?.map((product) => (
-                  <ProductSearchCard
-                    key={product.id}
-                    product={product}
-                    modalRef={modalRef}
-                    setSearchQuery={setSearchQuery}
-                  />
-                ))
-              : searchQuery.length > 0
-                ? filteredProducts?.map((product) => (
-                    <ProductSearchCard
-                      key={product.id}
-                      product={product}
-                      modalRef={modalRef}
-                      setSearchQuery={setSearchQuery}
-                    />
-                  ))
-                : null}
+            {(searchQuery.length === 0
+              ? shuffledProducts
+              : filteredProducts
+            )?.map((product) => (
+              <ProductSearchCard
+                key={product.id}
+                product={product}
+                modalRef={modalRef}
+                setSearchQuery={setSearchQuery}
+              />
+            ))}
           </ul>
         </div>
 
