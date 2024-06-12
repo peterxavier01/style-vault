@@ -6,6 +6,7 @@ import Button from "@/components/Button";
 
 import { Category } from "@/types/";
 import { categoryCardItemVariants } from "@/utils/animations";
+import { Asset } from "@chec/commerce.js/types/asset";
 
 interface CardProps {
   category: Category;
@@ -13,7 +14,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ category }) => {
   const { name, slug, assets } = category;
-  const [{ url }] = assets!;
+  const [{ url }] = assets as Asset[];
 
   if (!category) return;
 
