@@ -22,6 +22,7 @@ import {
 } from "react-icons/ai";
 import { FaFemale, FaMale } from "react-icons/fa";
 import { BiSolidShoppingBag } from "react-icons/bi";
+import useCheckoutData from "@/hooks/useCheckoutData";
 
 const links = [
   { id: 1, name: "Home", href: "/", icon: AiFillHome },
@@ -32,20 +33,27 @@ const links = [
 
 const Navbar = () => {
   const { cart, setCart } = useCartData();
+  const isOrderConfirmed = useCheckoutData((state) => state.isOrderConfirmed);
   const { theme } = useTheme();
 
   useEffect(() => {
     const getCartData = async () => {
-      try {
-        const data = await getCart();
-        setCart(data);
-      } catch (err) {
-        console.log(err);
+      if (isOrderConfirmed) {
+        setCart(null);
+      }
+
+      if (!isOrderConfirmed) {
+        try {
+          const data = await getCart();
+          setCart(data);
+        } catch (err) {
+          console.log(err);
+        }
       }
     };
 
     getCartData();
-  }, [setCart, cart]);
+  }, [setCart, cart, isOrderConfirmed]);
 
   const [isOpen, setIsOpen] = useState(false);
   const NavToggle = isOpen ? AiOutlineClose : AiOutlineMenu;
