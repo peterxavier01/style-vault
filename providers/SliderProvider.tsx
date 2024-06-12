@@ -17,11 +17,7 @@ const SliderProvider = () => {
 
   if (!isMounted) return null;
 
-  return (
-    <>
-      <CartSlider cartData={cartData} />
-    </>
-  );
+  return <CartSlider cartData={cartData} />;
 };
 
 export default SliderProvider;
