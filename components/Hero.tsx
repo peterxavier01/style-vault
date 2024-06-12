@@ -25,7 +25,7 @@ const Hero = () => {
             variants={heroTitleVariants}
             initial="initial"
             animate="visible"
-            className="text-3xl sm:text-4xl text-white sm:text-[40px] sm:leading-[50px] md:text-5xl font-bold"
+            className="text-3xl text-white sm:text-[40px] leading-10 sm:leading-[50px] md:text-5xl md:leading-[60px] font-bold"
           >
             Step Up Your Style with Our Premium Shoes
           </motion.h1>
