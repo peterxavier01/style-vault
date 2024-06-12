@@ -40,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
     inCart: boolean | undefined;
   };
 
-  const [productInCart, setproductInCart] = useState<initialStateType>({
+  const [productInCart, setProductInCart] = useState<initialStateType>({
     product,
     inCart: false,
   });
@@ -51,7 +51,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
       const isInCart = cart?.line_items.some(
         (item) => item.product_id === productId
       );
-      setproductInCart((prev) => ({ ...prev, inCart: isInCart }));
+      setProductInCart((prev) => ({ ...prev, inCart: isInCart }));
     } catch (error) {
       console.error(error);
     }
