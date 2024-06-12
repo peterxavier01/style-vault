@@ -44,7 +44,7 @@ const CheckoutForm = ({
 }: CheckoutFormProps) => {
   const { register, setFocus, handleSubmit, formState } = useForm<IFormData>();
 
-  const { errors, isDirty, isValid } = formState;
+  const { isDirty, isValid } = formState;
 
   const setCheckoutData = useCheckoutData((state) => state.setCheckoutData);
 
@@ -156,98 +156,96 @@ const CheckoutForm = ({
   };
 
   return (
-    <>
-      <form
-        className="w-full max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 mb-8"
-        onSubmit={handleSubmit(onSubmit)}
+    <form
+      className="w-full max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 mb-8"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <TextInput
+        type="text"
+        label="First Name"
+        {...register("firstName", { required: true })}
+      />
+      <TextInput
+        type="text"
+        label="Last Name"
+        {...register("lastName", { required: true })}
+      />
+      <TextInput
+        type="text"
+        label="Address"
+        {...register("address", { required: true })}
+      />
+      <TextInput
+        type="tel"
+        label="Mobile Number"
+        {...register("mobileNumber")}
+      />
+      <TextInput
+        type="email"
+        label="Email"
+        {...register("email", { required: true })}
+      />
+      <TextInput
+        type="text"
+        label="City"
+        {...register("city", { required: true })}
+      />
+      <TextInput
+        type="number"
+        label="Zip/Postal Code"
+        {...register("postalCode", { minLength: 2 })}
+      />
+      <Select
+        label="Shipping Country"
+        defaultOption="Select country"
+        value={shippingCountry}
+        {...register("shippingCountry", {
+          onChange: (event) => setShippingCountry(event.target.value),
+        })}
       >
-        <TextInput
-          type="text"
-          label="First Name"
-          {...register("firstName", { required: true })}
-        />
-        <TextInput
-          type="text"
-          label="Last Name"
-          {...register("lastName", { required: true })}
-        />
-        <TextInput
-          type="text"
-          label="Address"
-          {...register("address", { required: true })}
-        />
-        <TextInput
-          type="tel"
-          label="Mobile Number"
-          {...register("mobileNumber")}
-        />
-        <TextInput
-          type="email"
-          label="Email"
-          {...register("email", { required: true })}
-        />
-        <TextInput
-          type="text"
-          label="City"
-          {...register("city", { required: true })}
-        />
-        <TextInput
-          type="number"
-          label="Zip/Postal Code"
-          {...register("postalCode", { minLength: 2 })}
-        />
-        <Select
-          label="Shipping Country"
-          defaultOption="Select country"
-          value={shippingCountry}
-          {...register("shippingCountry", {
-            onChange: (event) => setShippingCountry(event.target.value),
-          })}
-        >
-          {shippingCountries?.map((option) => (
-            <option key={option.code} value={option.code}>
-              {option.label}
-            </option>
-          ))}
-        </Select>
-        <Select
-          label="Shipping Subdivision"
-          defaultOption="Select subdivision"
-          value={shippingSubdivision}
-          {...register("shippingSubdivision", {
-            onChange: (event) => setShippingSubdivision(event.target.value),
-          })}
-        >
-          {shippingSubdivisions?.map((subdivision) => (
-            <option key={subdivision.code} value={subdivision.code}>
-              {subdivision.label}
-            </option>
-          ))}
-        </Select>
-        <Select
-          label="Shipping Options"
-          defaultOption="Select shipping options"
-          value={shippingOption}
-          {...register("shippingOption", {
-            onChange: (e) => setShippingOption(e.target.value),
-          })}
-        >
-          {options?.map((option) => (
-            <option key={option.id} value={option.id}>
-              {option.label}
-            </option>
-          ))}
-        </Select>
+        {shippingCountries?.map((option) => (
+          <option key={option.code} value={option.code}>
+            {option.label}
+          </option>
+        ))}
+      </Select>
+      <Select
+        label="Shipping Subdivision"
+        defaultOption="Select subdivision"
+        value={shippingSubdivision}
+        {...register("shippingSubdivision", {
+          onChange: (event) => setShippingSubdivision(event.target.value),
+        })}
+      >
+        {shippingSubdivisions?.map((subdivision) => (
+          <option key={subdivision.code} value={subdivision.code}>
+            {subdivision.label}
+          </option>
+        ))}
+      </Select>
+      <Select
+        label="Shipping Options"
+        defaultOption="Select shipping options"
+        value={shippingOption}
+        {...register("shippingOption", {
+          onChange: (e) => setShippingOption(e.target.value),
+        })}
+      >
+        {options?.map((option) => (
+          <option key={option.id} value={option.id}>
+            {option.label}
+          </option>
+        ))}
+      </Select>
 
-        <Button
-          type="submit"
-          className="w-full max-w-xs mt-4 mx-auto sm:col-span-2 disabled:bg-primary/80 disabled:text-gray-300 disabled:cursor-not-allowed focus-visible:outline focus-visible:outline-primary"
-          disabled={!isDirty || !isValid}
-        >
-          Next
-        </Button>
-      </form>
-    </>
+      <Button
+        type="submit"
+        className="w-full max-w-xs mt-4 mx-auto sm:col-span-2 disabled:bg-primary/80 disabled:text-gray-300 disabled:cursor-not-allowed focus-visible:outline focus-visible:outline-primary"
+        disabled={!isDirty || !isValid}
+      >
+        Next
+      </Button>
+    </form>
   );
 };
 
