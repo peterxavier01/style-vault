@@ -27,7 +27,7 @@ body {
 }
 
 /****** Slider Styles *******/
-.cart-slider {
+.scrollbar-width-0 {
   -ms-overflow-style: none !important;
   /** IE and Edge */
   scrollbar-width: none !important;
