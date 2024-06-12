@@ -23,7 +23,7 @@ const Counter: React.FC<CounterProps> = ({ quantity, cartItem }) => {
     try {
       await incrementQuantity(cartItem.id, optimisticQuantity);
     } catch (error) {
-      setOptimisticQuantity(optimisticQuantity);
+      setOptimisticQuantity((prevQuantity) => prevQuantity);
     }
   };
 
@@ -33,7 +33,7 @@ const Counter: React.FC<CounterProps> = ({ quantity, cartItem }) => {
       try {
         await decrementQuantity(cartItem.id, optimisticQuantity);
       } catch (error) {
-        setOptimisticQuantity(optimisticQuantity);
+        setOptimisticQuantity((prevQuantity) => prevQuantity);
       }
     }
   };
