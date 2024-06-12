@@ -54,7 +54,7 @@ const ProductCategory: React.FC<ProductCatgory> = ({
           <div className="flex flex-row sm:flex-col gap-3">
             <Dropdown
               title="men"
-              checked={isMobile ? false : true}
+              checked={!isMobile}
               content={menCategories}
               onClick={handleFilterProduct}
             />
@@ -68,14 +68,15 @@ const ProductCategory: React.FC<ProductCatgory> = ({
 
         <div className="md:col-span-2 lg:col-span-3">
           <ul className="grid gap-4 grid-cols-2 lg:grid-cols-4">
-            {products &&
-              products.map((product) => {
-                return (
-                  <li key={product.id}>
-                    <ProductCard product={product} />
-                  </li>
-                );
-              })}
+            {products
+              ? products.map((product) => {
+                  return (
+                    <li key={product.id}>
+                      <ProductCard product={product} />
+                    </li>
+                  );
+                })
+              : null}
           </ul>
 
           <div className="flex items-center justify-center shadow-md p-4 rounded-lg w-full">
