@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsBagX } from "react-icons/bs";
 import { Cart } from "@chec/commerce.js/types/cart";
 
@@ -34,81 +34,80 @@ type FilledCartProps = {
   cartData: Cart | null;
 };
 
-const FilledCart: React.FC<FilledCartProps> = ({ cartData: cart }) => {
-  const cartSlider = useCartSlider();
+const FilledCart: React.FC<FilledCartProps> = React.memo(
+  ({ cartData: cart }) => {
+    const cartSlider = useCartSlider();
+    const [isDeleting, setIsDeleting] = useState(false);
 
-  const [optimisticCart, setOptimisticCart] = useState<LineItem[] | undefined>(
-    cart?.line_items
-  );
-  const [optimisticUpdateInProgress, setOptimisticUpdateInProgress] =
-    useState(false);
+    const [optimisticCart, setOptimisticCart] = useState<
+      LineItem[] | undefined
+    >(cart?.line_items);
 
-  useEffect(() => {
-    // Only update optimisticCart from cart?.line_items if there's no optimistic update in progress
-    if (!optimisticUpdateInProgress) {
-      setOptimisticCart(cart?.line_items);
-    }
-  }, [cart?.line_items, optimisticUpdateInProgress]);
+    useEffect(() => {
+      setOptimisticCart(cart?.line_items); // set value of optimisticCart to the cart items when component mounts to prevent undefined
+    }, [cart]);
 
-  const handleRemoveItem = async (id: string) => {
-    const newCartArr = optimisticCart?.filter((product) => {
-      return product.id !== id;
-    });
-
-    if (newCartArr) {
-      setOptimisticUpdateInProgress(true);
-      setOptimisticCart(newCartArr);
+    const handleRemoveItem = async (id: string) => {
       try {
+        setIsDeleting(true); // set state for pending ui
         await removeItem(id);
+        setIsDeleting(false); // remove state for pending ui
+
+        const newCartArr = optimisticCart?.filter(
+          (product) => product.id !== id
+        );
+        setOptimisticCart(newCartArr);
       } catch (error) {
-        setOptimisticCart(cart?.line_items);
-      } finally {
-        setOptimisticUpdateInProgress(false);
+        console.error(error);
+        setOptimisticCart(cart?.line_items); // Revert to the original cart if the removal fails
       }
-    }
-  };
+    };
 
-  return (
-    <div className="mt-8 grid gap-8">
-      {optimisticCart?.map((product) => (
-        <CartItem
-          key={product.id}
-          cartItem={product}
-          onRemoveItem={handleRemoveItem}
-          showCloseBtn={true}
-        />
-      ))}
+    return (
+      <div className="mt-8 grid gap-8">
+        {optimisticCart?.map((product) => (
+          <CartItem
+            key={product.id}
+            cartItem={product}
+            onRemoveItem={handleRemoveItem}
+            showCloseBtn={true}
+            isDeleting={isDeleting}
+          />
+        ))}
 
-      {cart && cart?.line_items.length > 0 ? (
-        <Button onClick={clearCart} className="w-full">
-          Clear Shopping Cart
-        </Button>
-      ) : null}
-
-      <div className="border-t border-slate-300 pt-4 sticky bottom-0 bg-white dark:bg-dark-secondary pb-8">
-        <p className="flex items-center justify-between text-xl">
-          <span className="font-bold text-slate-800 dark:text-gray-300">
-            Subtotal
-          </span>
-          <span className="font-bold text-slate-800 dark:text-gray-300">
-            {cart?.subtotal.formatted_with_symbol}
-          </span>
-        </p>
-        <p className="flex items-center gap-2 mt-4">
-          <span className="block w-2 h-2 bg-primary rounded-full" />
-          <span className="text-slate-800 dark:text-gray-100">
-            Shipping rates and taxes are calculated at checkout
-          </span>
-        </p>
-        <Link href="/checkout">
-          <Button className="w-full mt-4" onClick={cartSlider.onClose}>
-            Proceed to Checkout
+        {cart && cart?.line_items.length > 0 ? (
+          <Button onClick={clearCart} className="w-full">
+            Clear Shopping Cart
           </Button>
-        </Link>
+        ) : null}
+
+        <div className="border-t border-slate-300 pt-4 sticky bottom-0 bg-white dark:bg-dark-secondary pb-8">
+          <p className="flex items-center justify-between text-xl">
+            <span className="font-bold text-slate-800 dark:text-gray-300">
+              Subtotal
+            </span>
+            <span className="font-bold text-slate-800 dark:text-gray-300">
+              {cart?.subtotal.formatted_with_symbol}
+            </span>
+          </p>
+          <p className="flex items-center gap-2 mt-4">
+            <span className="block w-2 h-2 bg-primary rounded-full" />
+            <span className="text-slate-800 dark:text-gray-100">
+              Shipping rates and taxes are calculated at checkout
+            </span>
+          </p>
+          <Link href="/checkout">
+            <Button className="w-full mt-4" onClick={cartSlider.onClose}>
+              Proceed to Checkout
+            </Button>
+          </Link>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
+
+FilledCart.displayName = "FilledCart";
 
 interface CartSliderProps {
   cartData: Cart | null;
@@ -132,7 +131,7 @@ const CartSlider: React.FC<CartSliderProps> = ({ cartData }) => {
       title="Your Cart"
       isOpen={isOpen}
       onClick={handleClose}
-      className="cart-slider"
+      className="scrollbar-width-0"
     >
       {cartData?.line_items.length === 0 ? (
         <EmptyCart />
