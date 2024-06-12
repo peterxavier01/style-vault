@@ -10,12 +10,14 @@ interface CartItemProps {
   cartItem: LineItem;
   onRemoveItem: (id: string) => void;
   showCloseBtn: boolean;
+  isDeleting?: boolean;
 }
 
 const CartItem: React.FC<CartItemProps> = ({
   cartItem,
   onRemoveItem,
   showCloseBtn,
+  isDeleting,
 }) => {
   const {
     image,
@@ -25,7 +27,11 @@ const CartItem: React.FC<CartItemProps> = ({
   const src = image ? image.url : "";
 
   return (
-    <div className="grid grid-cols-3 gap-x-4">
+    <div className="grid grid-cols-3 gap-x-4 relative">
+      {isDeleting ? (
+        <div className="bg-white/40 absolute h-full w-full" />
+      ) : null}
+
       <div className="bg-gray-300 h-24 relative overflow-hidden w-full hover:bg-gray-400 duration-200 transition rounded-lg flex items-center justify-center">
         <Image
           src={src}
