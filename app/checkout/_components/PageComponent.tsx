@@ -69,7 +69,7 @@ const PageComponent = () => {
       if (token) setCheckoutToken(token);
     };
 
-    cart ? getToken(cart?.id) : null;
+    if (cart) getToken(cart.id);
     setIsLoading(false);
   }, [cart]);
 
