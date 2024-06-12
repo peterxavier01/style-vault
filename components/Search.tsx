@@ -31,6 +31,20 @@ const Search = () => {
     }
   }, [products]);
 
+  // Show search modal when CTRL + K keys are pressed
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "k" && event.ctrlKey) {
+        event.preventDefault(); // prevent the browser's default behaviour, in this case, bringing the browser search bar into focus
+        modalRef.current?.showModal();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   const openModal = () => {
     if (modalRef.current) {
       modalRef.current.showModal();
@@ -60,12 +74,14 @@ const Search = () => {
 
   return (
     <>
-      <button
-        className="cursor-pointer text-slate-600 dark:text-gray-300 hover:text-slate-900 hover:dark:text-white active:scale-90"
-        onClick={openModal}
-      >
-        <AiOutlineSearch size={24} />
-      </button>
+      <div className="tooltip tooltip-bottom" data-tip="Ctrl + K">
+        <button
+          className="cursor-pointer text-slate-600 dark:text-gray-300 hover:text-slate-900 hover:dark:text-white active:scale-90"
+          onClick={openModal}
+        >
+          <AiOutlineSearch size={24} />
+        </button>
+      </div>
 
       <dialog className="modal" ref={modalRef}>
         <div className="modal-box bg-white dark:bg-dark-secondary">
