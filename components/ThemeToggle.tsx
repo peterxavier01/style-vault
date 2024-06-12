@@ -1,9 +1,11 @@
 import { useTheme } from "next-themes";
 import { FiMoon, FiSun } from "react-icons/fi";
+import { LuSunMoon } from "react-icons/lu";
 
 const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
-  const Icon = theme === "dark" ? FiMoon : FiSun;
+  const Icon =
+    theme === "dark" ? FiMoon : theme === "light" ? FiSun : LuSunMoon;
 
   return (
     <div className="dropdown dropdown-end dropdown-bottom">
@@ -20,9 +22,9 @@ const ThemeToggle = () => {
         <li onClick={() => setTheme("dark")}>
           <a>Dark</a>
         </li>
-        {/* <li onClick={() => setTheme("system")}>
+        <li onClick={() => setTheme("system")}>
           <a>System</a>
-        </li> */}
+        </li>
       </ul>
     </div>
   );
