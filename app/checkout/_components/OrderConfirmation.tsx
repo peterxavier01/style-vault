@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Confetti from "react-confetti";
 import useWindowSize from "react-use/lib/useWindowSize";
 
@@ -9,19 +10,27 @@ import { refreshCart } from "@/libs/updateCart";
 import Button from "@/components/Button";
 
 const OrderConfirmation = () => {
+  const router = useRouter();
   const { width, height } = useWindowSize();
   const checkoutData = useCheckoutData((state) => state.checkoutData);
+  const setIsOrderConfirmed = useCheckoutData(
+    (state) => state.setIsOrderConfirmed
+  );
 
   useEffect(() => {
     const onCheckoutSuccess = async () => {
-      return await refreshCart();
+      await refreshCart();
+      setIsOrderConfirmed(true);
+      router.refresh();
     };
 
     onCheckoutSuccess();
-  }, []);
+
+    return () => setIsOrderConfirmed(false);
+  }, [router, setIsOrderConfirmed]);
 
   return (
-    <section className="max-w-2xl mx-auto flex flex-col items-center gap-4">
+    <section className="max-w-2xl mx-auto flex flex-col items-center gap-4 scrollbar-width-0">
       <Confetti
         width={width}
         height={height}
