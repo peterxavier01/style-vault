@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import sanitizeHtml from "sanitize-html";
@@ -23,6 +24,7 @@ type PageComponentProps = {
 };
 
 const PageContent = ({ product }: PageComponentProps) => {
+  const router = useRouter();
   const [selectedImage, setSelectedImage] = useState<string | undefined>("");
 
   const { cart } = useCartData();
@@ -32,7 +34,8 @@ const PageContent = ({ product }: PageComponentProps) => {
     cart?.line_items.map((item) => {
       setCartItem(item);
     });
-  }, [cart]);
+    router.refresh();
+  }, [cart, router]);
 
   useEffect(() => {
     if (!selectedImage) {
