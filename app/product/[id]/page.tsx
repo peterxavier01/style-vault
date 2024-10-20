@@ -9,11 +9,11 @@ interface ProductProps {
 }
 
 const Product: React.FC<ProductProps> = async ({ params: { id } }) => {
-  const product = await getProduct(id);
+  // const product = await getProduct(id);
 
   return (
     <section className="max-w-[1440px] mx-auto px-4 md:px-8 mb-14">
-      <PageContent product={product} />
+      {/* <PageContent product={product} /> */}
     </section>
   );
 };

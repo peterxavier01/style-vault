@@ -5,11 +5,11 @@ import ProductCategory from "@/components/ProductCategory";
 import getProducts from "@/libs/getProducts";
 
 export default async function Shop() {
-  const products: Product[] = await getProducts();
+  // const products: Product[] = await getProducts();
 
   return (
     <main>
-      <ProductCategory products={products} categoryName="Shop" />
+      {/* <ProductCategory products={products} categoryName="Shop" /> */}
     </main>
   );
 }

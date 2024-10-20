@@ -13,12 +13,9 @@ interface PageProps {
 }
 
 const Page: React.FC<PageProps> = async ({ params: { slug } }) => {
-  const products: Product[] = await getProductsByCategory(slug);
-  const category: Category = await getCategoryBySlug(slug);
-
   return (
     <main>
-      <ProductCategory products={products} category={category} />
+      {/* <ProductCategory products={products} category={category} /> */}
     </main>
   );
 };
