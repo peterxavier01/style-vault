@@ -1,10 +1,20 @@
-import commerce from "@/utils/commerce";
 import toast from "react-hot-toast";
 
-export default async function getProducts() {
-  const { data } = await commerce.products.list();
+import { client } from '@/utils/client';
 
-  if (!data) toast.error("Error fetching products");
+const options = { next: { revalidate: 60 } };
 
-  return data;
+const PRODUCTS_QUERY = `*[_type=="product"]`;
+
+export async function getProducts() {
+  try {
+    const products = await client.fetch(PRODUCTS_QUERY, {}, options);
+
+    return products;
+  } catch (error) {
+    toast.error("Error fetching products");
+    console.error('Error fetching products:', error);
+    
+    return [];
+  }
 }
