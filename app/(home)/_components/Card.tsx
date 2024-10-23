@@ -4,17 +4,18 @@ import { motion } from "framer-motion";
 
 import Button from "@/components/Button";
 
-import { Category } from "@/types/";
+import { Category } from "@/sanity/sanity.types";
 import { categoryCardItemVariants } from "@/utils/animations";
-import { Asset } from "@chec/commerce.js/types/asset";
+import { urlFor } from "@/utils/client";
 
 interface CardProps {
   category: Category;
 }
 
 const Card: React.FC<CardProps> = ({ category }) => {
-  const { name, slug, assets } = category;
-  const [{ url }] = assets as Asset[];
+  const { name, slug, image } = category;
+
+  const url = image ? urlFor(image)?.width(300).url() : null
 
   if (!category) return;
 
@@ -27,8 +28,8 @@ const Card: React.FC<CardProps> = ({ category }) => {
 
       <div>
         <Image
-          src={url}
-          alt={name}
+          src={url || "" }
+          alt={name || ""}
           fill
           loading="eager"
           sizes="(min-width: 1520px) 332px, (min-width: 1040px) 21.74vw, (min-width: 640px) 45.79vw, calc(100vw - 32px)"
@@ -40,7 +41,7 @@ const Card: React.FC<CardProps> = ({ category }) => {
         <h4 className="text-white uppercase text-2xl md:text-4xl font-semibold">
           {name}
         </h4>
-        <Link href={`/category/${slug}`}>
+        <Link href={`/category/${slug?.current}`}>
           <Button className="bg-white text-main-black rounded-full max-w-[200px] w-full border-none capitalize hover:text-white transition">
             See details
           </Button>
