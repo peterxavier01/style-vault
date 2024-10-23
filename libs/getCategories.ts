@@ -1,10 +1,20 @@
-import commerce from "@/utils/commerce";
 import toast from "react-hot-toast";
 
-export default async function getCategories() {
-  const { data } = await commerce.categories.list();
+import { client } from '@/utils/client';
 
-  if (!data) toast.error("Error fetching categories");
+const options = { next: { revalidate: 60 } };
 
-  return data;
+const CATEGORY_QUERY = `*[_type=="category"]`;
+
+export async function getCategories() {
+  try {
+    const categories = await client.fetch(CATEGORY_QUERY, {}, options);
+
+    return categories;
+  } catch (error) {
+    toast.error("Error fetching categories");
+    console.error('Error fetching categories:', error);
+    
+    return [];
+  }
 }
