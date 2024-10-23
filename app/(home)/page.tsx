@@ -1,12 +1,13 @@
+import { defineQuery } from "next-sanity";
+
 import Hero from "@/components/Hero";
-// import PageContent from "./_components/PageContent";
+import PageContent from "./_components/PageContent";
 
-import { Product } from "@chec/commerce.js/types/product";
-
-import getProducts from "@/libs/getProducts";
-import getCategories from "@/libs/getCategories";
+import { getProducts } from "@/libs/getProducts";
 
 export default async function Home() {
+  const products = await getProducts();
+  // const categories = await getCategories();`
 
   return (
     <main className="max-w-[1440px] mx-auto px-4 md:px-8">
@@ -14,7 +15,9 @@ export default async function Home() {
         <Hero />
       </div>
       <div className="my-12 md:mt-20 md:mb-14">
-        {/* <PageContent products={products} categories={categories} /> */}
+        <PageContent products={products}
+        //  categories={categories}
+        />
       </div>
     </main>
   );

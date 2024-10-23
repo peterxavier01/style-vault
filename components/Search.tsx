@@ -7,7 +7,7 @@ import { Product } from "@chec/commerce.js/types/product";
 
 import ProductSearchCard from "./ProductSearchCard";
 
-import getProducts from "@/libs/getProducts";
+import { getProducts } from "@/libs/getProducts";
 import { shuffleArray } from "@/utils";
 
 const Search = () => {

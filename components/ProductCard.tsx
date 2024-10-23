@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { twMerge } from "tailwind-merge";
@@ -10,10 +11,10 @@ import { TbShoppingCartCheck } from "react-icons/tb";
 
 import Button from "./Button";
 
-import { Product } from "@chec/commerce.js/types/product";
+import { Product } from "@/sanity/sanity.types";
+import { urlFor } from "@/utils/client";
 import addToCart from "@/libs/addToCart";
 import useCartData from "@/hooks/useCartData";
-import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   product: Product;
@@ -23,8 +24,8 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
   const {
     name,
-    price: { formatted_with_symbol },
-    id: productId,
+    price,
+    _id: productId,
     permalink,
     image,
   } = product;
@@ -33,29 +34,29 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
 
   const cart = useCartData((state) => state.cart);
 
-  const src = image ? image.url : "";
+  const src = image ? urlFor(image)?.url() : null;
 
-  type initialStateType = {
-    product: Product;
-    inCart: boolean | undefined;
-  };
+  // type initialStateType = {
+  //   product: Product;
+  //   inCart: boolean | undefined;
+  // };
 
-  const [productInCart, setProductInCart] = useState<initialStateType>({
-    product,
-    inCart: false,
-  });
+  // const [productInCart, setProductInCart] = useState<initialStateType>({
+  //   product,
+  //   inCart: false,
+  // });
 
-  // // Check if a product is already in the cart
-  useEffect(() => {
-    try {
-      const isInCart = cart?.line_items.some(
-        (item) => item.product_id === productId
-      );
-      setProductInCart((prev) => ({ ...prev, inCart: isInCart }));
-    } catch (error) {
-      console.error(error);
-    }
-  }, [cart, productId]);
+  // // // Check if a product is already in the cart
+  // useEffect(() => {
+  //   try {
+  //     const isInCart = cart?.line_items.some(
+  //       (item) => item.product_id === productId
+  //     );
+  //     setProductInCart((prev) => ({ ...prev, inCart: isInCart }));
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }, [cart, productId]);
 
   return (
     <div
@@ -65,9 +66,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
       )}
     >
       <div className="rounded-2xl bg-gray-300 group overflow-hidden w-full h-80 flex items-center justify-center relative">
-        <Link href={`/product/${permalink}`}>
+        <Link href={`/product/${permalink?.current}`}>
           <Image
-            src={src}
+            src={src || ""}
             alt="product"
             fill
             loading="eager"
@@ -76,7 +77,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
           />
         </Link>
 
-        <div className="card-actions absolute top-4 right-4">
+        {/* <div className="card-actions absolute top-4 right-4">
           <Button
             className="bg-white rounded-full border-none w-12 h-12 hover:scale-105 hover:bg-white transition flex justify-center items-center"
             title="Add to cart"
@@ -91,18 +92,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
               <TbShoppingCartCheck size={28} className="text-green-800" />
             )}
           </Button>
-        </div>
+        </div> */}
       </div>
 
       <div className="card-body">
         <div className="flex flex-col text-slate-800 dark:text-gray-300 w-full">
-          <Link href={`/product/${permalink}`}>
+          <Link href={`/product/${permalink?.current}`}>
             <h2 className="card-title truncate text-sm md:text-base link-hover-custom">
               {name}
             </h2>
           </Link>
           <p className="card-title text-lg md:text-xl flex-grow-0">
-            {formatted_with_symbol}
+            ${price}
           </p>
         </div>
       </div>
