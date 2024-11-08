@@ -3,23 +3,22 @@
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import debounce from "lodash.debounce";
-import { Product } from "@chec/commerce.js/types/product";
 
 import ProductSearchCard from "./ProductSearchCard";
 
-import { getProducts } from "@/libs/getProducts";
 import { shuffleArray } from "@/utils";
+import { PRODUCTS_QUERYResult as Product } from "@/sanity/sanity.types";
 
 const Search = () => {
   const modalRef = useRef<HTMLDialogElement | null>(null);
-  const [products, setProducts] = useState<Product[] | null>(null);
-  const [shuffledProducts, setShuffledProducts] = useState<Product[] | null>(
+  const [products, setProducts] = useState<Product | null>(null);
+  const [shuffledProducts, setShuffledProducts] = useState<Product | null>(
     null
   );
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState<
-    Product[] | undefined
-  >(undefined);
+  const [filteredProducts, setFilteredProducts] = useState<Product | undefined>(
+    undefined
+  );
 
   // Show a shuffled list of products when there is no search query
   useEffect(() => {
@@ -51,10 +50,20 @@ const Search = () => {
     }
   };
 
+  // Fetch products from the API route
   useEffect(() => {
     const fetchProducts = async () => {
-      const products: Product[] = await getProducts();
-      setProducts(products);
+      try {
+        const response = await fetch("/api/products");
+        if (response.ok) {
+          const products: Product = await response.json();
+          setProducts(products);
+        } else {
+          console.error("Failed to fetch products:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
     };
 
     fetchProducts();
@@ -69,7 +78,7 @@ const Search = () => {
     const lowerCaseSearchQuery = searchQuery.toLowerCase();
 
     const filteredProducts = products?.filter((product) =>
-      product.name.toLowerCase().includes(lowerCaseSearchQuery)
+      product.name?.toLowerCase().includes(lowerCaseSearchQuery)
     );
 
     setFilteredProducts(filteredProducts);
@@ -102,7 +111,7 @@ const Search = () => {
               : filteredProducts
             )?.map((product) => (
               <ProductSearchCard
-                key={product.id}
+                key={product._id}
                 product={product}
                 modalRef={modalRef}
                 setSearchQuery={setSearchQuery}

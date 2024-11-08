@@ -2,24 +2,26 @@
 
 import { useRouter } from "next/navigation";
 
-import { Product } from "@chec/commerce.js/types/product";
-import { Category } from "@chec/commerce.js/types/category";
-
 import ProductCard from "./ProductCard";
 import Dropdown from "./Dropdown";
 import Paging from "./Paging";
+
 import { menCategories, womenCategories } from "@/utils";
+import {
+  CATEGORY_BY_SLUG_QUERYResult,
+  PRODUCT_CATEGORY_QUERYResult,
+} from "@/sanity/sanity.types";
 
 type ProductCatgory = {
-  products: Product[];
-  category?: Category;
-  categoryName?: string;
+  products: PRODUCT_CATEGORY_QUERYResult;
+  category?: CATEGORY_BY_SLUG_QUERYResult;
+  isShopPage?: boolean;
 };
 
 const ProductCategory: React.FC<ProductCatgory> = ({
   products,
   category,
-  categoryName,
+  isShopPage,
 }) => {
   const router = useRouter();
 
@@ -42,7 +44,7 @@ const ProductCategory: React.FC<ProductCatgory> = ({
     <section className="px-4 md:px-8 max-w-[1440px] mx-auto mb-8">
       <div className="bg-primary rounded-2xl w-full min-h-[250px] flex items-center justify-center">
         <h1 className="text-white text-3xl md:text-5xl text-center tracking-wide font-semibold">
-          {category?.name || categoryName}
+          {!isShopPage ? category?.name : "Shop"}
         </h1>
       </div>
 
@@ -71,7 +73,7 @@ const ProductCategory: React.FC<ProductCatgory> = ({
             {products
               ? products.map((product) => {
                   return (
-                    <li key={product.id}>
+                    <li key={product._id}>
                       <ProductCard product={product} />
                     </li>
                   );

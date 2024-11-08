@@ -1,12 +1,27 @@
-import commerce from "@/utils/commerce";
-import toast from "react-hot-toast";
+import { PRODUCT_CATEGORY_QUERYResult } from "@/sanity/sanity.types";
 
-export default async function getProductsByCategory(slug: string) {
-  const { data: products } = await commerce.products.list({
-    category_slug: slug,
-  });
+import { client } from "@/utils/client";
+import { PRODUCT_CATEGORY_QUERY } from "@/utils/queries";
 
-  if (!products) toast.error("Error fetching products");
+const options = { next: { revalidate: 60 } };
 
-  return products;
+export async function getProductsByCategory(params: {
+  slug: string;
+}): Promise<PRODUCT_CATEGORY_QUERYResult> {
+  try {
+    const products: PRODUCT_CATEGORY_QUERYResult = await client.fetch(
+      PRODUCT_CATEGORY_QUERY,
+      params,
+      options
+    );
+
+    if (!products) {
+      throw new Error("Product not found");
+    }
+
+    return products;
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    throw new Error("Something went wrong");
+  }
 }

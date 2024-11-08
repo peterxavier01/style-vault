@@ -11,18 +11,21 @@ import clientOnly from "@/components/ClientOnly";
 import Card from "./Card";
 
 import { categoryCardContainerVariants } from "@/utils/animations";
-import { Product, Category } from "@/sanity/sanity.types";
+import {
+  PRODUCTS_QUERYResult as Product,
+  CATEGORY_QUERYResult as Category,
+} from "@/sanity/sanity.types";
 
 type PageContentProps = {
-  products: Product[];
-  categories: Category[];
+  products: Product;
+  categories: Category;
 };
 
 const ProductCard = dynamic(() => import("@/components/ProductCard"), {
   loading: () => <div className="skeleton h-80 w-full rounded-2xl"></div>,
 });
 
-const PageContent: React.FC<PageContentProps> = ({ products }) => {
+const PageContent: React.FC<PageContentProps> = ({ products, categories }) => {
   return (
     <>
       <section>
@@ -35,7 +38,7 @@ const PageContent: React.FC<PageContentProps> = ({ products }) => {
         </SlideContainer>
       </section>
 
-      {/* <section className="mt-10 select-none">
+      <section className="mt-10 select-none">
         <Header title="Product Categories" />
         {categories && (
           <motion.div
@@ -45,12 +48,14 @@ const PageContent: React.FC<PageContentProps> = ({ products }) => {
             viewport={{ once: true }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 gap-y-11"
           >
-            {categories.map((category) => (
-              <Card key={category.id} category={category} />
-            ))}
+            {categories
+              .filter((item) => !item.parentCategory)
+              .map((category) => (
+                <Card key={category._id} category={category} />
+              ))}
           </motion.div>
         )}
-      </section> */}
+      </section>
 
       <section className="mt-12 md:mt-20 select-none">
         <Header title="Best-selling Products" />

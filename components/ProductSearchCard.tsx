@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Product } from "@chec/commerce.js/types/product";
+import { PRODUCTS_QUERYResult as Product } from "@/sanity/sanity.types";
 
 interface ProductSearchCardProps {
-  product: Product;
+  product: Product[0];
   modalRef: React.MutableRefObject<HTMLDialogElement | null>;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -14,7 +14,7 @@ const ProductSearchCard = ({
   modalRef,
   setSearchQuery,
 }: ProductSearchCardProps) => {
-  const src = product.image ? product.image.url : "";
+  const src = product.image ? product.image.url : null;
 
   const handleClick = () => {
     modalRef.current?.close();
@@ -26,8 +26,8 @@ const ProductSearchCard = ({
       <div className="flex w-full gap-4 mb-4 hover:bg-black/5 dark:hover:bg-white/5 p-4 rounded-xl">
         <div className="relative w-20 h-20 md:w-24 md:h-24 flex-shrink-0">
           <Image
-            src={src}
-            alt={product.name.toLowerCase()}
+            src={src as string}
+            alt={product.name?.toLowerCase() as string}
             className="rounded-xl object-cover bg-gray-300 block"
             fill
             sizes="96px"
@@ -39,7 +39,7 @@ const ProductSearchCard = ({
             {product.name}
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-base md:text-lg font-medium">
-            {product.price.formatted_with_symbol}
+            {product.price}
           </p>
         </div>
       </div>

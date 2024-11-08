@@ -4,18 +4,19 @@ import { motion } from "framer-motion";
 
 import Button from "@/components/Button";
 
-import { Category } from "@/sanity/sanity.types";
+import { CATEGORY_QUERYResult } from "@/sanity/sanity.types";
 import { categoryCardItemVariants } from "@/utils/animations";
-import { urlFor } from "@/utils/client";
 
 interface CardProps {
-  category: Category;
+  category: CATEGORY_QUERYResult[0];
 }
 
 const Card: React.FC<CardProps> = ({ category }) => {
   const { name, slug, image } = category;
 
-  const url = image ? urlFor(image)?.width(300).url() : null
+  const url = image ? image.url : null;
+
+  if (!name || !url) return;
 
   if (!category) return;
 
@@ -28,8 +29,8 @@ const Card: React.FC<CardProps> = ({ category }) => {
 
       <div>
         <Image
-          src={url || "" }
-          alt={name || ""}
+          src={url}
+          alt={name}
           fill
           loading="eager"
           sizes="(min-width: 1520px) 332px, (min-width: 1040px) 21.74vw, (min-width: 640px) 45.79vw, calc(100vw - 32px)"

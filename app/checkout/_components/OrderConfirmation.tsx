@@ -4,30 +4,25 @@ import { useRouter } from "next/navigation";
 import Confetti from "react-confetti";
 import useWindowSize from "react-use/lib/useWindowSize";
 
-import useCheckoutData from "@/hooks/useCheckoutData";
-import { refreshCart } from "@/libs/updateCart";
-
 import Button from "@/components/Button";
+
+import useCheckoutData from "@/hooks/useCheckoutData";
+import useCartStore from "@/hooks/useCartStore";
 
 const OrderConfirmation = () => {
   const router = useRouter();
   const { width, height } = useWindowSize();
   const checkoutData = useCheckoutData((state) => state.checkoutData);
-  const setIsOrderConfirmed = useCheckoutData(
-    (state) => state.setIsOrderConfirmed
-  );
+  const clearCart = useCartStore((state) => state.clearCart);
 
   useEffect(() => {
-    const onCheckoutSuccess = async () => {
-      await refreshCart();
-      setIsOrderConfirmed(true);
+    const onCheckoutSuccess = () => {
+      clearCart();
       router.refresh();
     };
 
     onCheckoutSuccess();
-
-    return () => setIsOrderConfirmed(false);
-  }, [router, setIsOrderConfirmed]);
+  }, [router, clearCart]);
 
   return (
     <section className="max-w-2xl mx-auto flex flex-col items-center gap-4 scrollbar-width-0">

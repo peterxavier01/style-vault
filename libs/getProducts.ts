@@ -1,10 +1,9 @@
 import toast from "react-hot-toast";
 
-import { client } from '@/utils/client';
+import { client } from "@/utils/client";
+import { PRODUCTS_QUERY } from "@/utils/queries";
 
 const options = { next: { revalidate: 60 } };
-
-const PRODUCTS_QUERY = `*[_type=="product"]`;
 
 export async function getProducts() {
   try {
@@ -13,8 +12,8 @@ export async function getProducts() {
     return products;
   } catch (error) {
     toast.error("Error fetching products");
-    console.error('Error fetching products:', error);
-    
+    console.error("Error fetching products:", error);
+
     return [];
   }
 }
