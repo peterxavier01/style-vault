@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 
 import CartSlider from "@/components/CartSlider";
 
-import useCartData from "@/hooks/useCartData";
+import useCartStore from "@/hooks/useCartStore";
 
 const SliderProvider = () => {
-  const { cart: cartData } = useCartData();
+  const { cartItems: cartData } = useCartStore();
 
   const [isMounted, setIsMounted] = useState(false);
 
