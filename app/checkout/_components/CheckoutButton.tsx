@@ -1,11 +1,11 @@
 import { usePaystackPayment } from "react-paystack";
 import { PaystackProps, callback } from "react-paystack/dist/types";
 
-import useCheckoutData from "@/hooks/useCheckoutData";
-
 import Button from "@/components/Button";
 import { IFormData } from "./CheckoutForm";
+
 import { convertToSubunit } from "@/utils";
+import { getCartSubtotal } from "@/hooks/useCartStore";
 
 interface CheckoutButtonProps {
   checkoutData: IFormData | undefined;
@@ -18,17 +18,12 @@ const CheckoutButton = ({
   activeStep,
   setActiveStep,
 }: CheckoutButtonProps) => {
-  const checkoutLiveObject = useCheckoutData(
-    (state) => state.checkoutLiveObject
-  );
+  const total = parseInt(getCartSubtotal());
 
   const config: PaystackProps | undefined = {
     reference: new Date().getTime().toString(),
     email: checkoutData?.email ?? "",
-    amount: convertToSubunit(
-      checkoutLiveObject?.total.raw ?? 0,
-      checkoutLiveObject?.currency.code.toUpperCase() ?? ""
-    ),
+    amount: convertToSubunit(total ?? 0, "USD"),
     firstname: checkoutData?.firstName,
     lastname: checkoutData?.lastName,
     phone: checkoutData?.mobileNumber,

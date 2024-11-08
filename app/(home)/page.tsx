@@ -1,13 +1,11 @@
 import Hero from "@/components/Hero";
 import PageContent from "./_components/PageContent";
 
-import { Product } from "@chec/commerce.js/types/product";
-
-import getProducts from "@/libs/getProducts";
-import getCategories from "@/libs/getCategories";
+import { getProducts } from "@/libs/getProducts";
+import { getCategories } from "@/libs/getCategories";
 
 export default async function Home() {
-  const products: Product[] = await getProducts();
+  const products = await getProducts();
   const categories = await getCategories();
 
   return (
@@ -15,6 +13,7 @@ export default async function Home() {
       <div>
         <Hero />
       </div>
+
       <div className="my-12 md:mt-20 md:mb-14">
         <PageContent products={products} categories={categories} />
       </div>

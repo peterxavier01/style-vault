@@ -1,12 +1,27 @@
-import commerce from "@/utils/commerce";
-import toast from "react-hot-toast";
+import { PRODUCT_QUERYResult as PRODUCT_QUERY_TYPE } from "@/sanity/sanity.types";
 
-export default async function getProduct(id: string) {
-  const product = await commerce.products.retrieve(id, {
-    type: "permalink",
-  });
+import { client } from "@/utils/client";
+import { PRODUCT_QUERY } from "@/utils/queries";
 
-  if (!product) toast.error("Error fetching product details");
+const options = { next: { revalidate: 60 } };
 
-  return product;
+export async function getProduct(params: {
+  slug: string;
+}): Promise<PRODUCT_QUERY_TYPE> {
+  try {
+    const product: PRODUCT_QUERY_TYPE = await client.fetch(
+      PRODUCT_QUERY,
+      params,
+      options
+    );
+
+    if (!product) {
+      throw new Error("Product not found");
+    }
+
+    return product;
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    throw new Error("Something went wrong");
+  }
 }

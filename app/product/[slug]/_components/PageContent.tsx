@@ -1,12 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import sanitizeHtml from "sanitize-html";
-import { Product } from "@chec/commerce.js/types/product";
-import { LineItem } from "@chec/commerce.js/types/line-item";
+import { PRODUCT_QUERYResult } from "@/sanity/sanity.types";
 import { MdOutlineShoppingBag } from "react-icons/md";
 
 import Button from "@/components/Button";
@@ -16,49 +14,50 @@ import Counter from "@/components/Counter";
 import SimilarProduct from "@/components/SimilarProduct";
 import clientOnly from "@/components/ClientOnly";
 
-import addToCart from "@/libs/addToCart";
-import useCartData from "@/hooks/useCartData";
+import useCartData, { CartProduct } from "@/hooks/useCartStore";
 
 type PageComponentProps = {
-  product: Product;
+  product: PRODUCT_QUERYResult;
 };
 
 const PageContent = ({ product }: PageComponentProps) => {
   const router = useRouter();
+  const { cartItems, addToCart } = useCartData();
+  const [cartItem, setCartItem] = useState<CartProduct | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | undefined>("");
 
-  const { cart } = useCartData();
-  const [cartItem, setCartItem] = useState<Partial<LineItem>>({});
+  const url = product?.image ? product.image.url : null;
 
   useEffect(() => {
-    cart?.line_items.map((item) => {
+    cartItems.map((item) => {
       setCartItem(item);
     });
     router.refresh();
-  }, [cart, router]);
+  }, [cartItems, router]);
 
   useEffect(() => {
     if (!selectedImage) {
-      setSelectedImage(product?.image?.url);
+      setSelectedImage(url ?? "");
     }
-  }, [product, selectedImage]);
+  }, [product, selectedImage, url]);
+
+  if (!product) return notFound();
+
+  if (!url) return "";
 
   const handleImageSelected = (url: string) => {
     setSelectedImage(url);
   };
 
-  const sanitizedContent = sanitizeHtml(product.description, {
-    allowedTags: ["b", "i", "a", "p"], // allowed tags
-    allowedAttributes: { a: ["href"] }, // allowed attributes
-  });
-
-  if (!product) return;
+  function isProductInCart() {
+    return cartItems.find((item) => item._id === product?._id);
+  }
 
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
         <div className="flex flex-col gap-4">
-          <div className="temporary w-full min-h-[350px] md:min-h-[400px] bg-gray-300 rounded-xl relative">
+          <div className="temporary w-full min-h-[350px] md:min-h-[400px] overflow-hidden rounded-xl relative">
             <Image
               src={selectedImage as string}
               fill
@@ -68,19 +67,22 @@ const PageContent = ({ product }: PageComponentProps) => {
               alt="image-name"
             />
           </div>
+
           <div className="flex items-center gap-4 w-fit rounded-xl">
-            {product.assets.map((item) => (
+            {product.gallery?.map((item) => (
               <div
-                key={item.id}
-                className="relative overflow-hidden flex items-center justify-center w-[150px] h-[140px] bg-gray-300 rounded-xl"
+                key={item.asset?._id}
+                className="relative overflow-hidden flex items-center justify-center w-[150px] h-[140px] rounded-xl"
               >
                 <Image
-                  src={item.url}
+                  src={item.asset?.url || ""}
                   fill
                   sizes="150px"
                   alt="image-name"
                   className="rounded-2xl object-cover bg-gray-300 block"
-                  onMouseEnter={() => handleImageSelected(item.url)}
+                  onMouseEnter={() =>
+                    handleImageSelected(item.asset?.url || "")
+                  }
                 />
               </div>
             ))}
@@ -89,19 +91,18 @@ const PageContent = ({ product }: PageComponentProps) => {
 
         <div>
           <p className="text-slate-500 dark:text-slate-400 text-base font-medium mb-2">
-            {product.categories[0].name}
+            {product.categories?.[0]?.name}
           </p>
           <h1 className="text-3xl md:text-5xl font-bold text-main-black dark:text-gray-100 mb-4">
             {product.name}
           </h1>
-          <p
-            dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-            className="text-slate-500 dark:text-slate-400 text-sm mb-8"
-          />
+          <p className="text-slate-500 dark:text-slate-400 text-sm mb-8">
+            {product.description}
+          </p>
 
-          <Color colors={product.variant_groups[0]} />
+          {product.variants?.[0].color && <Color product={product} />}
 
-          <Size sizes={product.variant_groups[1]} />
+          {product.variants?.[0].size && <Size product={product} />}
 
           <div className="flex items-center justify-between mb-8">
             <div>
@@ -109,23 +110,23 @@ const PageContent = ({ product }: PageComponentProps) => {
                 total price
               </p>
               <p className="text-3xl text-main-black dark:text-gray-100 font-semibold">
-                {product.price.formatted_with_symbol}
+                ${product.price}
               </p>
             </div>
-            {cartItem.quantity && (
+            {isProductInCart() ? (
               <div>
                 <Counter
-                  quantity={cartItem.quantity as number}
-                  cartItem={cartItem as LineItem}
+                  quantity={cartItem?.quantity || 1}
+                  cartItem={cartItem as CartProduct}
                 />
               </div>
-            )}
+            ) : null}
           </div>
 
           <div className="flex items-center gap-4">
             <Button
               className="rounded-xl capitalize"
-              onClick={() => addToCart(product.id, 1)}
+              onClick={() => addToCart(product)}
             >
               <MdOutlineShoppingBag size={24} />
               Add to Cart
@@ -134,7 +135,7 @@ const PageContent = ({ product }: PageComponentProps) => {
         </div>
       </div>
 
-      {product.related_products.length > 0 ? (
+      {product.relatedProducts && product.relatedProducts.length > 0 ? (
         <SimilarProduct product={product} />
       ) : null}
     </>

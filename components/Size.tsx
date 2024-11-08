@@ -1,26 +1,27 @@
 import { useState } from "react";
 
-import { ProductVariantGroup } from "@chec/commerce.js/types/product-variant-group";
+import { PRODUCT_QUERYResult } from "@/sanity/sanity.types";
+
 import { cn } from "@/utils";
 
 type SizeProps = {
-  sizes: ProductVariantGroup;
+  product: PRODUCT_QUERYResult;
 };
 
-const Size = ({ sizes }: SizeProps) => {
+const Size = ({ product }: SizeProps) => {
   const [selectedSize, setSelectedSize] = useState<number>(0);
 
   return (
     <>
-      {sizes ? (
+      {product ? (
         <div className="mb-8">
           <p className="text-main-black dark:text-gray-300 font-medium capitalize">
             size
           </p>
           <div className="flex items-center gap-2 mt-2 relative">
-            {sizes.options.map((size, index) => (
+            {product.variants?.map((variant, index) => (
               <span
-                key={size.id}
+                key={variant.size?._id}
                 className={cn(
                   "uppercase w-full max-w-[45px] cursor-pointer h-10 rounded-xl text-sm flex items-center justify-center text-main-black dark:text-gray-300 hover:text-white hover:bg-primary transition border border-main-black dark:hover:border-primary",
                   selectedSize === index
@@ -29,7 +30,7 @@ const Size = ({ sizes }: SizeProps) => {
                 )}
                 onClick={() => setSelectedSize(index)}
               >
-                {size.name}
+                {variant.size?.name}
               </span>
             ))}
           </div>

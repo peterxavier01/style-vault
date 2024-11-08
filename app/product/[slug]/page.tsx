@@ -1,15 +1,19 @@
+import { notFound } from "next/navigation";
+
 import PageContent from "./_components/PageContent";
 
-import getProduct from "@/libs/getProduct";
+import { getProduct } from "@/libs/getProduct";
 
 interface ProductProps {
   params: {
-    id: string;
+    slug: string;
   };
 }
 
-const Product: React.FC<ProductProps> = async ({ params: { id } }) => {
-  const product = await getProduct(id);
+const Product: React.FC<ProductProps> = async ({ params }) => {
+  const product = await getProduct(params);
+
+  if (!product) notFound();
 
   return (
     <section className="max-w-[1440px] mx-auto px-4 md:px-8 mb-14">

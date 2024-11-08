@@ -4,9 +4,6 @@ import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { SwiperSlide } from "swiper/react";
 
-import { Product } from "@chec/commerce.js/types/product";
-import { Category } from "@chec/commerce.js/types/category";
-
 import SlideContainer from "@/components/SlideContainer";
 import Header from "@/components/Header";
 import Newsletter from "@/components/Newsletter";
@@ -14,10 +11,14 @@ import clientOnly from "@/components/ClientOnly";
 import Card from "./Card";
 
 import { categoryCardContainerVariants } from "@/utils/animations";
+import {
+  PRODUCTS_QUERYResult as Product,
+  CATEGORY_QUERYResult as Category,
+} from "@/sanity/sanity.types";
 
 type PageContentProps = {
-  products: Product[];
-  categories: Category[];
+  products: Product;
+  categories: Category;
 };
 
 const ProductCard = dynamic(() => import("@/components/ProductCard"), {
@@ -30,7 +31,7 @@ const PageContent: React.FC<PageContentProps> = ({ products, categories }) => {
       <section>
         <SlideContainer title="Featured Products">
           {products.map((product) => (
-            <SwiperSlide key={product.id} className="w-full">
+            <SwiperSlide key={product._id} className="w-full">
               <ProductCard product={product} />
             </SwiperSlide>
           ))}
@@ -47,9 +48,11 @@ const PageContent: React.FC<PageContentProps> = ({ products, categories }) => {
             viewport={{ once: true }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 gap-y-11"
           >
-            {categories.map((category) => (
-              <Card key={category.id} category={category} />
-            ))}
+            {categories
+              .filter((item) => !item.parentCategory)
+              .map((category) => (
+                <Card key={category._id} category={category} />
+              ))}
           </motion.div>
         )}
       </section>
@@ -58,7 +61,7 @@ const PageContent: React.FC<PageContentProps> = ({ products, categories }) => {
         <Header title="Best-selling Products" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
           {products.slice(0, 8).map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product._id} product={product} />
           ))}
         </div>
       </section>

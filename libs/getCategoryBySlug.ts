@@ -1,12 +1,27 @@
-import commerce from "@/utils/commerce";
-import toast from "react-hot-toast";
+import { CATEGORY_BY_SLUG_QUERYResult } from "@/sanity/sanity.types";
 
-export default async function getCategoryBySlug(slug: string) {
-  const category = await commerce.categories.retrieve(slug, {
-    type: "slug",
-  });
+import { client } from "@/utils/client";
+import { CATEGORY_BY_SLUG_QUERY } from "@/utils/queries";
 
-  if (!category) toast.error("Error fetching product categories");
+const options = { next: { revalidate: 60 } };
 
-  return category;
+export async function getCategoryBySlug(params: {
+  slug: string;
+}): Promise<CATEGORY_BY_SLUG_QUERYResult> {
+  try {
+    const category: CATEGORY_BY_SLUG_QUERYResult = await client.fetch(
+      CATEGORY_BY_SLUG_QUERY,
+      params,
+      options
+    );
+
+    if (!category) {
+      throw new Error("Category not found");
+    }
+
+    return category;
+  } catch (error) {
+    console.error("Error fetching category:", error);
+    throw new Error("Something went wrong");
+  }
 }

@@ -2,15 +2,16 @@ import Link from "next/link";
 
 import React, { useEffect, useState } from "react";
 import { BsBagX } from "react-icons/bs";
-import { Cart } from "@chec/commerce.js/types/cart";
 
 import useCartSlider from "@/hooks/useCartSlider";
+import useCartStore, {
+  CartProduct,
+  getCartSubtotal,
+} from "@/hooks/useCartStore";
 
 import Slider from "./Slider";
 import Button from "./Button";
 import CartItem from "./CartItem";
-import { emptyCart as clearCart, removeItem } from "@/libs/updateCart";
-import { LineItem } from "@chec/commerce.js/types/line-item";
 
 const EmptyCart = () => {
   const cartSlider = useCartSlider();
@@ -31,35 +32,36 @@ const EmptyCart = () => {
 };
 
 type FilledCartProps = {
-  cartData: Cart | null;
+  cartData: CartProduct[] | null;
 };
 
 const FilledCart: React.FC<FilledCartProps> = React.memo(
   ({ cartData: cart }) => {
     const cartSlider = useCartSlider();
     const [isDeleting, setIsDeleting] = useState(false);
+    const { cartItems, removeFromCart, clearCart } = useCartStore();
 
     const [optimisticCart, setOptimisticCart] = useState<
-      LineItem[] | undefined
-    >(cart?.line_items);
+      CartProduct[] | undefined
+    >(cartItems);
 
     useEffect(() => {
-      setOptimisticCart(cart?.line_items); // set value of optimisticCart to the cart items when component mounts to prevent undefined
-    }, [cart]);
+      setOptimisticCart(cartItems); // set value of optimisticCart to the cart items when component mounts to prevent undefined
+    }, [cart, cartItems]);
 
     const handleRemoveItem = async (id: string) => {
       try {
         setIsDeleting(true); // set state for pending ui
-        await removeItem(id);
+        removeFromCart(id);
         setIsDeleting(false); // remove state for pending ui
 
         const newCartArr = optimisticCart?.filter(
-          (product) => product.id !== id
+          (product) => product._id !== id
         );
         setOptimisticCart(newCartArr);
       } catch (error) {
         console.error(error);
-        setOptimisticCart(cart?.line_items); // Revert to the original cart if the removal fails
+        setOptimisticCart(cartItems); // Revert to the original cart if the removal fails
       }
     };
 
@@ -67,7 +69,7 @@ const FilledCart: React.FC<FilledCartProps> = React.memo(
       <div className="mt-8 grid gap-8">
         {optimisticCart?.map((product) => (
           <CartItem
-            key={product.id}
+            key={product._id}
             cartItem={product}
             onRemoveItem={handleRemoveItem}
             showCloseBtn={true}
@@ -75,7 +77,7 @@ const FilledCart: React.FC<FilledCartProps> = React.memo(
           />
         ))}
 
-        {cart && cart?.line_items.length > 0 ? (
+        {cart && cartItems.length > 0 ? (
           <Button onClick={clearCart} className="w-full">
             Clear Shopping Cart
           </Button>
@@ -87,7 +89,7 @@ const FilledCart: React.FC<FilledCartProps> = React.memo(
               Subtotal
             </span>
             <span className="font-bold text-slate-800 dark:text-gray-300">
-              {cart?.subtotal.formatted_with_symbol}
+              $ {getCartSubtotal()}
             </span>
           </p>
           <p className="flex items-center gap-2 mt-4">
@@ -110,7 +112,7 @@ const FilledCart: React.FC<FilledCartProps> = React.memo(
 FilledCart.displayName = "FilledCart";
 
 interface CartSliderProps {
-  cartData: Cart | null;
+  cartData: CartProduct[] | null;
 }
 
 const CartSlider: React.FC<CartSliderProps> = ({ cartData }) => {
@@ -133,7 +135,7 @@ const CartSlider: React.FC<CartSliderProps> = ({ cartData }) => {
       onClick={handleClose}
       className="scrollbar-width-0"
     >
-      {cartData?.line_items.length === 0 ? (
+      {cartData?.length === 0 ? (
         <EmptyCart />
       ) : (
         <FilledCart cartData={cartData} />

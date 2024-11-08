@@ -1,11 +1,12 @@
 import dynamic from "next/dynamic";
 import { SwiperSlide } from "swiper/react";
-import { Product } from "@chec/commerce.js/types/product";
 
 import SlideContainer from "./SlideContainer";
 
+import { PRODUCT_QUERYResult } from "@/sanity/sanity.types";
+
 interface SimilarProductProps {
-  product: Product;
+  product: PRODUCT_QUERYResult;
 }
 
 const ProductCard = dynamic(() => import("@/components/ProductCard"), {
@@ -16,8 +17,8 @@ const SimilarProduct = ({ product }: SimilarProductProps) => {
   return (
     <section className="mt-20">
       <SlideContainer title="Similar Product">
-        {product?.related_products?.map((product) => (
-          <SwiperSlide key={product.id} className="w-full">
+        {product?.relatedProducts?.map((product) => (
+          <SwiperSlide key={product._id} className="w-full">
             <ProductCard product={product} />
           </SwiperSlide>
         ))}

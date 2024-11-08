@@ -2,43 +2,30 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { notFound, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
 import { twMerge } from "tailwind-merge";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { TbShoppingCartCheck } from "react-icons/tb";
 
-import Button from "./Button";
+import Button from "@/components/Button";
 
-import { Product } from "@chec/commerce.js/types/product";
-import addToCart from "@/libs/addToCart";
-import useCartData from "@/hooks/useCartData";
-import { useRouter } from "next/navigation";
+import useCartStore from "@/hooks/useCartStore";
+import {
+  PRODUCT_CATEGORY_QUERYResult,
+  PRODUCT_QUERYResult,
+} from "@/sanity/sanity.types";
 
 interface ProductCardProps {
-  product: Product;
+  product: PRODUCT_CATEGORY_QUERYResult[0];
   className?: string;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
-  const {
-    name,
-    price: { formatted_with_symbol },
-    id: productId,
-    permalink,
-    image,
-  } = product;
-
   const router = useRouter();
 
-  const cart = useCartData((state) => state.cart);
-
-  const src = image ? image.url : "";
-
-  type initialStateType = {
-    product: Product;
-    inCart: boolean | undefined;
-  };
+  const cart = useCartStore((state) => state.cartItems);
+  const addToCart = useCartStore((state) => state.addToCart);
 
   const [productInCart, setProductInCart] = useState<initialStateType>({
     product,
@@ -48,14 +35,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
   // // Check if a product is already in the cart
   useEffect(() => {
     try {
-      const isInCart = cart?.line_items.some(
-        (item) => item.product_id === productId
-      );
+      const isInCart = cart?.some((item) => item._id === product._id);
       setProductInCart((prev) => ({ ...prev, inCart: isInCart }));
     } catch (error) {
       console.error(error);
     }
-  }, [cart, productId]);
+  }, [cart, product._id]);
+
+  if (!product) return notFound();
+
+  const src = product.image ? product.image.url : null;
+
+  type initialStateType = {
+    product: PRODUCT_CATEGORY_QUERYResult[0];
+    inCart: boolean | undefined;
+  };
 
   return (
     <div
@@ -65,9 +59,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
       )}
     >
       <div className="rounded-2xl bg-gray-300 group overflow-hidden w-full h-80 flex items-center justify-center relative">
-        <Link href={`/product/${permalink}`}>
+        <Link href={`/product/${product.permalink}`}>
           <Image
-            src={src}
+            src={src as string}
             alt="product"
             fill
             loading="eager"
@@ -81,7 +75,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
             className="bg-white rounded-full border-none w-12 h-12 hover:scale-105 hover:bg-white transition flex justify-center items-center"
             title="Add to cart"
             onClick={() => {
-              addToCart(productId, 1);
+              addToCart(product as PRODUCT_QUERYResult);
               router.refresh();
             }}
           >
@@ -96,13 +90,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
 
       <div className="card-body">
         <div className="flex flex-col text-slate-800 dark:text-gray-300 w-full">
-          <Link href={`/product/${permalink}`}>
+          <Link href={`/product/${product.permalink}`}>
             <h2 className="card-title truncate text-sm md:text-base link-hover-custom">
-              {name}
+              {product.name}
             </h2>
           </Link>
           <p className="card-title text-lg md:text-xl flex-grow-0">
-            {formatted_with_symbol}
+            ${product.price}
           </p>
         </div>
       </div>

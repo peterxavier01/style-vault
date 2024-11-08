@@ -9,20 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@chec/commerce.js": "^2.8.0",
-    "@sanity/image-url": "^1.0.2",
-    "@sanity/vision": "^3.61.0",
-    "@types/chec__commerce.js": "^2.8.7",
     "@types/node": "20.6.2",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "10.4.15",
     "clsx": "^2.0.0",
     "eslint": "8.49.0",
-    "eslint-config-next": "^13.5.3",
+    "eslint-config-next": "^15.0.0",
     "framer-motion": "^10.16.4",
     "lodash.debounce": "^4.0.8",
-    "next": "^13.5.3",
+    "next": "^14.2.7",
+    "next-sanity": "^9.7.0",
     "next-themes": "^0.3.0",
     "postcss": "8.4.29",
     "rc-pagination": "^3.6.1",
@@ -35,18 +32,16 @@
     "react-icons": "^4.11.0",
     "react-paystack": "^5.0.0",
     "react-use": "^17.5.0",
-    "sanitize-html": "^2.13.0",
-    "sanity": "^3.61.0",
-    "styled-components": "^6.1.13",
+    "sanity": "^3.63.0",
     "swiper": "^10.3.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2",
+    "zod": "^3.23.8",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.9",
-    "@types/sanitize-html": "^2.11.0",
     "daisyui": "^4.10.2"
   }
 }

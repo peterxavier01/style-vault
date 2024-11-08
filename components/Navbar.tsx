@@ -3,17 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { useState } from "react";
 import { useTheme } from "next-themes";
-
-import useCartSlider from "@/hooks/useCartSlider";
-import useCartData from "@/hooks/useCartData";
-import getCart from "@/libs/getCart";
-
-import clientOnly from "./ClientOnly";
-import Search from "./Search";
-import ThemeToggle from "./ThemeToggle";
-
 import {
   AiOutlineClose,
   AiOutlineMenu,
@@ -22,7 +14,15 @@ import {
 } from "react-icons/ai";
 import { FaFemale, FaMale } from "react-icons/fa";
 import { BiSolidShoppingBag } from "react-icons/bi";
-import useCheckoutData from "@/hooks/useCheckoutData";
+
+import useCartSlider from "@/hooks/useCartSlider";
+import { useCartInitialization } from "@/hooks/useCartStore";
+import useCartStore from "@/hooks/useCartStore";
+
+import clientOnly from "./ClientOnly";
+import ThemeToggle from "./ThemeToggle";
+
+const Search = dynamic(() => import("./Search"));
 
 const links = [
   { id: 1, name: "Home", href: "/", icon: AiFillHome },
@@ -32,35 +32,15 @@ const links = [
 ];
 
 const Navbar = () => {
-  const { cart, setCart } = useCartData();
-  const isOrderConfirmed = useCheckoutData((state) => state.isOrderConfirmed);
-  const { theme } = useTheme();
-
-  useEffect(() => {
-    const getCartData = async () => {
-      if (isOrderConfirmed) {
-        setCart(null);
-      }
-
-      if (!isOrderConfirmed) {
-        try {
-          const data = await getCart();
-          setCart(data);
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    };
-
-    getCartData();
-  }, [setCart, cart, isOrderConfirmed]);
-
   const [isOpen, setIsOpen] = useState(false);
-  const NavToggle = isOpen ? AiOutlineClose : AiOutlineMenu;
-
+  const cart = useCartStore((state) => state.cartItems);
+  const { theme } = useTheme();
   const pathname = usePathname();
-
   const cartSlider = useCartSlider();
+
+  useCartInitialization();
+
+  const NavToggle = isOpen ? AiOutlineClose : AiOutlineMenu;
 
   const handleClick = () => {
     setIsOpen((prev) => !prev);
@@ -141,7 +121,7 @@ const Navbar = () => {
             <AiOutlineShoppingCart size={24} />
             {cart && (
               <span className="p-[10px] text-[9px] flex items-center justify-center bg-primary w-4 h-4 text-white absolute -top-3 -right-3 rounded-full">
-                {cart?.total_items}
+                {cart.length}
               </span>
             )}
           </div>
