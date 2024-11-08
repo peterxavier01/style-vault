@@ -156,24 +156,7 @@ export type Product = {
   _updatedAt: string
   _rev: string
   name?: string
-  description?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
-    listItem?: 'bullet' | 'number'
-    markDefs?: Array<{
-      href?: string
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
-    _key: string
-  }>
+  description?: string
   price?: number
   image?: {
     asset?: {
@@ -187,7 +170,7 @@ export type Product = {
     _type: 'image'
   }
   permalink?: Slug
-  assets?: Array<{
+  gallery?: Array<{
     asset?: {
       _ref: string
       _type: 'reference'
@@ -303,3 +286,142 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageMetadata
 export declare const internalGroqTypeReferenceTo: unique symbol
+// Source: ../utils/queries.ts
+// Variable: PRODUCTS_QUERY
+// Query: *[_type == "product"]{  _id, name, price,   "image": image.asset-> { _id, url },   "permalink": permalink.current,}
+export type PRODUCTS_QUERYResult = Array<{
+  _id: string
+  name: string | null
+  price: number | null
+  image: {
+    _id: string
+    url: string | null
+  } | null
+  permalink: string | null
+}>
+// Variable: PRODUCT_QUERY
+// Query: *[_type == "product" && permalink.current == $slug]{  _id, name, description, price,   "image": image.asset->{ _id, url },   "permalink": permalink.current,  gallery[]{     asset-> { _id, url }  },  "categories": categories[]->{ _id, name },  "relatedProducts": relatedProducts[]->{    _id, name, description, price,     "image": image.asset->{ _id, url },     "permalink": permalink.current,    gallery[]{       asset-> { _id, url }    },    "categories": categories[]->{ _id, name },    "variants": variants[]->{      _id,      name,      price,      stock,      "size": size->{        _id, name      },      "color": color->{        _id, name, hex      },      assets -> {_id, url}    }  },  "variants": variants[]->{    _id,    name,    price,    stock,    "size": size->{      _id, name    },    "color": color->{      _id, name, hex    },    assets -> {_id, url}  }}[0]
+export type PRODUCT_QUERYResult = {
+  _id: string
+  name: string | null
+  description: string | null
+  price: number | null
+  image: {
+    _id: string
+    url: string | null
+  } | null
+  permalink: string | null
+  gallery: Array<{
+    asset: {
+      _id: string
+      url: string | null
+    } | null
+  }> | null
+  categories: Array<{
+    _id: string
+    name: string | null
+  }> | null
+  relatedProducts: Array<{
+    _id: string
+    name: string | null
+    description: string | null
+    price: number | null
+    image: {
+      _id: string
+      url: string | null
+    } | null
+    permalink: string | null
+    gallery: Array<{
+      asset: {
+        _id: string
+        url: string | null
+      } | null
+    }> | null
+    categories: Array<{
+      _id: string
+      name: string | null
+    }> | null
+    variants: Array<{
+      _id: string
+      name: string | null
+      price: number | null
+      stock: number | null
+      size: {
+        _id: string
+        name: string | null
+      } | null
+      color: {
+        _id: string
+        name: string | null
+        hex: string | null
+      } | null
+      assets: null
+    }> | null
+  }> | null
+  variants: Array<{
+    _id: string
+    name: string | null
+    price: number | null
+    stock: number | null
+    size: {
+      _id: string
+      name: string | null
+    } | null
+    color: {
+      _id: string
+      name: string | null
+      hex: string | null
+    } | null
+    assets: null
+  }> | null
+} | null
+// Variable: CATEGORY_QUERY
+// Query: *[_type=="category"]{  _id,   name,   slug,   "image": image.asset->{_id, url},  parentCategory -> {_id, name}}
+export type CATEGORY_QUERYResult = Array<{
+  _id: string
+  name: string | null
+  slug: Slug | null
+  image: {
+    _id: string
+    url: string | null
+  } | null
+  parentCategory: {
+    _id: string
+    name: string | null
+  } | null
+}>
+// Variable: CATEGORY_BY_SLUG_QUERY
+// Query: *[_type == "category" && slug.current == $slug]{  _id,  name,  slug,  "image": image.asset-> { _id, url }}[0]
+export type CATEGORY_BY_SLUG_QUERYResult = {
+  _id: string
+  name: string | null
+  slug: Slug | null
+  image: {
+    _id: string
+    url: string | null
+  } | null
+} | null
+// Variable: PRODUCT_CATEGORY_QUERY
+// Query: *[_type == "product" && $slug in categories[]->slug.current]{  _id,   name,   price,   "image": image.asset-> { _id, url },  "permalink": permalink.current,}
+export type PRODUCT_CATEGORY_QUERYResult = Array<{
+  _id: string
+  name: string | null
+  price: number | null
+  image: {
+    _id: string
+    url: string | null
+  } | null
+  permalink: string | null
+}>
+
+// Query TypeMap
+import '@sanity/client'
+declare module '@sanity/client' {
+  interface SanityQueries {
+    '*[_type == "product"]{\n  _id, name, price, \n  "image": image.asset-> { _id, url }, \n  "permalink": permalink.current,\n}': PRODUCTS_QUERYResult
+    '*[_type == "product" && permalink.current == $slug]{\n  _id, name, description, price, \n  "image": image.asset->{ _id, url }, \n  "permalink": permalink.current,\n  gallery[]{ \n    asset-> { _id, url }\n  },\n  "categories": categories[]->{ _id, name },\n  "relatedProducts": relatedProducts[]->{\n    _id, name, description, price, \n    "image": image.asset->{ _id, url }, \n    "permalink": permalink.current,\n    gallery[]{ \n      asset-> { _id, url }\n    },\n    "categories": categories[]->{ _id, name },\n    "variants": variants[]->{\n      _id,\n      name,\n      price,\n      stock,\n      "size": size->{\n        _id, name\n      },\n      "color": color->{\n        _id, name, hex\n      },\n      assets -> {_id, url}\n    }\n  },\n  "variants": variants[]->{\n    _id,\n    name,\n    price,\n    stock,\n    "size": size->{\n      _id, name\n    },\n    "color": color->{\n      _id, name, hex\n    },\n    assets -> {_id, url}\n  }\n}[0]': PRODUCT_QUERYResult
+    '*[_type=="category"]{\n  _id, \n  name, \n  slug, \n  "image": image.asset->{_id, url},\n  parentCategory -> {_id, name}\n}': CATEGORY_QUERYResult
+    '*[_type == "category" && slug.current == $slug]{\n  _id,\n  name,\n  slug,\n  "image": image.asset-> { _id, url }\n}[0]': CATEGORY_BY_SLUG_QUERYResult
+    '*[_type == "product" && $slug in categories[]->slug.current]{\n  _id, \n  name, \n  price, \n  "image": image.asset-> { _id, url },\n  "permalink": permalink.current,\n}': PRODUCT_CATEGORY_QUERYResult
+  }
+}
